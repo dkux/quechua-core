@@ -1,0 +1,27 @@
+{
+    "name": "AlumnoCarrera",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "alumno",
+            "otherEntityName": "alumno",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "carrera",
+            "otherEntityName": "carrera",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020837",
+    "entityTableName": "alumno_carrera",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

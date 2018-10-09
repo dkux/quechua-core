@@ -1,0 +1,30 @@
+{
+    "name": "Periodo",
+    "fields": [
+        {
+            "fieldName": "cuatrimestre",
+            "fieldType": "Cuatrimestre",
+            "fieldValues": "PRIMERO,SEGUNDO,VERANO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "ano",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181009020840",
+    "entityTableName": "periodo",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

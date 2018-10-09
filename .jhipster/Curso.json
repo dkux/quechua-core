@@ -1,0 +1,52 @@
+{
+    "name": "Curso",
+    "fields": [
+        {
+            "fieldName": "estado",
+            "fieldType": "CursoEstado",
+            "fieldValues": "ACTIVO,INACTIVO,ELIMINADO"
+        },
+        {
+            "fieldName": "vacantes",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "horario",
+            "otherEntityName": "horarioCursada",
+            "otherEntityRelationshipName": "curso"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "profesor",
+            "otherEntityName": "profesor",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "periodo",
+            "otherEntityName": "periodo",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "materia",
+            "otherEntityName": "materia",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020834",
+    "entityTableName": "curso",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

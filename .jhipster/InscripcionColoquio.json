@@ -1,0 +1,33 @@
+{
+    "name": "InscripcionColoquio",
+    "fields": [
+        {
+            "fieldName": "estado",
+            "fieldType": "InscripcionColoquioEstado",
+            "fieldValues": "ACTIVA,ELIMINADA"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "coloquio",
+            "otherEntityName": "coloquio",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "alumno",
+            "otherEntityName": "alumno",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020841",
+    "entityTableName": "inscripcion_coloquio",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

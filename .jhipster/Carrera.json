@@ -1,0 +1,29 @@
+{
+    "name": "Carrera",
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "materia",
+            "otherEntityName": "materia",
+            "otherEntityRelationshipName": "carrera"
+        }
+    ],
+    "changelogDate": "20181009020830",
+    "entityTableName": "carrera",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

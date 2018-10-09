@@ -1,0 +1,41 @@
+{
+    "name": "PeriodoAdministrativo",
+    "fields": [
+        {
+            "fieldName": "fechaInicio",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fechaFin",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "consultarPioridad",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inscribirCursada",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "inscribirColoquio",
+            "fieldType": "Boolean"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20181009020842",
+    "entityTableName": "periodo_administrativo",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,49 @@
+{
+    "name": "Cursada",
+    "fields": [
+        {
+            "fieldName": "notaCursada",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "notFinal",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "libro",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "folio",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "EstadoCursada",
+            "fieldValues": "APROBADO,REPROBADO,FINAL_PENDIENTE,FINAL_APROBADO,APLAZO"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "curso",
+            "otherEntityName": "curso",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "alumno",
+            "otherEntityName": "alumno",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020843",
+    "entityTableName": "cursada",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

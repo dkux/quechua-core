@@ -1,0 +1,38 @@
+{
+    "name": "InscripcionCurso",
+    "fields": [
+        {
+            "fieldName": "estado",
+            "fieldType": "InscripcionCursoEstado",
+            "fieldValues": "REGULAR,CONDICIONAL,ELIMINADA"
+        },
+        {
+            "fieldName": "cursadaEstado",
+            "fieldType": "CursadaEstado",
+            "fieldValues": "APROBADA,DESAPROBADA"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "alumno",
+            "otherEntityName": "alumno",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "curso",
+            "otherEntityName": "curso",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020838",
+    "entityTableName": "inscripcion_curso",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

@@ -1,0 +1,59 @@
+{
+    "name": "Coloquio",
+    "fields": [
+        {
+            "fieldName": "dia",
+            "fieldType": "Dia",
+            "fieldValues": "LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "aula",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "horaInicio",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "horaFin",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sede",
+            "fieldType": "Sede",
+            "fieldValues": "PC,LH",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "curso",
+            "otherEntityName": "curso",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020839",
+    "entityTableName": "coloquio",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

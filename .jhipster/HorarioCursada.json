@@ -1,0 +1,59 @@
+{
+    "name": "HorarioCursada",
+    "fields": [
+        {
+            "fieldName": "dia",
+            "fieldType": "Dia",
+            "fieldValues": "LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "sede",
+            "fieldType": "Sede",
+            "fieldValues": "PC,LH",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "aula",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "horaInicio",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "horaFin",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "curso",
+            "otherEntityName": "curso",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181009020833",
+    "entityTableName": "horario_cursada",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}
