@@ -1,10 +1,13 @@
 package fi.uba.quechua.web.rest;
 
+import afu.org.checkerframework.checker.units.qual.A;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.repository.AlumnoRepository;
+import fi.uba.quechua.service.AlumnoCarreraService;
 import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -55,10 +58,16 @@ public class AlumnoResourceIntTest {
     @Autowired
     private AlumnoRepository alumnoRepository;
 
-    
+
 
     @Autowired
     private AlumnoService alumnoService;
+
+    @Autowired
+    private AlumnoCarreraService alumnoCarreraService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -79,7 +88,7 @@ public class AlumnoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AlumnoResource alumnoResource = new AlumnoResource(alumnoService);
+        final AlumnoResource alumnoResource = new AlumnoResource(alumnoService, alumnoCarreraService, userService);
         this.restAlumnoMockMvc = MockMvcBuilders.standaloneSetup(alumnoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -235,7 +244,7 @@ public class AlumnoResourceIntTest {
             .andExpect(jsonPath("$.[*].padron").value(hasItem(DEFAULT_PADRON.toString())))
             .andExpect(jsonPath("$.[*].prioridad").value(hasItem(DEFAULT_PRIORIDAD)));
     }
-    
+
 
     @Test
     @Transactional

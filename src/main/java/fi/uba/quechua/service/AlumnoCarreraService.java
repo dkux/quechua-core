@@ -1,6 +1,8 @@
 package fi.uba.quechua.service;
 
+import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.domain.AlumnoCarrera;
+import fi.uba.quechua.domain.Carrera;
 import fi.uba.quechua.repository.AlumnoCarreraRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +35,8 @@ public class AlumnoCarreraService {
      * @return the persisted entity
      */
     public AlumnoCarrera save(AlumnoCarrera alumnoCarrera) {
-        log.debug("Request to save AlumnoCarrera : {}", alumnoCarrera);        return alumnoCarreraRepository.save(alumnoCarrera);
+        log.debug("Request to save AlumnoCarrera : {}", alumnoCarrera);
+        return alumnoCarreraRepository.save(alumnoCarrera);
     }
 
     /**
@@ -68,5 +71,16 @@ public class AlumnoCarreraService {
     public void delete(Long id) {
         log.debug("Request to delete AlumnoCarrera : {}", id);
         alumnoCarreraRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the Carreras by Alumno.
+     *
+     * @param alumno the Alumno
+     * @return the list of entities
+     */
+    public List<Carrera> findCarrerasByAlumno(Alumno alumno) {
+        log.debug("Request to get Carreras by Alumno : {}", alumno.getId());
+        return alumnoCarreraRepository.findCarrerasByAlumno(alumno);
     }
 }

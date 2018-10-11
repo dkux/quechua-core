@@ -39,6 +39,10 @@ public class Alumno implements Serializable {
     @Column(name = "prioridad", nullable = false)
     private Integer prioridad;
 
+    @NotNull
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -99,6 +103,20 @@ public class Alumno implements Serializable {
     public void setPrioridad(Integer prioridad) {
         this.prioridad = prioridad;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Alumno userId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

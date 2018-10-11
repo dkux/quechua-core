@@ -2,7 +2,12 @@ package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.Alumno;
+import fi.uba.quechua.domain.AlumnoCarrera;
+import fi.uba.quechua.domain.Carrera;
+import fi.uba.quechua.security.SecurityUtils;
+import fi.uba.quechua.service.AlumnoCarreraService;
 import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -31,8 +36,14 @@ public class AlumnoResource {
 
     private final AlumnoService alumnoService;
 
-    public AlumnoResource(AlumnoService alumnoService) {
+    private final AlumnoCarreraService alumnoCarreraService;
+
+    private final UserService userService;
+
+    public AlumnoResource(AlumnoService alumnoService, AlumnoCarreraService alumnoCarreraService, UserService userService) {
         this.alumnoService = alumnoService;
+        this.alumnoCarreraService = alumnoCarreraService;
+        this.userService = userService;
     }
 
     /**
@@ -115,5 +126,22 @@ public class AlumnoResource {
         log.debug("REST request to delete Alumno : {}", id);
         alumnoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /alumno-carreras : get all the carreras del alumno.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of alumnoCarreras in body
+     */
+    @GetMapping("/alumnos/carreras")
+    @Timed
+    public List<Carrera> getCarrerasDelAlumno() {
+        log.debug("REST request to get all Carreras del Alumno");
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
+        }
+        return alumnoCarreraService.findCarrerasByAlumno(alumno.get());
     }
 }

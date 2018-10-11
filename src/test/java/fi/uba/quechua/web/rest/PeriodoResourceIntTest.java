@@ -50,7 +50,7 @@ public class PeriodoResourceIntTest {
     @Autowired
     private PeriodoRepository periodoRepository;
 
-    
+
 
     @Autowired
     private PeriodoService periodoService;
@@ -116,7 +116,7 @@ public class PeriodoResourceIntTest {
         assertThat(periodoList).hasSize(databaseSizeBeforeCreate + 1);
         Periodo testPeriodo = periodoList.get(periodoList.size() - 1);
         assertThat(testPeriodo.getCuatrimestre()).isEqualTo(DEFAULT_CUATRIMESTRE);
-        assertThat(testPeriodo.getAno()).isEqualTo(DEFAULT_ANO);
+        assertThat(testPeriodo.getAnio()).isEqualTo(DEFAULT_ANO);
     }
 
     @Test
@@ -161,7 +161,7 @@ public class PeriodoResourceIntTest {
     public void checkAnoIsRequired() throws Exception {
         int databaseSizeBeforeTest = periodoRepository.findAll().size();
         // set the field null
-        periodo.setAno(null);
+        periodo.setAnio(null);
 
         // Create the Periodo, which fails.
 
@@ -188,7 +188,7 @@ public class PeriodoResourceIntTest {
             .andExpect(jsonPath("$.[*].cuatrimestre").value(hasItem(DEFAULT_CUATRIMESTRE.toString())))
             .andExpect(jsonPath("$.[*].ano").value(hasItem(DEFAULT_ANO.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -238,7 +238,7 @@ public class PeriodoResourceIntTest {
         assertThat(periodoList).hasSize(databaseSizeBeforeUpdate);
         Periodo testPeriodo = periodoList.get(periodoList.size() - 1);
         assertThat(testPeriodo.getCuatrimestre()).isEqualTo(UPDATED_CUATRIMESTRE);
-        assertThat(testPeriodo.getAno()).isEqualTo(UPDATED_ANO);
+        assertThat(testPeriodo.getAnio()).isEqualTo(UPDATED_ANO);
     }
 
     @Test

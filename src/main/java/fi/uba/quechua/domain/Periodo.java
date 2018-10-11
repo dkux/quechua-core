@@ -31,8 +31,8 @@ public class Periodo implements Serializable {
     private Cuatrimestre cuatrimestre;
 
     @NotNull
-    @Column(name = "ano", nullable = false)
-    private String ano;
+    @Column(name = "anio", nullable = false)
+    private String anio;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -56,17 +56,17 @@ public class Periodo implements Serializable {
         this.cuatrimestre = cuatrimestre;
     }
 
-    public String getAno() {
-        return ano;
+    public String getAnio() {
+        return anio;
     }
 
     public Periodo ano(String ano) {
-        this.ano = ano;
+        this.anio = ano;
         return this;
     }
 
-    public void setAno(String ano) {
-        this.ano = ano;
+    public void setAnio(String anio) {
+        this.anio = anio;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -95,7 +95,7 @@ public class Periodo implements Serializable {
         return "Periodo{" +
             "id=" + getId() +
             ", cuatrimestre='" + getCuatrimestre() + "'" +
-            ", ano='" + getAno() + "'" +
+            ", anio='" + getAnio() + "'" +
             "}";
     }
 }

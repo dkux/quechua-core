@@ -61,6 +61,18 @@ public class AlumnoService {
     }
 
     /**
+     * Get one alumno by userId.
+     *
+     * @param userId the id of the user
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Optional<Alumno> findOneByUserId(Long userId) {
+        log.debug("Request to get Alumno by userId : {}", userId);
+        return alumnoRepository.findByUserId(userId);
+    }
+
+    /**
      * Delete the alumno by id.
      *
      * @param id the id of the entity

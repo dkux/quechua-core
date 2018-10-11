@@ -4,6 +4,8 @@ import fi.uba.quechua.domain.Alumno;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 /**
  * Spring Data  repository for the Alumno entity.
@@ -12,4 +14,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
+    Optional<Alumno> findByUserId(Long userId);
 }
