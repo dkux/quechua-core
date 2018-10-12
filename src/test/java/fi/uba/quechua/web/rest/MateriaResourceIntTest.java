@@ -3,6 +3,7 @@ package fi.uba.quechua.web.rest;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.Materia;
+import fi.uba.quechua.repository.CarreraRepository;
 import fi.uba.quechua.repository.MateriaRepository;
 import fi.uba.quechua.service.MateriaService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
@@ -52,10 +53,13 @@ public class MateriaResourceIntTest {
     @Autowired
     private MateriaRepository materiaRepository;
 
-    
+
 
     @Autowired
     private MateriaService materiaService;
+
+    @Autowired
+    private CarreraRepository carreraRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -76,7 +80,7 @@ public class MateriaResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MateriaResource materiaResource = new MateriaResource(materiaService);
+        final MateriaResource materiaResource = new MateriaResource(materiaService, carreraRepository);
         this.restMateriaMockMvc = MockMvcBuilders.standaloneSetup(materiaResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -211,7 +215,7 @@ public class MateriaResourceIntTest {
             .andExpect(jsonPath("$.[*].codigo").value(hasItem(DEFAULT_CODIGO.toString())))
             .andExpect(jsonPath("$.[*].creditos").value(hasItem(DEFAULT_CREDITOS)));
     }
-    
+
 
     @Test
     @Transactional

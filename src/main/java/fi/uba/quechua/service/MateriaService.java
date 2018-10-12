@@ -1,5 +1,6 @@
 package fi.uba.quechua.service;
 
+import fi.uba.quechua.domain.Carrera;
 import fi.uba.quechua.domain.Materia;
 import fi.uba.quechua.repository.MateriaRepository;
 import org.slf4j.Logger;
@@ -68,5 +69,9 @@ public class MateriaService {
     public void delete(Long id) {
         log.debug("Request to delete Materia : {}", id);
         materiaRepository.deleteById(id);
+    }
+
+    public List<Materia> findByFilter(Carrera carrera, String query) {
+        return materiaRepository.findAllByCarreraAndNombreStartingWith(carrera, query);
     }
 }

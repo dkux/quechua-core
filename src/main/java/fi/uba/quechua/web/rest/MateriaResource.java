@@ -1,7 +1,9 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import fi.uba.quechua.domain.Carrera;
 import fi.uba.quechua.domain.Materia;
+import fi.uba.quechua.repository.CarreraRepository;
 import fi.uba.quechua.service.MateriaService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
@@ -31,8 +33,11 @@ public class MateriaResource {
 
     private final MateriaService materiaService;
 
-    public MateriaResource(MateriaService materiaService) {
+    private CarreraRepository carreraRepository;
+
+    public MateriaResource(MateriaService materiaService, CarreraRepository carreraRepository) {
         this.materiaService = materiaService;
+        this.carreraRepository = carreraRepository;
     }
 
     /**
@@ -78,18 +83,6 @@ public class MateriaResource {
     }
 
     /**
-     * GET  /materias : get all the materias.
-     *
-     * @return the ResponseEntity with status 200 (OK) and the list of materias in body
-     */
-    @GetMapping("/materias")
-    @Timed
-    public List<Materia> getAllMaterias() {
-        log.debug("REST request to get all Materias");
-        return materiaService.findAll();
-    }
-
-    /**
      * GET  /materias/:id : get the "id" materia.
      *
      * @param id the id of the materia to retrieve
@@ -115,5 +108,19 @@ public class MateriaResource {
         log.debug("REST request to delete Materia : {}", id);
         materiaService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /materias : get the materias.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of materias in body
+     */
+    @GetMapping("/materias")
+    @Timed
+    public List<Materia> getMateriasByFilter(@RequestParam(name="carrera") Long carreraId,
+                                             @RequestParam(name="query", defaultValue = "") String query) {
+        log.debug("REST request to get all Materias");
+        Optional<Carrera> carrera = carreraRepository.findById(carreraId);
+        return materiaService.findByFilter(carrera.get(), query);
     }
 }
