@@ -4,9 +4,11 @@ import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.domain.AlumnoCarrera;
 import fi.uba.quechua.domain.Carrera;
+import fi.uba.quechua.domain.Cursada;
 import fi.uba.quechua.security.SecurityUtils;
 import fi.uba.quechua.service.AlumnoCarreraService;
 import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.CursadaService;
 import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
@@ -38,12 +40,17 @@ public class AlumnoResource {
 
     private final AlumnoCarreraService alumnoCarreraService;
 
+    private final CursadaService cursadaService;
+
+
     private final UserService userService;
 
-    public AlumnoResource(AlumnoService alumnoService, AlumnoCarreraService alumnoCarreraService, UserService userService) {
+    public AlumnoResource(AlumnoService alumnoService, AlumnoCarreraService alumnoCarreraService,
+                          UserService userService, CursadaService cursadaService) {
         this.alumnoService = alumnoService;
         this.alumnoCarreraService = alumnoCarreraService;
         this.userService = userService;
+        this.cursadaService = cursadaService;
     }
 
     /**
@@ -143,5 +150,21 @@ public class AlumnoResource {
             throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
         }
         return alumnoCarreraService.findCarrerasByAlumno(alumno.get());
+    }
+
+    /**
+     * GET  /alumno-carreras : get all the carreras del alumno.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of alumnoCarreras in body
+     */
+    @GetMapping("/alumnos/cursadasActivas")
+    @Timed
+    public List<Cursada> getCursadasActivasDelAlumno() {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
+        }
+        return cursadaService.findCursadasActivasByAlumno(alumno.get());
     }
 }

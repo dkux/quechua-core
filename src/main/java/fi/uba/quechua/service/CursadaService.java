@@ -1,6 +1,9 @@
 package fi.uba.quechua.service;
 
+import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.domain.Cursada;
+import fi.uba.quechua.domain.enumeration.CursadaEstado;
+import fi.uba.quechua.domain.enumeration.EstadoCursada;
 import fi.uba.quechua.repository.CursadaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,5 +71,9 @@ public class CursadaService {
     public void delete(Long id) {
         log.debug("Request to delete Cursada : {}", id);
         cursadaRepository.deleteById(id);
+    }
+
+    public List<Cursada> findCursadasActivasByAlumno(Alumno alumno) {
+        return cursadaRepository.findAllByAlumnoAndEstado(alumno, EstadoCursada.ACTIVA);
     }
 }

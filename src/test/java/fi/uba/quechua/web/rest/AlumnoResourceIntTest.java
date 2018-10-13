@@ -7,6 +7,7 @@ import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.repository.AlumnoRepository;
 import fi.uba.quechua.service.AlumnoCarreraService;
 import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.CursadaService;
 import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
@@ -70,6 +71,9 @@ public class AlumnoResourceIntTest {
     private UserService userService;
 
     @Autowired
+    private CursadaService cursadaService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -88,7 +92,7 @@ public class AlumnoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final AlumnoResource alumnoResource = new AlumnoResource(alumnoService, alumnoCarreraService, userService);
+        final AlumnoResource alumnoResource = new AlumnoResource(alumnoService, alumnoCarreraService, userService, cursadaService);
         this.restAlumnoMockMvc = MockMvcBuilders.standaloneSetup(alumnoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
