@@ -4,7 +4,10 @@ import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.InscripcionCurso;
 import fi.uba.quechua.repository.InscripcionCursoRepository;
+import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.CursoService;
 import fi.uba.quechua.service.InscripcionCursoService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -51,10 +54,19 @@ public class InscripcionCursoResourceIntTest {
     @Autowired
     private InscripcionCursoRepository inscripcionCursoRepository;
 
-    
+
 
     @Autowired
     private InscripcionCursoService inscripcionCursoService;
+
+    @Autowired
+    private AlumnoService alumnoService;
+
+    @Autowired
+    private CursoService cursoService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -75,7 +87,7 @@ public class InscripcionCursoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final InscripcionCursoResource inscripcionCursoResource = new InscripcionCursoResource(inscripcionCursoService);
+        final InscripcionCursoResource inscripcionCursoResource = new InscripcionCursoResource(inscripcionCursoService, alumnoService, cursoService, userService);
         this.restInscripcionCursoMockMvc = MockMvcBuilders.standaloneSetup(inscripcionCursoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -153,7 +165,7 @@ public class InscripcionCursoResourceIntTest {
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].cursadaEstado").value(hasItem(DEFAULT_CURSADA_ESTADO.toString())));
     }
-    
+
 
     @Test
     @Transactional

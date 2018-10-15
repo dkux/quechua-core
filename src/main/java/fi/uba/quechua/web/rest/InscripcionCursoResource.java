@@ -1,8 +1,14 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import fi.uba.quechua.domain.Alumno;
+import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.domain.InscripcionCurso;
+import fi.uba.quechua.domain.enumeration.InscripcionCursoEstado;
+import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.CursoService;
 import fi.uba.quechua.service.InscripcionCursoService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,8 +36,18 @@ public class InscripcionCursoResource {
 
     private final InscripcionCursoService inscripcionCursoService;
 
-    public InscripcionCursoResource(InscripcionCursoService inscripcionCursoService) {
+    private final AlumnoService alumnoService;
+
+    private final UserService userService;
+
+    private final CursoService cursoService;
+
+    public InscripcionCursoResource(InscripcionCursoService inscripcionCursoService, AlumnoService alumnoService,
+                                    CursoService cursoService, UserService userService) {
         this.inscripcionCursoService = inscripcionCursoService;
+        this.alumnoService = alumnoService;
+        this.userService = userService;
+        this.cursoService = cursoService;
     }
 
     /**
@@ -114,5 +130,39 @@ public class InscripcionCursoResource {
         log.debug("REST request to delete InscripcionCurso : {}", id);
         inscripcionCursoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/inscripcion-cursos/{cursoId}")
+    @Timed
+    public ResponseEntity<InscripcionCurso> inscribir(@PathVariable Long cursoId) throws URISyntaxException {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        log.debug("REST request to inscribir al alumno {} en el curso {}", userId, cursoId);
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        InscripcionCursoEstado estado = InscripcionCursoEstado.REGULAR;
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
+        }
+        Optional<Curso> curso = cursoService.findOne(cursoId);
+        if (!curso.isPresent()) {
+            throw new BadRequestAlertException("No existe un curso con id provisto", "Curso", "idnoexists");
+        }
+
+        List<InscripcionCurso> inscripciones = inscripcionCursoService.findAllRegularesByCurso(curso.get());
+        if (curso.get().getVacantes() <= inscripciones.size()) {
+            estado = InscripcionCursoEstado.CONDICIONAL;
+        }
+
+        Optional<InscripcionCurso> inscripcionCurso = inscripcionCursoService.findByCursoAndAlumno(curso.get(), alumno.get());
+        if (inscripcionCurso.isPresent()) {
+            throw new BadRequestAlertException("El alumno ya se encuentra inscripto al curso", "Curso", "idexists");
+        }
+        InscripcionCurso inscripcion = new InscripcionCurso();
+        inscripcion.setAlumno(alumno.get());
+        inscripcion.setCurso(curso.get());
+        inscripcion.estado(estado);
+        InscripcionCurso result = inscripcionCursoService.save(inscripcion);
+        return ResponseEntity.created(new URI("/api/inscripcion-cursos/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("inscripcionCurso", result.getId().toString()))
+            .body(result);
     }
 }
