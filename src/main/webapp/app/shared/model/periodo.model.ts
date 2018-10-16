@@ -7,7 +7,7 @@ export const enum Cuatrimestre {
 export interface IPeriodo {
   id?: number;
   cuatrimestre?: Cuatrimestre;
-  ano?: string;
+  anio?: string;
 }
 
 export const defaultValue: Readonly<IPeriodo> = {};

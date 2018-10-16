@@ -20,7 +20,7 @@ import { ICurso } from 'app/shared/model/curso.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ICursoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICursoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface ICursoUpdateState {
   isNew: boolean;
@@ -183,7 +183,7 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                     {profesors
                       ? profesors.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.nombre} {otherEntity.apellido}
                           </option>
                         ))
                       : null}
@@ -196,7 +196,7 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                     {periodos
                       ? periodos.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.cuatrimestre}-{otherEntity.anio}
                           </option>
                         ))
                       : null}
@@ -209,7 +209,7 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                     {materias
                       ? materias.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            {otherEntity.nombre} ({otherEntity.codigo})
                           </option>
                         ))
                       : null}

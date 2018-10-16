@@ -12,7 +12,7 @@ import { IPeriodo } from 'app/shared/model/periodo.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IPeriodoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IPeriodoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class PeriodoDetail extends React.Component<IPeriodoDetailProps> {
   componentDidMount() {
@@ -33,9 +33,9 @@ export class PeriodoDetail extends React.Component<IPeriodoDetailProps> {
             </dt>
             <dd>{periodoEntity.cuatrimestre}</dd>
             <dt>
-              <span id="ano">Ano</span>
+              <span id="ano">Año</span>
             </dt>
-            <dd>{periodoEntity.ano}</dd>
+            <dd>{periodoEntity.anio}</dd>
           </dl>
           <Button tag={Link} to="/entity/periodo" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

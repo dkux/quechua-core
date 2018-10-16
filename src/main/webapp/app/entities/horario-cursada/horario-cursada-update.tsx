@@ -16,7 +16,7 @@ import { IHorarioCursada } from 'app/shared/model/horario-cursada.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IHorarioCursadaUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IHorarioCursadaUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IHorarioCursadaUpdateState {
   isNew: boolean;
@@ -180,7 +180,7 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     {cursos
                       ? cursos.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
-                            {otherEntity.id}
+                            ({otherEntity.materia.codigo}) {otherEntity.profesor.nombre} {otherEntity.profesor.apellido}
                           </option>
                         ))
                       : null}

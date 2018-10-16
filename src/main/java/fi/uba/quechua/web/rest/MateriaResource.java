@@ -83,6 +83,18 @@ public class MateriaResource {
     }
 
     /**
+     * GET  /materias : get all the materias.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of materias in body
+     */
+    @GetMapping("/materias")
+    @Timed
+    public List<Materia> getAllMaterias() {
+        log.debug("REST request to get all Materias");
+        return materiaService.findAll();
+    }
+
+    /**
      * GET  /materias/:id : get the "id" materia.
      *
      * @param id the id of the materia to retrieve
@@ -115,7 +127,7 @@ public class MateriaResource {
      *
      * @return the ResponseEntity with status 200 (OK) and the list of materias in body
      */
-    @GetMapping("/materias")
+    @GetMapping("/materias/find")
     @Timed
     public List<Materia> getMateriasByFilter(@RequestParam(name="carrera") Long carreraId,
                                              @RequestParam(name="query", defaultValue = "") String query) {

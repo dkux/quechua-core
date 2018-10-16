@@ -60,8 +60,8 @@ public class Periodo implements Serializable {
         return anio;
     }
 
-    public Periodo ano(String ano) {
-        this.anio = ano;
+    public Periodo anio(String anio) {
+        this.anio = anio;
         return this;
     }
 

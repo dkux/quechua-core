@@ -12,7 +12,7 @@ import { IHorarioCursada } from 'app/shared/model/horario-cursada.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IHorarioCursadaDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IHorarioCursadaDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class HorarioCursadaDetail extends React.Component<IHorarioCursadaDetailProps> {
   componentDidMount() {
@@ -49,7 +49,9 @@ export class HorarioCursadaDetail extends React.Component<IHorarioCursadaDetailP
             </dt>
             <dd>{horarioCursadaEntity.horaFin}</dd>
             <dt>Curso</dt>
-            <dd>{horarioCursadaEntity.curso ? horarioCursadaEntity.curso.id : ''}</dd>
+            <dd>{horarioCursadaEntity.curso ?
+              `(${horarioCursadaEntity.curso.materia.codigo}) ${horarioCursadaEntity.curso.profesor.nombre} ${horarioCursadaEntity.curso.profesor.apellido}`
+              : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/horario-cursada" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

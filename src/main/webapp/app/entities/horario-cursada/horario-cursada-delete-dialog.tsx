@@ -9,7 +9,7 @@ import { IHorarioCursada } from 'app/shared/model/horario-cursada.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './horario-cursada.reducer';
 
-export interface IHorarioCursadaDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IHorarioCursadaDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class HorarioCursadaDeleteDialog extends React.Component<IHorarioCursadaDeleteDialogProps> {
   componentDidMount() {

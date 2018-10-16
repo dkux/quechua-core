@@ -56,7 +56,10 @@ export class HorarioCursada extends React.Component<IHorarioCursadaProps> {
                   <td>{horarioCursada.aula}</td>
                   <td>{horarioCursada.horaInicio}</td>
                   <td>{horarioCursada.horaFin}</td>
-                  <td>{horarioCursada.curso ? <Link to={`curso/${horarioCursada.curso.id}`}>{horarioCursada.curso.id}</Link> : ''}</td>
+                  <td>{horarioCursada.curso ? <Link to={`curso/${horarioCursada.curso.id}`}>
+                    {horarioCursada.curso.materia.nombre} ({horarioCursada.curso.materia.codigo}) {horarioCursada.curso.profesor.nombre} {horarioCursada.curso.profesor.apellido}
+                    </Link> : ''}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${horarioCursada.id}`} color="info" size="sm">

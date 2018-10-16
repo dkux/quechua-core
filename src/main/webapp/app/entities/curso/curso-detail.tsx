@@ -12,7 +12,7 @@ import { ICurso } from 'app/shared/model/curso.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ICursoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICursoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class CursoDetail extends React.Component<ICursoDetailProps> {
   componentDidMount() {
@@ -37,11 +37,11 @@ export class CursoDetail extends React.Component<ICursoDetailProps> {
             </dt>
             <dd>{cursoEntity.vacantes}</dd>
             <dt>Profesor</dt>
-            <dd>{cursoEntity.profesor ? cursoEntity.profesor.id : ''}</dd>
+            <dd>{cursoEntity.profesor ? `${cursoEntity.profesor.nombre} ${cursoEntity.profesor.apellido}` : ''}</dd>
             <dt>Periodo</dt>
-            <dd>{cursoEntity.periodo ? cursoEntity.periodo.id : ''}</dd>
+            <dd>{cursoEntity.periodo ? `${cursoEntity.periodo.cuatrimestre}-${cursoEntity.periodo.anio}` : ''}</dd>
             <dt>Materia</dt>
-            <dd>{cursoEntity.materia ? cursoEntity.materia.id : ''}</dd>
+            <dd>{cursoEntity.materia ? `${cursoEntity.materia.nombre}` : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/curso" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

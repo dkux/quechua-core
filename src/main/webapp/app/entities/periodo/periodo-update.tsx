@@ -14,7 +14,7 @@ import { IPeriodo } from 'app/shared/model/periodo.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IPeriodoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IPeriodoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IPeriodoUpdateState {
   isNew: boolean;
@@ -96,12 +96,12 @@ export class PeriodoUpdate extends React.Component<IPeriodoUpdateProps, IPeriodo
                 </AvGroup>
                 <AvGroup>
                   <Label id="anoLabel" for="ano">
-                    Ano
+                    Año
                   </Label>
                   <AvField
-                    id="periodo-ano"
+                    id="periodo-anio"
                     type="text"
-                    name="ano"
+                    name="anio"
                     validate={{
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}

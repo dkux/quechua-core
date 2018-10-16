@@ -12,7 +12,7 @@ import { IMateria } from 'app/shared/model/materia.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IMateriaDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IMateriaDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class MateriaDetail extends React.Component<IMateriaDetailProps> {
   componentDidMount() {

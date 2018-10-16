@@ -9,7 +9,7 @@ import { IPeriodo } from 'app/shared/model/periodo.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './periodo.reducer';
 
-export interface IPeriodoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IPeriodoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class PeriodoDeleteDialog extends React.Component<IPeriodoDeleteDialogProps> {
   componentDidMount() {

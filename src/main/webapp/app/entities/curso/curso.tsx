@@ -52,9 +52,9 @@ export class Curso extends React.Component<ICursoProps> {
                   </td>
                   <td>{curso.estado}</td>
                   <td>{curso.vacantes}</td>
-                  <td>{curso.profesor ? <Link to={`profesor/${curso.profesor.id}`}>{curso.profesor.id}</Link> : ''}</td>
-                  <td>{curso.periodo ? <Link to={`periodo/${curso.periodo.id}`}>{curso.periodo.id}</Link> : ''}</td>
-                  <td>{curso.materia ? <Link to={`materia/${curso.materia.id}`}>{curso.materia.id}</Link> : ''}</td>
+                  <td>{curso.profesor ? <Link to={`profesor/${curso.profesor.id}`}>{curso.profesor.nombre}, {curso.profesor.apellido} </Link> : ''}</td>
+                  <td>{curso.periodo ? <Link to={`periodo/${curso.periodo.id}`}>{curso.periodo.cuatrimestre}-{curso.periodo.anio}</Link> : ''}</td>
+                  <td>{curso.materia ? <Link to={`materia/${curso.materia.id}`}>{curso.materia.nombre} ({curso.materia.codigo})</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${curso.id}`} color="info" size="sm">
