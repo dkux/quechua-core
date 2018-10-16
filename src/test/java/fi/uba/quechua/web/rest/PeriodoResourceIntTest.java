@@ -91,7 +91,7 @@ public class PeriodoResourceIntTest {
     public static Periodo createEntity(EntityManager em) {
         Periodo periodo = new Periodo()
             .cuatrimestre(DEFAULT_CUATRIMESTRE)
-            .ano(DEFAULT_ANO);
+            .anio(DEFAULT_ANO);
         return periodo;
     }
 
@@ -226,7 +226,7 @@ public class PeriodoResourceIntTest {
         em.detach(updatedPeriodo);
         updatedPeriodo
             .cuatrimestre(UPDATED_CUATRIMESTRE)
-            .ano(UPDATED_ANO);
+            .anio(UPDATED_ANO);
 
         restPeriodoMockMvc.perform(put("/api/periodos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
