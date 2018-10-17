@@ -165,4 +165,32 @@ public class InscripcionCursoResource {
             .headers(HeaderUtil.createEntityCreationAlert("inscripcionCurso", result.getId().toString()))
             .body(result);
     }
+
+    @PostMapping("/inscripcion-cursos/{inscripcionCursoId}/accion/{accion:desinscribir|regularizar|rechazar}")
+    public ResponseEntity<InscripcionCurso> cambiarEstadoInscripcion(
+            @PathVariable Long inscripcionCursoId,
+            @PathVariable String accion) {
+        Optional<InscripcionCurso> inscripcion = inscripcionCursoService.findOne(inscripcionCursoId);
+        if (!inscripcion.isPresent()) {
+            throw new BadRequestAlertException("No existe la inscripcion con id provisto", "InscripcionCurso", "idnoexists");
+        }
+        InscripcionCursoEstado estado = null;
+        switch (accion) {
+            case "desinscribir":
+                estado = InscripcionCursoEstado.ELIMINADA;
+                break;
+            case "regularizar":
+                estado = InscripcionCursoEstado.REGULAR;
+                break;
+            case "rechazar":
+                estado = InscripcionCursoEstado.ELIMINADA;
+                break;
+        }
+        inscripcion.get().setEstado(estado);
+        InscripcionCurso result = inscripcionCursoService.save(inscripcion.get());
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("inscripcionCurso", result.getId().toString()))
+            .body(result);
+    }
+
 }
