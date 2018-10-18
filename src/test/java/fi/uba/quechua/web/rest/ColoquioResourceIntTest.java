@@ -3,6 +3,7 @@ package fi.uba.quechua.web.rest;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.Coloquio;
+import fi.uba.quechua.domain.Periodo;
 import fi.uba.quechua.repository.ColoquioRepository;
 import fi.uba.quechua.service.ColoquioService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
@@ -105,6 +106,11 @@ public class ColoquioResourceIntTest {
             .horaInicio(DEFAULT_HORA_INICIO)
             .horaFin(DEFAULT_HORA_FIN)
             .sede(DEFAULT_SEDE);
+        // Add required entity
+        Periodo periodo = PeriodoResourceIntTest.createEntity(em);
+        em.persist(periodo);
+        em.flush();
+        coloquio.setPeriodo(periodo);
         return coloquio;
     }
 

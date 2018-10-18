@@ -1,7 +1,9 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.Curso;
+import fi.uba.quechua.service.ColoquioService;
 import fi.uba.quechua.service.CursoService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
@@ -31,8 +33,11 @@ public class CursoResource {
 
     private final CursoService cursoService;
 
-    public CursoResource(CursoService cursoService) {
+    private final ColoquioService coloquioService;
+
+    public CursoResource(CursoService cursoService, ColoquioService coloquioService) {
         this.cursoService = cursoService;
+        this.coloquioService = coloquioService;
     }
 
     /**
@@ -115,5 +120,21 @@ public class CursoResource {
         log.debug("REST request to delete Curso : {}", id);
         cursoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /coloquios/{cursoId}/coloquios : get all the coloquios by curso.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of coloquios in body
+     */
+    @GetMapping("/cursos/{cursoId}/coloquios")
+    @Timed
+    public List<Coloquio> getColoquiosByCurso(@PathVariable Long cursoId) {
+        log.debug("REST request to get all Coloquios by curso {}", cursoId);
+        Optional<Curso> curso = cursoService.findOne(cursoId);
+        if (!curso.isPresent()) {
+            throw new BadRequestAlertException("No existe el curso con id provisto", "Curso", "idnoexists");
+        }
+        return coloquioService.findAllByCurso(curso.get());
     }
 }

@@ -1,7 +1,10 @@
 package fi.uba.quechua.service;
 
 import fi.uba.quechua.domain.Coloquio;
+import fi.uba.quechua.domain.Curso;
+import fi.uba.quechua.domain.Periodo;
 import fi.uba.quechua.repository.ColoquioRepository;
+import fi.uba.quechua.repository.PeriodoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -22,8 +26,11 @@ public class ColoquioService {
 
     private final ColoquioRepository coloquioRepository;
 
-    public ColoquioService(ColoquioRepository coloquioRepository) {
+    private final PeriodoRepository periodoRepository;
+
+    public ColoquioService(ColoquioRepository coloquioRepository, PeriodoRepository periodoRepository) {
         this.coloquioRepository = coloquioRepository;
+        this.periodoRepository = periodoRepository;
     }
 
     /**
@@ -33,7 +40,8 @@ public class ColoquioService {
      * @return the persisted entity
      */
     public Coloquio save(Coloquio coloquio) {
-        log.debug("Request to save Coloquio : {}", coloquio);        return coloquioRepository.save(coloquio);
+        log.debug("Request to save Coloquio : {}", coloquio);
+        return coloquioRepository.save(coloquio);
     }
 
     /**
@@ -68,5 +76,14 @@ public class ColoquioService {
     public void delete(Long id) {
         log.debug("Request to delete Coloquio : {}", id);
         coloquioRepository.deleteById(id);
+    }
+
+    public List<Coloquio> findAllByCurso(Curso curso) {
+        log.debug("Request to get Coloquios by curso {}", curso.getId());
+        Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
+        if (!periodo.isPresent()) {
+            return new LinkedList<>();
+        }
+        return coloquioRepository.findAllByCursoAndPeriodo(curso, periodo.get());
     }
 }

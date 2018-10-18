@@ -1,4 +1,5 @@
 import { ICurso } from 'app/shared/model//curso.model';
+import { IPeriodo } from 'app/shared/model//periodo.model';
 
 export const enum Dia {
   LUNES = 'LUNES',
@@ -23,6 +24,7 @@ export interface IColoquio {
   horaFin?: string;
   sede?: Sede;
   curso?: ICurso;
+  periodo?: IPeriodo;
 }
 
 export const defaultValue: Readonly<IColoquio> = {};

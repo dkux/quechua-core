@@ -54,6 +54,11 @@ public class Coloquio implements Serializable {
     @JsonIgnoreProperties("")
     private Curso curso;
 
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("")
+    private Periodo periodo;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -139,6 +144,19 @@ public class Coloquio implements Serializable {
 
     public void setCurso(Curso curso) {
         this.curso = curso;
+    }
+
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+
+    public Coloquio periodo(Periodo periodo) {
+        this.periodo = periodo;
+        return this;
+    }
+
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -6,52 +6,52 @@ ALTER TABLE profesor ADD COLUMN user_id BIGINT(20);
 
 INSERT INTO `carrera` (`id`, `nombre`)
 VALUES
-	(1, 'Ingeniería Civil'),
-	(2, 'Ingeniería de Alimentos'),
-	(3, 'Ingeniería Electricista'),
-	(4, 'Ingeniería Electrónica'),
-	(5, 'Ingeniería en Agrimensura'),
-	(6, 'Ingeniería en Informática'),
-	(7, 'Ingeniería en Petróleo'),
-	(8, 'Ingeniería Industrial'),
-	(9, 'Ingeniería Mecánica'),
-	(10, 'Ingeniería Naval y Mecánica'),
-	(11, 'Ingeniería Química'),
-	(12, 'Licenciatura en Análisis de Sistemas');
+  (1, 'Ingeniería Civil'),
+  (2, 'Ingeniería de Alimentos'),
+  (3, 'Ingeniería Electricista'),
+  (4, 'Ingeniería Electrónica'),
+  (5, 'Ingeniería en Agrimensura'),
+  (6, 'Ingeniería en Informática'),
+  (7, 'Ingeniería en Petróleo'),
+  (8, 'Ingeniería Industrial'),
+  (9, 'Ingeniería Mecánica'),
+  (10, 'Ingeniería Naval y Mecánica'),
+  (11, 'Ingeniería Química'),
+  (12, 'Licenciatura en Análisis de Sistemas');
 
-	INSERT INTO `departamento` (`id`, `nombre`, `codigo`)
+INSERT INTO `departamento` (`id`, `nombre`, `codigo`)
 VALUES
-	(1, 'Agrimensura', NULL),
-	(2, 'Computación', NULL),
-	(3, 'Construcciones y Estructuras', NULL),
-	(4, 'Electrónica', NULL),
-	(5, 'Energía', NULL),
-	(6, 'Estabilidad', NULL),
-	(7, 'Física', NULL),
-	(8, 'Gestión', NULL),
-	(9, 'Hidráulica', NULL),
-	(10, 'Idiomas', NULL),
-	(11, 'Ingeniería Mecánica', NULL),
-	(12, 'Ingeniería Naval', NULL),
-	(13, 'Ingeniería Química', NULL),
-	(14, 'Matemática', NULL),
-	(15, 'Química', NULL),
-	(16, 'Seguridad del Trabajo y Ambiente', NULL),
-	(17, 'Tecnología Industrial', NULL),
-	(18, 'Transporte', NULL);
+  (1, 'Agrimensura', 1),
+  (2, 'Computación', 75),
+  (3, 'Construcciones y Estructuras', 2),
+  (4, 'Electrónica', 66),
+  (5, 'Energía', 4),
+  (6, 'Estabilidad', 6),
+  (7, 'Física', 62),
+  (8, 'Gestión', 71),
+  (9, 'Hidráulica', 9),
+  (10, 'Idiomas', 10),
+  (11, 'Ingeniería Mecánica', 11),
+  (12, 'Ingeniería Naval', 12),
+  (13, 'Ingeniería Química', 13),
+  (14, 'Matemática', 61),
+  (15, 'Química', 63),
+  (16, 'Seguridad del Trabajo y Ambiente', 16),
+  (17, 'Tecnología Industrial', 17),
+  (18, 'Transporte', 18);
 
 
 INSERT INTO `jhi_user` (`id`, `login`, `password_hash`, `first_name`, `last_name`, `email`, `image_url`, `activated`, `lang_key`, `activation_key`, `reset_key`, `created_by`, `created_date`, `reset_date`, `last_modified_by`, `last_modified_date`)
 VALUES
-	(5, 'msosa@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Mercedes', 'Sosa', 'msosa@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(6, 'gcerati@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cerati', 'gcerati@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(7, 'lspinetta@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Luis Alberto', 'Spinetta', 'lspinetta@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(8, 'fpaez@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Fito', 'Paez', 'fpaez@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(9, 'lgieco@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Leon', 'Gieco', 'lgieco@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(10, 'cgarcia@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Charly', 'Garcia', 'cgarcia@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(11, 'gcordera@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cordera', 'gcordera@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(12, 'fcantilo@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Faviana', 'Cantilo', 'fcantilo@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-	(13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
+  (5, 'msosa@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Mercedes', 'Sosa', 'msosa@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (6, 'gcerati@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cerati', 'gcerati@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (7, 'lspinetta@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Luis Alberto', 'Spinetta', 'lspinetta@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (8, 'fpaez@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Fito', 'Paez', 'fpaez@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (9, 'lgieco@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Leon', 'Gieco', 'lgieco@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (10, 'cgarcia@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Charly', 'Garcia', 'cgarcia@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (11, 'gcordera@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cordera', 'gcordera@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (12, 'fcantilo@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Faviana', 'Cantilo', 'fcantilo@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
 
 
 INSERT INTO `jhi_user_authority` (`user_id`, `authority_name`)
@@ -69,9 +69,9 @@ VALUES
 
 INSERT INTO `profesor` (`id`, `nombre`, `apellido`, `user_id`)
 VALUES
-	(1, 'Mercedes', 'Sosa', 5),
-	(2, 'Gustavo', 'Cerati', 6),
-	(3, 'Luis Alberto', 'Spinetta', 7);
+  (1, 'Mercedes', 'Sosa', 5),
+  (2, 'Gustavo', 'Cerati', 6),
+  (3, 'Luis Alberto', 'Spinetta', 7);
 
 
 INSERT INTO `alumno` (`id`, `nombre`, `apellido`, `padron`, `prioridad`, `user_id`)
@@ -114,3 +114,8 @@ VALUES
   (1, 'LUNES', 'PC', '203', '19:00', '23:00', 1),
   (2, 'MIERCOLES', 'PC', '102', '19:00', '23:00', 1),
   (3, 'VIERNES', 'LH', '201', '15:00', '18:00', 2);
+
+INSERT INTO `coloquio` (`id`, `dia`, `aula`, `hora_inicio`, `hora_fin`, `sede`, `curso_id`, `periodo_id`)
+VALUES
+  (1, 'LUNES', '201', '19:00', '22:00', 'PC', 1,1),
+  (2, 'JUEVES', 'E9', '9:00', '12:00', 'PC', 2,1);

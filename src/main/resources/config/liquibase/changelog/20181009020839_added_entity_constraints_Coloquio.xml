@@ -14,5 +14,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="curso"/>
 
+        <addForeignKeyConstraint baseColumnNames="periodo_id"
+                                 baseTableName="coloquio"
+                                 constraintName="fk_coloquio_periodo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="periodo"/>
+
     </changeSet>
 </databaseChangeLog>

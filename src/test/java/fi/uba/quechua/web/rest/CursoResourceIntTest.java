@@ -4,6 +4,7 @@ import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.repository.CursoRepository;
+import fi.uba.quechua.service.ColoquioService;
 import fi.uba.quechua.service.CursoService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
@@ -50,10 +51,11 @@ public class CursoResourceIntTest {
     @Autowired
     private CursoRepository cursoRepository;
 
-    
-
     @Autowired
     private CursoService cursoService;
+
+    @Autowired
+    private ColoquioService coloquioService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -74,7 +76,7 @@ public class CursoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CursoResource cursoResource = new CursoResource(cursoService);
+        final CursoResource cursoResource = new CursoResource(cursoService, coloquioService);
         this.restCursoMockMvc = MockMvcBuilders.standaloneSetup(cursoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -170,7 +172,7 @@ public class CursoResourceIntTest {
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].vacantes").value(hasItem(DEFAULT_VACANTES)));
     }
-    
+
 
     @Test
     @Transactional

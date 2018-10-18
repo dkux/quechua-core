@@ -40,6 +40,7 @@ export class Coloquio extends React.Component<IColoquioProps> {
                 <th>Hora Fin</th>
                 <th>Sede</th>
                 <th>Curso</th>
+                <th>Periodo</th>
                 <th />
               </tr>
             </thead>
@@ -57,6 +58,7 @@ export class Coloquio extends React.Component<IColoquioProps> {
                   <td>{coloquio.horaFin}</td>
                   <td>{coloquio.sede}</td>
                   <td>{coloquio.curso ? <Link to={`curso/${coloquio.curso.id}`}>{coloquio.curso.id}</Link> : ''}</td>
+                  <td>{coloquio.periodo ? <Link to={`periodo/${coloquio.periodo.id}`}>{coloquio.periodo.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${coloquio.id}`} color="info" size="sm">

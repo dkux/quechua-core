@@ -10,6 +10,8 @@ import { IRootState } from 'app/shared/reducers';
 
 import { ICurso } from 'app/shared/model/curso.model';
 import { getEntities as getCursos } from 'app/entities/curso/curso.reducer';
+import { IPeriodo } from 'app/shared/model/periodo.model';
+import { getEntities as getPeriodos } from 'app/entities/periodo/periodo.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './coloquio.reducer';
 import { IColoquio } from 'app/shared/model/coloquio.model';
 // tslint:disable-next-line:no-unused-variable
@@ -21,6 +23,7 @@ export interface IColoquioUpdateProps extends StateProps, DispatchProps, RouteCo
 export interface IColoquioUpdateState {
   isNew: boolean;
   cursoId: number;
+  periodoId: number;
 }
 
 export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoquioUpdateState> {
@@ -28,6 +31,7 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
     super(props);
     this.state = {
       cursoId: 0,
+      periodoId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -40,6 +44,7 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
     }
 
     this.props.getCursos();
+    this.props.getPeriodos();
   }
 
   saveEntity = (event, errors, values) => {
@@ -80,8 +85,25 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
     }
   };
 
+  periodoUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        periodoId: -1
+      });
+    } else {
+      for (const i in this.props.periodos) {
+        if (id === this.props.periodos[i].id.toString()) {
+          this.setState({
+            periodoId: this.props.periodos[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
-    const { coloquioEntity, cursos, loading, updating } = this.props;
+    const { coloquioEntity, cursos, periodos, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -186,6 +208,25 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="periodo.id">Periodo</Label>
+                  <AvInput
+                    id="coloquio-periodo"
+                    type="select"
+                    className="form-control"
+                    name="periodo.id"
+                    onChange={this.periodoUpdate}
+                    value={isNew && periodos ? periodos[0] && periodos[0].id : ''}
+                  >
+                    {periodos
+                      ? periodos.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/coloquio" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -205,6 +246,7 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
 
 const mapStateToProps = (storeState: IRootState) => ({
   cursos: storeState.curso.entities,
+  periodos: storeState.periodo.entities,
   coloquioEntity: storeState.coloquio.entity,
   loading: storeState.coloquio.loading,
   updating: storeState.coloquio.updating
@@ -212,6 +254,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 
 const mapDispatchToProps = {
   getCursos,
+  getPeriodos,
   getEntity,
   updateEntity,
   createEntity,

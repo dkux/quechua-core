@@ -50,6 +50,8 @@ export class ColoquioDetail extends React.Component<IColoquioDetailProps> {
             <dd>{coloquioEntity.sede}</dd>
             <dt>Curso</dt>
             <dd>{coloquioEntity.curso ? coloquioEntity.curso.id : ''}</dd>
+            <dt>Periodo</dt>
+            <dd>{coloquioEntity.periodo ? coloquioEntity.periodo.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/coloquio" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
