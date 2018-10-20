@@ -78,9 +78,9 @@ public class InscripcionCursoService {
         return inscripcionCursoRepository.findAllNoEliminadasByCursoOrderByAlumnoNombre(curso, InscripcionCursoEstado.ELIMINADA);
     }
 
-    public Optional<InscripcionCurso> findByCursoAndAlumno(Curso curso, Alumno alumno) {
+    public Optional<InscripcionCurso> findByCursoAndAlumnoNoEliminada(Curso curso, Alumno alumno) {
         log.debug("Request to get InscripcionCursos by Curso {} and Alumno {}", curso.getId(), alumno.getId());
-        return inscripcionCursoRepository.findByCursoAndAlumno(curso, alumno);
+        return inscripcionCursoRepository.findByCursoAndAlumnoAndEstadoNot(curso, alumno, InscripcionCursoEstado.ELIMINADA);
     }
 
     public List<InscripcionCurso> findAllRegularesByCurso(Curso curso) {

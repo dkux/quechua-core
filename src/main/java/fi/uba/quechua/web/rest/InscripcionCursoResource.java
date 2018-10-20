@@ -152,7 +152,7 @@ public class InscripcionCursoResource {
             estado = InscripcionCursoEstado.CONDICIONAL;
         }
 
-        Optional<InscripcionCurso> inscripcionCurso = inscripcionCursoService.findByCursoAndAlumno(curso.get(), alumno.get());
+        Optional<InscripcionCurso> inscripcionCurso = inscripcionCursoService.findByCursoAndAlumnoNoEliminada(curso.get(), alumno.get());
         if (inscripcionCurso.isPresent()) {
             throw new BadRequestAlertException("El alumno ya se encuentra inscripto al curso", "Curso", "idexists");
         }

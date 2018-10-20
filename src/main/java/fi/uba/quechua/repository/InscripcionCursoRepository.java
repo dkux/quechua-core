@@ -19,7 +19,7 @@ import java.util.Optional;
 @Repository
 public interface InscripcionCursoRepository extends JpaRepository<InscripcionCurso, Long> {
 
-    Optional<InscripcionCurso> findByCursoAndAlumno(Curso curso, Alumno alumno);
+    Optional<InscripcionCurso> findByCursoAndAlumnoAndEstadoNot(Curso curso, Alumno alumno, InscripcionCursoEstado estado);
 
     List<InscripcionCurso> findAllByCursoAndEstadoNot(Curso curso, InscripcionCursoEstado estado);
 
