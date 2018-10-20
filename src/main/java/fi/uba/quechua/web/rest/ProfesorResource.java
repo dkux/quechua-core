@@ -142,4 +142,18 @@ public class ProfesorResource {
         }
         return cursoService.findByProfesor(profesor.get());
     }
+
+    /**
+     * GET  /profesors/data.
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body the profesor, or with status 404 (Not Found)
+    */
+    @GetMapping("/profesors/data")
+    @Timed
+    public ResponseEntity<Profesor> getAlumnoByUser() {
+        log.debug("REST request to get Alumno by user");
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Profesor> profesor = profesorRepository.findByUserId(userId);
+        return ResponseUtil.wrapOrNotFound(profesor);
+    }
 }
