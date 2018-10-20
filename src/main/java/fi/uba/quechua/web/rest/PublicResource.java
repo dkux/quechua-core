@@ -96,39 +96,6 @@ public class PublicResource {
         return materiaService.findAll();
     }
 
-    @PostMapping("/inscripcion-cursos/{cursoId}/{alumnoId}")
-    @Timed
-    public ResponseEntity<InscripcionCurso> inscribir(@PathVariable Long cursoId, @PathVariable Long alumnoId) throws URISyntaxException {
-        log.debug("REST request to inscribir al alumno {} en el curso {}", alumnoId, cursoId);
-        Optional<Alumno> alumno = alumnoService.findOne(alumnoId);
-        InscripcionCursoEstado estado = InscripcionCursoEstado.REGULAR;
-        if (!alumno.isPresent()) {
-            throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
-        }
-        Optional<Curso> curso = cursoService.findOne(cursoId);
-        if (!curso.isPresent()) {
-            throw new BadRequestAlertException("No existe un curso con id provisto", "Curso", "idnoexists");
-        }
-
-        List<InscripcionCurso> inscripciones = inscripcionCursoService.findAllRegularesByCurso(curso.get());
-        if (curso.get().getVacantes() <= inscripciones.size()) {
-            estado = InscripcionCursoEstado.CONDICIONAL;
-        }
-
-        Optional<InscripcionCurso> inscripcionCurso = inscripcionCursoService.findByCursoAndAlumno(curso.get(), alumno.get());
-        if (inscripcionCurso.isPresent()) {
-            throw new BadRequestAlertException("El alumno ya se encuentra inscripto al curso", "Curso", "idexists");
-        }
-        InscripcionCurso inscripcion = new InscripcionCurso();
-        inscripcion.setAlumno(alumno.get());
-        inscripcion.setCurso(curso.get());
-        inscripcion.estado(estado);
-        InscripcionCurso result = inscripcionCursoService.save(inscripcion);
-        return ResponseEntity.created(new URI("/api/inscripcion-cursos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("inscripcionCurso", result.getId().toString()))
-            .body(result);
-    }
-
     /**
      * GET  /cursos : get curso and inscripciones.
      *
