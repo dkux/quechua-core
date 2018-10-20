@@ -4,7 +4,7 @@ import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.InscripcionColoquio;
 import fi.uba.quechua.repository.InscripcionColoquioRepository;
-import fi.uba.quechua.service.InscripcionColoquioService;
+import fi.uba.quechua.service.*;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -47,10 +47,17 @@ public class InscripcionColoquioResourceIntTest {
     @Autowired
     private InscripcionColoquioRepository inscripcionColoquioRepository;
 
-    
-
     @Autowired
     private InscripcionColoquioService inscripcionColoquioService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ColoquioService coloquioService;
+
+    @Autowired
+    private AlumnoService alumnoService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -71,7 +78,8 @@ public class InscripcionColoquioResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final InscripcionColoquioResource inscripcionColoquioResource = new InscripcionColoquioResource(inscripcionColoquioService);
+        final InscripcionColoquioResource inscripcionColoquioResource = new InscripcionColoquioResource(inscripcionColoquioService,
+            userService, coloquioService, alumnoService);
         this.restInscripcionColoquioMockMvc = MockMvcBuilders.standaloneSetup(inscripcionColoquioResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -146,7 +154,7 @@ public class InscripcionColoquioResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(inscripcionColoquio.getId().intValue())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())));
     }
-    
+
 
     @Test
     @Transactional

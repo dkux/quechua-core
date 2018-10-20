@@ -2,6 +2,7 @@ package fi.uba.quechua.service;
 
 import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.domain.Materia;
+import fi.uba.quechua.domain.Profesor;
 import fi.uba.quechua.domain.enumeration.CursoEstado;
 import fi.uba.quechua.repository.CursoRepository;
 import org.slf4j.Logger;
@@ -116,5 +117,17 @@ public class CursoService {
     public void delete(Long id) {
         log.debug("Request to delete Curso : {}", id);
         cursoRepository.deleteById(id);
+    }
+
+    /**
+     * Get all the cursos by Profesor.
+     *
+     * @return the list of entities
+     */
+    @Transactional(readOnly = true)
+    public List<Curso> findByProfesor(Profesor profesor) {
+        log.debug("Request to get all Cursos by profesor {}", profesor.getId());
+        List<Curso> cursos = cursoRepository.findAllByProfesorAndEstado(profesor, CursoEstado.ACTIVO);
+        return cursos;
     }
 }

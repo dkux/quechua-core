@@ -1,8 +1,10 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.domain.Profesor;
 import fi.uba.quechua.repository.ProfesorRepository;
+import fi.uba.quechua.service.*;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -31,8 +33,15 @@ public class ProfesorResource {
 
     private final ProfesorRepository profesorRepository;
 
-    public ProfesorResource(ProfesorRepository profesorRepository) {
+    private final UserService userService;
+
+    private final CursoService cursoService;
+
+    public ProfesorResource(ProfesorRepository profesorRepository, UserService userService,
+                            CursoService cursoService) {
         this.profesorRepository = profesorRepository;
+        this.userService = userService;
+        this.cursoService = cursoService;
     }
 
     /**
@@ -62,11 +71,10 @@ public class ProfesorResource {
      * @return the ResponseEntity with status 200 (OK) and with body the updated profesor,
      * or with status 400 (Bad Request) if the profesor is not valid,
      * or with status 500 (Internal Server Error) if the profesor couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/profesors")
     @Timed
-    public ResponseEntity<Profesor> updateProfesor(@Valid @RequestBody Profesor profesor) throws URISyntaxException {
+    public ResponseEntity<Profesor> updateProfesor(@Valid @RequestBody Profesor profesor) {
         log.debug("REST request to update Profesor : {}", profesor);
         if (profesor.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -116,5 +124,22 @@ public class ProfesorResource {
 
         profesorRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /cursadas : get all the cursadas.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of cursadas in body
+     */
+    @GetMapping("/profesors/cursos")
+    @Timed
+    public List<Curso> getAllCursadasByProfesor() {
+        log.debug("REST request to get all Cursadas");
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Profesor> profesor = profesorRepository.findByUserId(userId);
+        if (!profesor.isPresent()) {
+            throw new BadRequestAlertException("No existe un Profesor asociado al usuario logueado", ENTITY_NAME, "idnoexists");
+        }
+        return cursoService.findByProfesor(profesor.get());
     }
 }

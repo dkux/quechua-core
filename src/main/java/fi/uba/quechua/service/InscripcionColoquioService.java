@@ -1,6 +1,9 @@
 package fi.uba.quechua.service;
 
+import fi.uba.quechua.domain.Alumno;
+import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.InscripcionColoquio;
+import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import fi.uba.quechua.repository.InscripcionColoquioRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,5 +71,10 @@ public class InscripcionColoquioService {
     public void delete(Long id) {
         log.debug("Request to delete InscripcionColoquio : {}", id);
         inscripcionColoquioRepository.deleteById(id);
+    }
+
+    public Optional<InscripcionColoquio> findByColoquioAndAlumnoAndEstado(Coloquio coloquio, Alumno alumno, InscripcionColoquioEstado estado) {
+        log.debug("Request to get InscripcionColoquio by Coloquio {} and Alumno {}", coloquio.getId(), alumno.getId());
+        return inscripcionColoquioRepository.findByColoquioAndAlumnoAndEstado(coloquio, alumno, estado);
     }
 }

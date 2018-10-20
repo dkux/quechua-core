@@ -1,8 +1,9 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import fi.uba.quechua.domain.InscripcionColoquio;
-import fi.uba.quechua.service.InscripcionColoquioService;
+import fi.uba.quechua.domain.*;
+import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
+import fi.uba.quechua.service.*;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -30,8 +31,18 @@ public class InscripcionColoquioResource {
 
     private final InscripcionColoquioService inscripcionColoquioService;
 
-    public InscripcionColoquioResource(InscripcionColoquioService inscripcionColoquioService) {
+    private final UserService userService;
+
+    private final AlumnoService alumnoService;
+
+    private final ColoquioService coloquioService;
+
+    public InscripcionColoquioResource(InscripcionColoquioService inscripcionColoquioService, UserService userService,
+                                       ColoquioService coloquioService, AlumnoService alumnoService) {
         this.inscripcionColoquioService = inscripcionColoquioService;
+        this.userService = userService;
+        this.coloquioService = coloquioService;
+        this.alumnoService = alumnoService;
     }
 
     /**
@@ -114,5 +125,34 @@ public class InscripcionColoquioResource {
         log.debug("REST request to delete InscripcionColoquio : {}", id);
         inscripcionColoquioService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    @PostMapping("/inscripcion-coloquios/{coloquioId}/inscribir")
+    @Timed
+    public ResponseEntity<InscripcionColoquio> inscribir(@PathVariable Long coloquioId) throws URISyntaxException {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        log.debug("REST request to inscribir al alumno {} en el coloquio {}", userId, coloquioId);
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
+        }
+        Optional<Coloquio> coloquio = coloquioService.findOne(coloquioId);
+        if (!coloquio.isPresent()) {
+            throw new BadRequestAlertException("No existe un coloquio con id provisto", "Coloquio", "idnoexists");
+        }
+
+
+        Optional<InscripcionColoquio> inscripcionColoquio = inscripcionColoquioService.findByColoquioAndAlumnoAndEstado(coloquio.get(), alumno.get(), InscripcionColoquioEstado.ACTIVA);
+        if (inscripcionColoquio.isPresent()) {
+            throw new BadRequestAlertException("El alumno ya se encuentra inscripto al coloquio", "Coloquio", "idexists");
+        }
+        InscripcionColoquio inscripcion = new InscripcionColoquio();
+        inscripcion.setAlumno(alumno.get());
+        inscripcion.setColoquio(coloquio.get());
+        inscripcion.estado(InscripcionColoquioEstado.ACTIVA);
+        InscripcionColoquio result = inscripcionColoquioService.save(inscripcion);
+        return ResponseEntity.created(new URI("/api/inscripcion-coloquios/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("inscripcionColoquio", result.getId().toString()))
+            .body(result);
     }
 }
