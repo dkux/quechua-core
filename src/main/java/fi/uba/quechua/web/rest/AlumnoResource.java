@@ -167,4 +167,18 @@ public class AlumnoResource {
         }
         return cursadaService.findCursadasActivasByAlumno(alumno.get());
     }
+
+    /**
+     * GET  /alumnos/data.
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body the alumno, or with status 404 (Not Found)
+     */
+    @GetMapping("/alumnos/data")
+    @Timed
+    public ResponseEntity<Alumno> getAlumnoByUser() {
+        log.debug("REST request to get Alumno by user");
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        return ResponseUtil.wrapOrNotFound(alumno);
+    }
 }
