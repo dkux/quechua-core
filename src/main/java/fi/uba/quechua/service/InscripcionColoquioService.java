@@ -77,4 +77,9 @@ public class InscripcionColoquioService {
         log.debug("Request to get InscripcionColoquio by Coloquio {} and Alumno {}", coloquio.getId(), alumno.getId());
         return inscripcionColoquioRepository.findByColoquioAndAlumnoAndEstado(coloquio, alumno, estado);
     }
+
+    public List<InscripcionColoquio> findAllActivasByAlumno(Alumno alumno) {
+        log.debug("Request to get all InscripcionColoquio by Alumno {}", alumno.getId());
+        return inscripcionColoquioRepository.findAllByAlumnoAndEstado(alumno, InscripcionColoquioEstado.ACTIVA);
+    }
 }

@@ -155,4 +155,22 @@ public class InscripcionColoquioResource {
             .headers(HeaderUtil.createEntityCreationAlert("inscripcionColoquio", result.getId().toString()))
             .body(result);
     }
+
+
+    /**
+     * GET  /inscripcion-coloquios : get all the inscripcionColoquios by Alumno.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of inscripcionColoquios in body
+     */
+    @GetMapping("/inscripcion-coloquios/byAlumno")
+    @Timed
+    public List<InscripcionColoquio> getAllInscripcionColoquiosByAlumno() {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        log.debug("REST request to get all InscripcionColoquios by Almuno {}", userId);
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
+        }
+        return inscripcionColoquioService.findAllActivasByAlumno(alumno.get());
+    }
 }
