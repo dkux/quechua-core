@@ -128,6 +128,9 @@ public class CursoService {
     public List<Curso> findByProfesor(Profesor profesor) {
         log.debug("Request to get all Cursos by profesor {}", profesor.getId());
         List<Curso> cursos = cursoRepository.findAllByProfesorAndEstado(profesor, CursoEstado.ACTIVO);
+        for (Curso curso: cursos) {
+            curso.getHorarios().size();
+        }
         return cursos;
     }
 }
