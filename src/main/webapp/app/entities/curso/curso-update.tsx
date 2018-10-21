@@ -179,7 +179,6 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                 <AvGroup>
                   <Label for="profesor.id">Profesor</Label>
                   <AvInput id="curso-profesor" type="select" className="form-control" name="profesor.id" onChange={this.profesorUpdate}>
-                    <option value="" key="0" />
                     {profesors
                       ? profesors.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -192,7 +191,6 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                 <AvGroup>
                   <Label for="periodo.id">Periodo</Label>
                   <AvInput id="curso-periodo" type="select" className="form-control" name="periodo.id" onChange={this.periodoUpdate}>
-                    <option value="" key="0" />
                     {periodos
                       ? periodos.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
@@ -205,7 +203,6 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                 <AvGroup>
                   <Label for="materia.id">Materia</Label>
                   <AvInput id="curso-materia" type="select" className="form-control" name="materia.id" onChange={this.materiaUpdate}>
-                    <option value="" key="0" />
                     {materias
                       ? materias.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>

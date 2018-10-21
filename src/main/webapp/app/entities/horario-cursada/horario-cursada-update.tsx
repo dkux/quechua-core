@@ -156,7 +156,8 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     type="text"
                     name="horaInicio"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.'}
                     }}
                   />
                 </AvGroup>
@@ -169,7 +170,8 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     type="text"
                     name="horaFin"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'This field is required.' },
+                      pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.'}
                     }}
                   />
                 </AvGroup>
