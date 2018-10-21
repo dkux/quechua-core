@@ -31,4 +31,5 @@ public interface InscripcionCursoRepository extends JpaRepository<InscripcionCur
         "ORDER BY i.estado DESC, a.apellido ASC, a.nombre ASC ")
     List<InscripcionCurso> findAllNoEliminadasByCursoOrderByAlumnoNombre(@Param("curso") Curso curso , @Param("eliminada") InscripcionCursoEstado eliminada);
 
+    List<InscripcionCurso> findByEstadoNot(InscripcionCursoEstado estado);
 }

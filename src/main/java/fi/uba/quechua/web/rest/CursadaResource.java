@@ -2,7 +2,9 @@ package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.Cursada;
+import fi.uba.quechua.domain.InscripcionCurso;
 import fi.uba.quechua.service.CursadaService;
+import fi.uba.quechua.service.InscripcionCursoService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -114,5 +116,19 @@ public class CursadaResource {
         log.debug("REST request to delete Cursada : {}", id);
         cursadaService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * POST  /cursadas/iniciar : Create cursadas to inscripcionCurso.
+     *
+     * @return the ResponseEntity with status 201 (Created) and with body the new cursada, or with status 400 (Bad Request) if the cursada has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/cursadas/iniciar")
+    @Timed
+    public ResponseEntity<Void> iniciarCursadas() throws URISyntaxException {
+        log.debug("REST request to iniciar Cursadas");
+        cursadaService.iniciarCursadas();
+        return ResponseEntity.ok().build();
     }
 }

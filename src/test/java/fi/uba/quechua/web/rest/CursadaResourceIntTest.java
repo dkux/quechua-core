@@ -59,7 +59,7 @@ public class CursadaResourceIntTest {
     @Autowired
     private CursadaRepository cursadaRepository;
 
-    
+
 
     @Autowired
     private CursadaService cursadaService;
@@ -170,7 +170,7 @@ public class CursadaResourceIntTest {
             .andExpect(jsonPath("$.[*].folio").value(hasItem(DEFAULT_FOLIO.toString())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())));
     }
-    
+
 
     @Test
     @Transactional

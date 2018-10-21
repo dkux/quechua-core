@@ -2,9 +2,11 @@ package fi.uba.quechua.service;
 
 import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.domain.Cursada;
-import fi.uba.quechua.domain.enumeration.CursadaEstado;
+import fi.uba.quechua.domain.InscripcionCurso;
 import fi.uba.quechua.domain.enumeration.EstadoCursada;
+import fi.uba.quechua.domain.enumeration.InscripcionCursoEstado;
 import fi.uba.quechua.repository.CursadaRepository;
+import fi.uba.quechua.repository.InscripcionCursoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +27,11 @@ public class CursadaService {
 
     private final CursadaRepository cursadaRepository;
 
-    public CursadaService(CursadaRepository cursadaRepository) {
+    private final InscripcionCursoRepository inscripcionCursoRepository;
+
+    public CursadaService(CursadaRepository cursadaRepository, InscripcionCursoRepository inscripcionCursoRepository) {
         this.cursadaRepository = cursadaRepository;
+        this.inscripcionCursoRepository = inscripcionCursoRepository;
     }
 
     /**
@@ -36,7 +41,8 @@ public class CursadaService {
      * @return the persisted entity
      */
     public Cursada save(Cursada cursada) {
-        log.debug("Request to save Cursada : {}", cursada);        return cursadaRepository.save(cursada);
+        log.debug("Request to save Cursada : {}", cursada);
+        return cursadaRepository.save(cursada);
     }
 
     /**
@@ -74,6 +80,21 @@ public class CursadaService {
     }
 
     public List<Cursada> findCursadasActivasByAlumno(Alumno alumno) {
-        return cursadaRepository.findAllByAlumnoAndEstado(alumno, EstadoCursada.ACTIVA);
+        List<Cursada> cursadas = cursadaRepository.findAllByAlumnoAndEstado(alumno, EstadoCursada.ACTIVA);
+        for (Cursada cursada: cursadas) {
+            cursada.getCurso().getHorarios().size();
+        }
+        return cursadas;
+    }
+
+    public void iniciarCursadas() {
+        List<InscripcionCurso> inscripcionesCursos = inscripcionCursoRepository.findByEstadoNot(InscripcionCursoEstado.ELIMINADA);
+        for (InscripcionCurso inscripcionCurso: inscripcionesCursos) {
+            Cursada cursada = new Cursada();
+            cursada.setAlumno(inscripcionCurso.getAlumno());
+            cursada.setCurso(inscripcionCurso.getCurso());
+            cursada.setEstado(EstadoCursada.ACTIVA);
+            cursadaRepository.save(cursada);
+        }
     }
 }
