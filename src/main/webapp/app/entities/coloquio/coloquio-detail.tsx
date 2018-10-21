@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAction } from 'react-jhipster';
+import { ICrudGetAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -12,7 +12,7 @@ import { IColoquio } from 'app/shared/model/coloquio.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IColoquioDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IColoquioDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class ColoquioDetail extends React.Component<IColoquioDetailProps> {
   componentDidMount() {
@@ -29,10 +29,6 @@ export class ColoquioDetail extends React.Component<IColoquioDetailProps> {
           </h2>
           <dl className="jh-entity-details">
             <dt>
-              <span id="dia">Dia</span>
-            </dt>
-            <dd>{coloquioEntity.dia}</dd>
-            <dt>
               <span id="aula">Aula</span>
             </dt>
             <dd>{coloquioEntity.aula}</dd>
@@ -48,6 +44,12 @@ export class ColoquioDetail extends React.Component<IColoquioDetailProps> {
               <span id="sede">Sede</span>
             </dt>
             <dd>{coloquioEntity.sede}</dd>
+            <dt>
+              <span id="fecha">Fecha</span>
+            </dt>
+            <dd>
+              <TextFormat value={coloquioEntity.fecha} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            </dd>
             <dt>Curso</dt>
             <dd>{coloquioEntity.curso ? coloquioEntity.curso.id : ''}</dd>
             <dt>Periodo</dt>

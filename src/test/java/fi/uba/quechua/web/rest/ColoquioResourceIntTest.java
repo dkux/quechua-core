@@ -23,6 +23,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
 
 
@@ -32,7 +34,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fi.uba.quechua.domain.enumeration.Dia;
 import fi.uba.quechua.domain.enumeration.Sede;
 /**
  * Test class for the ColoquioResource REST controller.
@@ -42,9 +43,6 @@ import fi.uba.quechua.domain.enumeration.Sede;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = QuechuaApp.class)
 public class ColoquioResourceIntTest {
-
-    private static final Dia DEFAULT_DIA = Dia.LUNES;
-    private static final Dia UPDATED_DIA = Dia.MARTES;
 
     private static final String DEFAULT_AULA = "AAAAAAAAAA";
     private static final String UPDATED_AULA = "BBBBBBBBBB";
@@ -57,6 +55,9 @@ public class ColoquioResourceIntTest {
 
     private static final Sede DEFAULT_SEDE = Sede.PC;
     private static final Sede UPDATED_SEDE = Sede.LH;
+
+    private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_FECHA = LocalDate.now(ZoneId.systemDefault());
 
     @Autowired
     private ColoquioRepository coloquioRepository;
@@ -101,11 +102,11 @@ public class ColoquioResourceIntTest {
      */
     public static Coloquio createEntity(EntityManager em) {
         Coloquio coloquio = new Coloquio()
-            .dia(DEFAULT_DIA)
             .aula(DEFAULT_AULA)
             .horaInicio(DEFAULT_HORA_INICIO)
             .horaFin(DEFAULT_HORA_FIN)
-            .sede(DEFAULT_SEDE);
+            .sede(DEFAULT_SEDE)
+            .fecha(DEFAULT_FECHA);
         // Add required entity
         Periodo periodo = PeriodoResourceIntTest.createEntity(em);
         em.persist(periodo);
@@ -134,11 +135,11 @@ public class ColoquioResourceIntTest {
         List<Coloquio> coloquioList = coloquioRepository.findAll();
         assertThat(coloquioList).hasSize(databaseSizeBeforeCreate + 1);
         Coloquio testColoquio = coloquioList.get(coloquioList.size() - 1);
-        assertThat(testColoquio.getDia()).isEqualTo(DEFAULT_DIA);
         assertThat(testColoquio.getAula()).isEqualTo(DEFAULT_AULA);
         assertThat(testColoquio.getHoraInicio()).isEqualTo(DEFAULT_HORA_INICIO);
         assertThat(testColoquio.getHoraFin()).isEqualTo(DEFAULT_HORA_FIN);
         assertThat(testColoquio.getSede()).isEqualTo(DEFAULT_SEDE);
+        assertThat(testColoquio.getFecha()).isEqualTo(DEFAULT_FECHA);
     }
 
     @Test
@@ -158,24 +159,6 @@ public class ColoquioResourceIntTest {
         // Validate the Coloquio in the database
         List<Coloquio> coloquioList = coloquioRepository.findAll();
         assertThat(coloquioList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkDiaIsRequired() throws Exception {
-        int databaseSizeBeforeTest = coloquioRepository.findAll().size();
-        // set the field null
-        coloquio.setDia(null);
-
-        // Create the Coloquio, which fails.
-
-        restColoquioMockMvc.perform(post("/api/coloquios")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(coloquio)))
-            .andExpect(status().isBadRequest());
-
-        List<Coloquio> coloquioList = coloquioRepository.findAll();
-        assertThat(coloquioList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -252,6 +235,24 @@ public class ColoquioResourceIntTest {
 
     @Test
     @Transactional
+    public void checkFechaIsRequired() throws Exception {
+        int databaseSizeBeforeTest = coloquioRepository.findAll().size();
+        // set the field null
+        coloquio.setFecha(null);
+
+        // Create the Coloquio, which fails.
+
+        restColoquioMockMvc.perform(post("/api/coloquios")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(coloquio)))
+            .andExpect(status().isBadRequest());
+
+        List<Coloquio> coloquioList = coloquioRepository.findAll();
+        assertThat(coloquioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllColoquios() throws Exception {
         // Initialize the database
         coloquioRepository.saveAndFlush(coloquio);
@@ -261,11 +262,11 @@ public class ColoquioResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(coloquio.getId().intValue())))
-            .andExpect(jsonPath("$.[*].dia").value(hasItem(DEFAULT_DIA.toString())))
             .andExpect(jsonPath("$.[*].aula").value(hasItem(DEFAULT_AULA.toString())))
             .andExpect(jsonPath("$.[*].horaInicio").value(hasItem(DEFAULT_HORA_INICIO.toString())))
             .andExpect(jsonPath("$.[*].horaFin").value(hasItem(DEFAULT_HORA_FIN.toString())))
-            .andExpect(jsonPath("$.[*].sede").value(hasItem(DEFAULT_SEDE.toString())));
+            .andExpect(jsonPath("$.[*].sede").value(hasItem(DEFAULT_SEDE.toString())))
+            .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())));
     }
     
 
@@ -280,11 +281,11 @@ public class ColoquioResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(coloquio.getId().intValue()))
-            .andExpect(jsonPath("$.dia").value(DEFAULT_DIA.toString()))
             .andExpect(jsonPath("$.aula").value(DEFAULT_AULA.toString()))
             .andExpect(jsonPath("$.horaInicio").value(DEFAULT_HORA_INICIO.toString()))
             .andExpect(jsonPath("$.horaFin").value(DEFAULT_HORA_FIN.toString()))
-            .andExpect(jsonPath("$.sede").value(DEFAULT_SEDE.toString()));
+            .andExpect(jsonPath("$.sede").value(DEFAULT_SEDE.toString()))
+            .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()));
     }
     @Test
     @Transactional
@@ -307,11 +308,11 @@ public class ColoquioResourceIntTest {
         // Disconnect from session so that the updates on updatedColoquio are not directly saved in db
         em.detach(updatedColoquio);
         updatedColoquio
-            .dia(UPDATED_DIA)
             .aula(UPDATED_AULA)
             .horaInicio(UPDATED_HORA_INICIO)
             .horaFin(UPDATED_HORA_FIN)
-            .sede(UPDATED_SEDE);
+            .sede(UPDATED_SEDE)
+            .fecha(UPDATED_FECHA);
 
         restColoquioMockMvc.perform(put("/api/coloquios")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -322,11 +323,11 @@ public class ColoquioResourceIntTest {
         List<Coloquio> coloquioList = coloquioRepository.findAll();
         assertThat(coloquioList).hasSize(databaseSizeBeforeUpdate);
         Coloquio testColoquio = coloquioList.get(coloquioList.size() - 1);
-        assertThat(testColoquio.getDia()).isEqualTo(UPDATED_DIA);
         assertThat(testColoquio.getAula()).isEqualTo(UPDATED_AULA);
         assertThat(testColoquio.getHoraInicio()).isEqualTo(UPDATED_HORA_INICIO);
         assertThat(testColoquio.getHoraFin()).isEqualTo(UPDATED_HORA_FIN);
         assertThat(testColoquio.getSede()).isEqualTo(UPDATED_SEDE);
+        assertThat(testColoquio.getFecha()).isEqualTo(UPDATED_FECHA);
     }
 
     @Test

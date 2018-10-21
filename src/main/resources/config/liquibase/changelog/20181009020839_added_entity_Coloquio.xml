@@ -22,10 +22,6 @@
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="dia" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-
             <column name="aula" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -39,6 +35,10 @@
             </column>
 
             <column name="sede" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="fecha" type="date">
                 <constraints nullable="false" />
             </column>
 

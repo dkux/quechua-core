@@ -8,9 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
-
-import fi.uba.quechua.domain.enumeration.Dia;
 
 import fi.uba.quechua.domain.enumeration.Sede;
 
@@ -29,11 +28,6 @@ public class Coloquio implements Serializable {
     private Long id;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "dia", nullable = false)
-    private Dia dia;
-
-    @NotNull
     @Column(name = "aula", nullable = false)
     private String aula;
 
@@ -49,6 +43,10 @@ public class Coloquio implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "sede", nullable = false)
     private Sede sede;
+
+    @NotNull
+    @Column(name = "fecha", nullable = false)
+    private LocalDate fecha;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -66,19 +64,6 @@ public class Coloquio implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Dia getDia() {
-        return dia;
-    }
-
-    public Coloquio dia(Dia dia) {
-        this.dia = dia;
-        return this;
-    }
-
-    public void setDia(Dia dia) {
-        this.dia = dia;
     }
 
     public String getAula() {
@@ -133,6 +118,19 @@ public class Coloquio implements Serializable {
         this.sede = sede;
     }
 
+    public LocalDate getFecha() {
+        return fecha;
+    }
+
+    public Coloquio fecha(LocalDate fecha) {
+        this.fecha = fecha;
+        return this;
+    }
+
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
+    }
+
     public Curso getCurso() {
         return curso;
     }
@@ -184,11 +182,11 @@ public class Coloquio implements Serializable {
     public String toString() {
         return "Coloquio{" +
             "id=" + getId() +
-            ", dia='" + getDia() + "'" +
             ", aula='" + getAula() + "'" +
             ", horaInicio='" + getHoraInicio() + "'" +
             ", horaFin='" + getHoraFin() + "'" +
             ", sede='" + getSede() + "'" +
+            ", fecha='" + getFecha() + "'" +
             "}";
     }
 }

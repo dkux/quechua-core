@@ -18,7 +18,7 @@ import { IColoquio } from 'app/shared/model/coloquio.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IColoquioUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IColoquioUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IColoquioUpdateState {
   isNew: boolean;
@@ -126,24 +126,6 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
                   </AvGroup>
                 ) : null}
                 <AvGroup>
-                  <Label id="diaLabel">Dia</Label>
-                  <AvInput
-                    id="coloquio-dia"
-                    type="select"
-                    className="form-control"
-                    name="dia"
-                    value={(!isNew && coloquioEntity.dia) || 'LUNES'}
-                  >
-                    <option value="LUNES">LUNES</option>
-                    <option value="MARTES">MARTES</option>
-                    <option value="MIERCOLES">MIERCOLES</option>
-                    <option value="JUEVES">JUEVES</option>
-                    <option value="VIERNES">VIERNES</option>
-                    <option value="SABADO">SABADO</option>
-                    <option value="DOMINGO">DOMINGO</option>
-                  </AvInput>
-                </AvGroup>
-                <AvGroup>
                   <Label id="aulaLabel" for="aula">
                     Aula
                   </Label>
@@ -194,6 +176,20 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
                     <option value="PC">PC</option>
                     <option value="LH">LH</option>
                   </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="fechaLabel" for="fecha">
+                    Fecha
+                  </Label>
+                  <AvField
+                    id="coloquio-fecha"
+                    type="date"
+                    className="form-control"
+                    name="fecha"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <AvGroup>
                   <Label for="curso.id">Curso</Label>

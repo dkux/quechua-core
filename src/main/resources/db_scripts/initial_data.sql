@@ -115,7 +115,8 @@ VALUES
   (2, 'MIERCOLES', 'PC', '102', '19:00', '23:00', 1),
   (3, 'VIERNES', 'LH', '201', '15:00', '18:00', 2);
 
-INSERT INTO `coloquio` (`id`, `dia`, `aula`, `hora_inicio`, `hora_fin`, `sede`, `curso_id`, `periodo_id`)
+INSERT INTO `coloquio` (`id`, `aula`, `hora_inicio`, `hora_fin`, `sede`, `fecha`, `curso_id`, `periodo_id`)
 VALUES
-  (1, 'LUNES', '201', '19:00', '22:00', 'PC', 1,1),
-  (2, 'JUEVES', 'E9', '9:00', '12:00', 'PC', 2,1);
+  (1, '201', '19:00', '22:00', 'PC', '2018-12-23', 1, 1),
+  (2, 'E9', '9:00', '12:00', 'PC', '2018-12-18', 2, 1);
+

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
 // tslint:disable-next-line:no-unused-variable
-import { ICrudGetAllAction } from 'react-jhipster';
+import { ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -34,11 +34,11 @@ export class Coloquio extends React.Component<IColoquioProps> {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Dia</th>
                 <th>Aula</th>
                 <th>Hora Inicio</th>
                 <th>Hora Fin</th>
                 <th>Sede</th>
+                <th>Fecha</th>
                 <th>Curso</th>
                 <th>Periodo</th>
                 <th />
@@ -52,11 +52,13 @@ export class Coloquio extends React.Component<IColoquioProps> {
                       {coloquio.id}
                     </Button>
                   </td>
-                  <td>{coloquio.dia}</td>
                   <td>{coloquio.aula}</td>
                   <td>{coloquio.horaInicio}</td>
                   <td>{coloquio.horaFin}</td>
                   <td>{coloquio.sede}</td>
+                  <td>
+                    <TextFormat type="date" value={coloquio.fecha} format={APP_LOCAL_DATE_FORMAT} />
+                  </td>
                   <td>{coloquio.curso ? <Link to={`curso/${coloquio.curso.id}`}>{coloquio.curso.id}</Link> : ''}</td>
                   <td>{coloquio.periodo ? <Link to={`periodo/${coloquio.periodo.id}`}>{coloquio.periodo.id}</Link> : ''}</td>
                   <td className="text-right">

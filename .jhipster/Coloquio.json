@@ -20,14 +20,6 @@
     ],
     "fields": [
         {
-            "fieldName": "dia",
-            "fieldType": "Dia",
-            "fieldValues": "LUNES,MARTES,MIERCOLES,JUEVES,VIERNES,SABADO,DOMINGO",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "aula",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -52,6 +44,13 @@
             "fieldName": "sede",
             "fieldType": "Sede",
             "fieldValues": "PC,LH",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "fecha",
+            "fieldType": "LocalDate",
             "fieldValidateRules": [
                 "required"
             ]
