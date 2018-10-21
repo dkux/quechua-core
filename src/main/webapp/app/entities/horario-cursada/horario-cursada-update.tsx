@@ -178,7 +178,6 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                 <AvGroup>
                   <Label for="curso.id">Curso</Label>
                   <AvInput id="horario-cursada-curso" type="select" className="form-control" name="curso.id" onChange={this.cursoUpdate}>
-                    <option value="" key="0" />
                     {cursos
                       ? cursos.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>

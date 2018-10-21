@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -80,7 +81,8 @@ public class CursadaService {
     }
 
     public List<Cursada> findCursadasActivasByAlumno(Alumno alumno) {
-        List<Cursada> cursadas = cursadaRepository.findAllByAlumnoAndEstado(alumno, EstadoCursada.ACTIVA);
+        List<EstadoCursada> estadoCursadas = Arrays.asList(EstadoCursada.ACTIVA, EstadoCursada.FINAL_PENDIENTE);
+        List<Cursada> cursadas = cursadaRepository.findAllByAlumnoAndEstadoIn(alumno, estadoCursadas);
         for (Cursada cursada: cursadas) {
             cursada.getCurso().getHorarios().size();
         }

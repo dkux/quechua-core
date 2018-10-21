@@ -18,4 +18,6 @@ import java.util.List;
 public interface CursadaRepository extends JpaRepository<Cursada, Long> {
 
     List<Cursada> findAllByAlumnoAndEstado(Alumno alumno, EstadoCursada estado);
+
+    List<Cursada> findAllByAlumnoAndEstadoIn(Alumno alumno, List<EstadoCursada> estado);
 }
