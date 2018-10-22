@@ -12,7 +12,7 @@ import { IProfesor } from 'app/shared/model/profesor.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IProfesorDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IProfesorDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class ProfesorDetail extends React.Component<IProfesorDetailProps> {
   componentDidMount() {

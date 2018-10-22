@@ -88,7 +88,9 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="quechuaApp.horarioCursada.home.createOrEditLabel">Create or edit a HorarioCursada</h2>
+            <h2 id="quechuaApp.horarioCursada.home.createOrEditLabel">
+              {isNew ? 'Crear Horario de cursada' : 'Modificar Horario de cursada'}
+            </h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -112,13 +114,12 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     name="dia"
                     value={(!isNew && horarioCursadaEntity.dia) || 'LUNES'}
                   >
-                    <option value="LUNES">LUNES</option>
-                    <option value="MARTES">MARTES</option>
-                    <option value="MIERCOLES">MIERCOLES</option>
-                    <option value="JUEVES">JUEVES</option>
-                    <option value="VIERNES">VIERNES</option>
-                    <option value="SABADO">SABADO</option>
-                    <option value="DOMINGO">DOMINGO</option>
+                    <option value="LUNES">Lunes</option>
+                    <option value="MARTES">Martes</option>
+                    <option value="MIERCOLES">Miércoles</option>
+                    <option value="JUEVES">Jueves</option>
+                    <option value="VIERNES">Viernes</option>
+                    <option value="SABADO">Sábado</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
@@ -143,7 +144,7 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     type="text"
                     name="aula"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
+                      required: { value: true, errorMessage: 'Este campo es obligatorio.' }
                     }}
                   />
                 </AvGroup>
@@ -156,8 +157,8 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     type="text"
                     name="horaInicio"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.'}
+                      required: { value: true, errorMessage: 'Este campo es obligatorio.' },
+                      pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.' }
                     }}
                   />
                 </AvGroup>
@@ -170,8 +171,8 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                     type="text"
                     name="horaFin"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.'}
+                      required: { value: true, errorMessage: 'Este campo es obligatorio.' },
+                      pattern: { value: '^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$', errorMessage: 'Formato inválido HH:MM.' }
                     }}
                   />
                 </AvGroup>
@@ -189,11 +190,11 @@ export class HorarioCursadaUpdate extends React.Component<IHorarioCursadaUpdateP
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/horario-cursada" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Volver</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />&nbsp; Guardar
                 </Button>
               </AvForm>
             )}

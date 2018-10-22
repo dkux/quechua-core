@@ -26,7 +26,7 @@ export class Curso extends React.Component<ICursoProps> {
         <h2 id="curso-heading">
           Cursos
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Curso
+            <FontAwesomeIcon icon="plus" />&nbsp; Crear curso
           </Link>
         </h2>
         <div className="table-responsive">
@@ -58,13 +58,13 @@ export class Curso extends React.Component<ICursoProps> {
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${curso.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">View</span>
+                        <FontAwesomeIcon icon="eye" /> <span className="d-none d-md-inline">Ver</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${curso.id}/edit`} color="primary" size="sm">
-                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Edit</span>
+                        <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Editar</span>
                       </Button>
                       <Button tag={Link} to={`${match.url}/${curso.id}/delete`} color="danger" size="sm">
-                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Delete</span>
+                        <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Borrar</span>
                       </Button>
                     </div>
                   </td>

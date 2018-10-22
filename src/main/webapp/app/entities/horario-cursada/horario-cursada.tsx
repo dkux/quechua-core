@@ -26,7 +26,7 @@ export class HorarioCursada extends React.Component<IHorarioCursadaProps> {
         <h2 id="horario-cursada-heading">
           Horario Cursadas
           <Link to={`${match.url}/new`} className="btn btn-primary float-right jh-create-entity" id="jh-create-entity">
-            <FontAwesomeIcon icon="plus" />&nbsp; Create new Horario Cursada
+            <FontAwesomeIcon icon="plus" />&nbsp; Crear Horario Cursada
           </Link>
         </h2>
         <div className="table-responsive">

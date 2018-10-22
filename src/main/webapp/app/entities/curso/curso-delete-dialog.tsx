@@ -9,7 +9,7 @@ import { ICurso } from 'app/shared/model/curso.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './curso.reducer';
 
-export interface ICursoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICursoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class CursoDeleteDialog extends React.Component<ICursoDeleteDialogProps> {
   componentDidMount() {
@@ -30,14 +30,14 @@ export class CursoDeleteDialog extends React.Component<ICursoDeleteDialogProps> 
     const { cursoEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this Curso?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Confirmación de eliminación</ModalHeader>
+        <ModalBody>Está seguro de querer eliminar este Curso?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban" />&nbsp; Cancel
+            <FontAwesomeIcon icon="ban" />&nbsp; Cancelar
           </Button>
           <Button color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash" />&nbsp; Delete
+            <FontAwesomeIcon icon="trash" />&nbsp; Eliminar
           </Button>
         </ModalFooter>
       </Modal>

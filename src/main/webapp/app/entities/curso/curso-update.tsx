@@ -132,7 +132,8 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
       <div>
         <Row className="justify-content-center">
           <Col md="8">
-            <h2 id="quechuaApp.curso.home.createOrEditLabel">Create or edit a Curso</h2>
+            <h2 id="quechuaApp.curso.home.createOrEditLabel">
+              {isNew ? 'Crear Curso' : 'Modificar Curso'}</h2>
           </Col>
         </Row>
         <Row className="justify-content-center">
@@ -171,8 +172,8 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                     className="form-control"
                     name="vacantes"
                     validate={{
-                      required: { value: true, errorMessage: 'This field is required.' },
-                      number: { value: true, errorMessage: 'This field should be a number.' }
+                      required: { value: true, errorMessage: 'Este campo es obligatorio.' },
+                      number: { value: true, errorMessage: 'Este campo debe ser un número.' }
                     }}
                   />
                 </AvGroup>
@@ -214,11 +215,11 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/curso" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
-                  <span className="d-none d-md-inline">Back</span>
+                  <span className="d-none d-md-inline">Volver</span>
                 </Button>
                 &nbsp;
                 <Button color="primary" id="save-entity" type="submit" disabled={updating}>
-                  <FontAwesomeIcon icon="save" />&nbsp; Save
+                  <FontAwesomeIcon icon="save" />&nbsp; Guardar
                 </Button>
               </AvForm>
             )}

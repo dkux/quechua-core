@@ -9,7 +9,7 @@ import { IProfesor } from 'app/shared/model/profesor.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './profesor.reducer';
 
-export interface IProfesorDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IProfesorDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class ProfesorDeleteDialog extends React.Component<IProfesorDeleteDialogProps> {
   componentDidMount() {

@@ -30,14 +30,14 @@ export class HorarioCursadaDeleteDialog extends React.Component<IHorarioCursadaD
     const { horarioCursadaEntity } = this.props;
     return (
       <Modal isOpen toggle={this.handleClose}>
-        <ModalHeader toggle={this.handleClose}>Confirm delete operation</ModalHeader>
-        <ModalBody>Are you sure you want to delete this HorarioCursada?</ModalBody>
+        <ModalHeader toggle={this.handleClose}>Confirmación de eliminación</ModalHeader>
+        <ModalBody>Está seguro de eliminar este Horario de Cursada?</ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={this.handleClose}>
-            <FontAwesomeIcon icon="ban" />&nbsp; Cancel
+            <FontAwesomeIcon icon="ban" />&nbsp; Cancelar
           </Button>
           <Button color="danger" onClick={this.confirmDelete}>
-            <FontAwesomeIcon icon="trash" />&nbsp; Delete
+            <FontAwesomeIcon icon="trash" />&nbsp; Eliminar
           </Button>
         </ModalFooter>
       </Modal>
