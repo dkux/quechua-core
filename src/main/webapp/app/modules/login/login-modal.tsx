@@ -24,55 +24,49 @@ class LoginModal extends React.Component<ILoginModalProps> {
       <Modal isOpen={this.props.showModal} toggle={handleClose} backdrop="static" id="login-page" autoFocus={false}>
         <AvForm onSubmit={this.handleSubmit}>
           <ModalHeader id="login-title" toggle={handleClose}>
-            Sign in
+            Ingresar
           </ModalHeader>
           <ModalBody>
             <Row>
               <Col md="12">
                 {loginError ? (
                   <Alert color="danger">
-                    <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                    <strong>Falló el login!</strong> Por favor verifique sus datos y pruebe nuevamente.
                   </Alert>
                 ) : null}
               </Col>
               <Col md="12">
                 <AvField
                   name="username"
-                  label="Username"
-                  placeholder="Your username"
+                  label="Nombre de usuario"
+                  placeholder="Su nombre de usuario"
                   required
-                  errorMessage="Username cannot be empty!"
+                  errorMessage="El nombre de usuario no puede estar vacío!"
                   autoFocus
                 />
                 <AvField
                   name="password"
                   type="password"
-                  label="Password"
-                  placeholder="Your password"
+                  label="Contraseña"
+                  placeholder="Contraseña"
                   required
-                  errorMessage="Password cannot be empty!"
+                  errorMessage="La contraseña no puede estar vacía!"
                 />
                 <AvGroup check inline>
                   <Label className="form-check-label">
-                    <AvInput type="checkbox" name="rememberMe" /> Remember me
+                    <AvInput type="checkbox" name="rememberMe" /> Recordarme
                   </Label>
                 </AvGroup>
               </Col>
             </Row>
             <div className="mt-1">&nbsp;</div>
-            <Alert color="warning">
-              <Link to="/reset/request">Did you forget your password?</Link>
-            </Alert>
-            <Alert color="warning">
-              <span>You don't have an account yet?</span> <Link to="/register">Register a new account</Link>
-            </Alert>
           </ModalBody>
           <ModalFooter>
             <Button color="secondary" onClick={handleClose} tabIndex="1">
-              Cancel
+              Cancelar
             </Button>{' '}
             <Button color="primary" type="submit">
-              Sign in
+              Iniciar sesion
             </Button>
           </ModalFooter>
         </AvForm>
