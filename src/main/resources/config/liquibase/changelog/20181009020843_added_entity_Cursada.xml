@@ -26,10 +26,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="not_final" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-
             <column name="libro" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
@@ -42,12 +38,20 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="nota_final" type="${floatType}">
+                <constraints nullable="true" />
+            </column>
+
             <column name="curso_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <column name="alumno_id" type="bigint">
                 <constraints nullable="true" />
+            </column>
+
+            <column name="periodo_id" type="bigint">
+                <constraints nullable="false" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

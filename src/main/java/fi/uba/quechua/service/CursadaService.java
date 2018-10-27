@@ -3,10 +3,12 @@ package fi.uba.quechua.service;
 import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.domain.Cursada;
 import fi.uba.quechua.domain.InscripcionCurso;
+import fi.uba.quechua.domain.Periodo;
 import fi.uba.quechua.domain.enumeration.EstadoCursada;
 import fi.uba.quechua.domain.enumeration.InscripcionCursoEstado;
 import fi.uba.quechua.repository.CursadaRepository;
 import fi.uba.quechua.repository.InscripcionCursoRepository;
+import fi.uba.quechua.repository.PeriodoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +32,13 @@ public class CursadaService {
 
     private final InscripcionCursoRepository inscripcionCursoRepository;
 
-    public CursadaService(CursadaRepository cursadaRepository, InscripcionCursoRepository inscripcionCursoRepository) {
+    private final PeriodoRepository periodoRepository;
+
+    public CursadaService(CursadaRepository cursadaRepository, InscripcionCursoRepository inscripcionCursoRepository,
+                          PeriodoRepository periodoRepository) {
         this.cursadaRepository = cursadaRepository;
         this.inscripcionCursoRepository = inscripcionCursoRepository;
+        this.periodoRepository = periodoRepository;
     }
 
     /**
@@ -91,11 +97,15 @@ public class CursadaService {
 
     public void iniciarCursadas() {
         List<InscripcionCurso> inscripcionesCursos = inscripcionCursoRepository.findByEstadoNot(InscripcionCursoEstado.ELIMINADA);
+        Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
+        if (!periodo.isPresent())
+            return;
         for (InscripcionCurso inscripcionCurso: inscripcionesCursos) {
             Cursada cursada = new Cursada();
             cursada.setAlumno(inscripcionCurso.getAlumno());
             cursada.setCurso(inscripcionCurso.getCurso());
             cursada.setEstado(EstadoCursada.ACTIVA);
+            cursada.setPeriodo(periodo.get());
             cursadaRepository.save(cursada);
         }
     }

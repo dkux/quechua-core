@@ -12,6 +12,8 @@ import { ICurso } from 'app/shared/model/curso.model';
 import { getEntities as getCursos } from 'app/entities/curso/curso.reducer';
 import { IAlumno } from 'app/shared/model/alumno.model';
 import { getEntities as getAlumnos } from 'app/entities/alumno/alumno.reducer';
+import { IPeriodo } from 'app/shared/model/periodo.model';
+import { getEntities as getPeriodos } from 'app/entities/periodo/periodo.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './cursada.reducer';
 import { ICursada } from 'app/shared/model/cursada.model';
 // tslint:disable-next-line:no-unused-variable
@@ -24,6 +26,7 @@ export interface ICursadaUpdateState {
   isNew: boolean;
   cursoId: number;
   alumnoId: number;
+  periodoId: number;
 }
 
 export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursadaUpdateState> {
@@ -32,6 +35,7 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
     this.state = {
       cursoId: 0,
       alumnoId: 0,
+      periodoId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -45,6 +49,7 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
 
     this.props.getCursos();
     this.props.getAlumnos();
+    this.props.getPeriodos();
   }
 
   saveEntity = (event, errors, values) => {
@@ -102,8 +107,25 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
     }
   };
 
+  periodoUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        periodoId: -1
+      });
+    } else {
+      for (const i in this.props.periodos) {
+        if (id === this.props.periodos[i].id.toString()) {
+          this.setState({
+            periodoId: this.props.periodos[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
-    const { cursadaEntity, cursos, alumnos, loading, updating } = this.props;
+    const { cursadaEntity, cursos, alumnos, periodos, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -130,12 +152,6 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
                     Nota Cursada
                   </Label>
                   <AvField id="cursada-notaCursada" type="number" className="form-control" name="notaCursada" />
-                </AvGroup>
-                <AvGroup>
-                  <Label id="notFinalLabel" for="notFinal">
-                    Not Final
-                  </Label>
-                  <AvField id="cursada-notFinal" type="number" className="form-control" name="notFinal" />
                 </AvGroup>
                 <AvGroup>
                   <Label id="libroLabel" for="libro">
@@ -166,6 +182,12 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
+                  <Label id="notaFinalLabel" for="notaFinal">
+                    Nota Final
+                  </Label>
+                  <AvField id="cursada-notaFinal" type="number" className="form-control" name="notaFinal" />
+                </AvGroup>
+                <AvGroup>
                   <Label for="curso.id">Curso</Label>
                   <AvInput id="cursada-curso" type="select" className="form-control" name="curso.id" onChange={this.cursoUpdate}>
                     <option value="" key="0" />
@@ -184,6 +206,25 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
                     <option value="" key="0" />
                     {alumnos
                       ? alumnos.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label for="periodo.id">Periodo</Label>
+                  <AvInput
+                    id="cursada-periodo"
+                    type="select"
+                    className="form-control"
+                    name="periodo.id"
+                    onChange={this.periodoUpdate}
+                    value={isNew && periodos ? periodos[0] && periodos[0].id : ''}
+                  >
+                    {periodos
+                      ? periodos.map(otherEntity => (
                           <option value={otherEntity.id} key={otherEntity.id}>
                             {otherEntity.id}
                           </option>
@@ -211,6 +252,7 @@ export class CursadaUpdate extends React.Component<ICursadaUpdateProps, ICursada
 const mapStateToProps = (storeState: IRootState) => ({
   cursos: storeState.curso.entities,
   alumnos: storeState.alumno.entities,
+  periodos: storeState.periodo.entities,
   cursadaEntity: storeState.cursada.entity,
   loading: storeState.cursada.loading,
   updating: storeState.cursada.updating
@@ -219,6 +261,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getCursos,
   getAlumnos,
+  getPeriodos,
   getEntity,
   updateEntity,
   createEntity,

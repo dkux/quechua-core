@@ -2,9 +2,7 @@ package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.Cursada;
-import fi.uba.quechua.domain.InscripcionCurso;
 import fi.uba.quechua.service.CursadaService;
-import fi.uba.quechua.service.InscripcionCursoService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -13,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -45,7 +44,7 @@ public class CursadaResource {
      */
     @PostMapping("/cursadas")
     @Timed
-    public ResponseEntity<Cursada> createCursada(@RequestBody Cursada cursada) throws URISyntaxException {
+    public ResponseEntity<Cursada> createCursada(@Valid @RequestBody Cursada cursada) throws URISyntaxException {
         log.debug("REST request to save Cursada : {}", cursada);
         if (cursada.getId() != null) {
             throw new BadRequestAlertException("A new cursada cannot already have an ID", ENTITY_NAME, "idexists");
@@ -67,7 +66,7 @@ public class CursadaResource {
      */
     @PutMapping("/cursadas")
     @Timed
-    public ResponseEntity<Cursada> updateCursada(@RequestBody Cursada cursada) throws URISyntaxException {
+    public ResponseEntity<Cursada> updateCursada(@Valid @RequestBody Cursada cursada) throws URISyntaxException {
         log.debug("REST request to update Cursada : {}", cursada);
         if (cursada.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");

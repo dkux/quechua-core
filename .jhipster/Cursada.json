@@ -1,12 +1,32 @@
 {
-    "name": "Cursada",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "curso",
+            "otherEntityName": "curso",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "alumno",
+            "otherEntityName": "alumno",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "periodo",
+            "otherEntityName": "periodo",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        }
+    ],
     "fields": [
         {
             "fieldName": "notaCursada",
-            "fieldType": "Float"
-        },
-        {
-            "fieldName": "notFinal",
             "fieldType": "Float"
         },
         {
@@ -20,30 +40,19 @@
         {
             "fieldName": "estado",
             "fieldType": "EstadoCursada",
-            "fieldValues": "APROBADO,REPROBADO,FINAL_PENDIENTE,FINAL_APROBADO,APLAZO"
-        }
-    ],
-    "relationships": [
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "curso",
-            "otherEntityName": "curso",
-            "otherEntityField": "id"
+            "fieldValues": "APROBADO,REPROBADO,FINAL_PENDIENTE,FINAL_APROBADO,APLAZO,ACTIVA"
         },
         {
-            "relationshipType": "many-to-one",
-            "relationshipName": "alumno",
-            "otherEntityName": "alumno",
-            "otherEntityField": "id"
+            "fieldName": "notaFinal",
+            "fieldType": "Float",
+            "fieldValidateRules": []
         }
     ],
     "changelogDate": "20181009020843",
-    "entityTableName": "cursada",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "serviceClass",
+    "entityTableName": "cursada",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -28,9 +29,6 @@ public class Cursada implements Serializable {
     @Column(name = "nota_cursada")
     private Float notaCursada;
 
-    @Column(name = "not_final")
-    private Float notFinal;
-
     @Column(name = "libro")
     private String libro;
 
@@ -41,6 +39,9 @@ public class Cursada implements Serializable {
     @Column(name = "estado")
     private EstadoCursada estado;
 
+    @Column(name = "nota_final")
+    private Float notaFinal;
+
     @ManyToOne
     @JsonIgnoreProperties("")
     private Curso curso;
@@ -48,6 +49,11 @@ public class Cursada implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("")
     private Alumno alumno;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("")
+    private Periodo periodo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -69,19 +75,6 @@ public class Cursada implements Serializable {
 
     public void setNotaCursada(Float notaCursada) {
         this.notaCursada = notaCursada;
-    }
-
-    public Float getNotFinal() {
-        return notFinal;
-    }
-
-    public Cursada notFinal(Float notFinal) {
-        this.notFinal = notFinal;
-        return this;
-    }
-
-    public void setNotFinal(Float notFinal) {
-        this.notFinal = notFinal;
     }
 
     public String getLibro() {
@@ -123,6 +116,19 @@ public class Cursada implements Serializable {
         this.estado = estado;
     }
 
+    public Float getNotaFinal() {
+        return notaFinal;
+    }
+
+    public Cursada notaFinal(Float notaFinal) {
+        this.notaFinal = notaFinal;
+        return this;
+    }
+
+    public void setNotaFinal(Float notaFinal) {
+        this.notaFinal = notaFinal;
+    }
+
     public Curso getCurso() {
         return curso;
     }
@@ -147,6 +153,19 @@ public class Cursada implements Serializable {
 
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
+    }
+
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+
+    public Cursada periodo(Periodo periodo) {
+        this.periodo = periodo;
+        return this;
+    }
+
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -175,10 +194,10 @@ public class Cursada implements Serializable {
         return "Cursada{" +
             "id=" + getId() +
             ", notaCursada=" + getNotaCursada() +
-            ", notFinal=" + getNotFinal() +
             ", libro='" + getLibro() + "'" +
             ", folio='" + getFolio() + "'" +
             ", estado='" + getEstado() + "'" +
+            ", notaFinal=" + getNotaFinal() +
             "}";
     }
 }

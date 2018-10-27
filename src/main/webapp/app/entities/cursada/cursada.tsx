@@ -35,12 +35,13 @@ export class Cursada extends React.Component<ICursadaProps> {
               <tr>
                 <th>ID</th>
                 <th>Nota Cursada</th>
-                <th>Not Final</th>
                 <th>Libro</th>
                 <th>Folio</th>
                 <th>Estado</th>
+                <th>Nota Final</th>
                 <th>Curso</th>
                 <th>Alumno</th>
+                <th>Periodo</th>
                 <th />
               </tr>
             </thead>
@@ -53,12 +54,13 @@ export class Cursada extends React.Component<ICursadaProps> {
                     </Button>
                   </td>
                   <td>{cursada.notaCursada}</td>
-                  <td>{cursada.notFinal}</td>
                   <td>{cursada.libro}</td>
                   <td>{cursada.folio}</td>
                   <td>{cursada.estado}</td>
+                  <td>{cursada.notaFinal}</td>
                   <td>{cursada.curso ? <Link to={`curso/${cursada.curso.id}`}>{cursada.curso.id}</Link> : ''}</td>
                   <td>{cursada.alumno ? <Link to={`alumno/${cursada.alumno.id}`}>{cursada.alumno.id}</Link> : ''}</td>
+                  <td>{cursada.periodo ? <Link to={`periodo/${cursada.periodo.id}`}>{cursada.periodo.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${cursada.id}`} color="info" size="sm">

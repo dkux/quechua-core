@@ -33,10 +33,6 @@ export class CursadaDetail extends React.Component<ICursadaDetailProps> {
             </dt>
             <dd>{cursadaEntity.notaCursada}</dd>
             <dt>
-              <span id="notFinal">Not Final</span>
-            </dt>
-            <dd>{cursadaEntity.notFinal}</dd>
-            <dt>
               <span id="libro">Libro</span>
             </dt>
             <dd>{cursadaEntity.libro}</dd>
@@ -48,10 +44,16 @@ export class CursadaDetail extends React.Component<ICursadaDetailProps> {
               <span id="estado">Estado</span>
             </dt>
             <dd>{cursadaEntity.estado}</dd>
+            <dt>
+              <span id="notaFinal">Nota Final</span>
+            </dt>
+            <dd>{cursadaEntity.notaFinal}</dd>
             <dt>Curso</dt>
             <dd>{cursadaEntity.curso ? cursadaEntity.curso.id : ''}</dd>
             <dt>Alumno</dt>
             <dd>{cursadaEntity.alumno ? cursadaEntity.alumno.id : ''}</dd>
+            <dt>Periodo</dt>
+            <dd>{cursadaEntity.periodo ? cursadaEntity.periodo.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/cursada" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
