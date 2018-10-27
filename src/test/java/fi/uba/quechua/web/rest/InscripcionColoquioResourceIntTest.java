@@ -3,8 +3,12 @@ package fi.uba.quechua.web.rest;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.InscripcionColoquio;
+import fi.uba.quechua.domain.Cursada;
 import fi.uba.quechua.repository.InscripcionColoquioRepository;
-import fi.uba.quechua.service.*;
+import fi.uba.quechua.service.AlumnoService;
+import fi.uba.quechua.service.ColoquioService;
+import fi.uba.quechua.service.InscripcionColoquioService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -96,6 +100,11 @@ public class InscripcionColoquioResourceIntTest {
     public static InscripcionColoquio createEntity(EntityManager em) {
         InscripcionColoquio inscripcionColoquio = new InscripcionColoquio()
             .estado(DEFAULT_ESTADO);
+        // Add required entity
+        Cursada cursada = CursadaResourceIntTest.createEntity(em);
+        em.persist(cursada);
+        em.flush();
+        inscripcionColoquio.setCursada(cursada);
         return inscripcionColoquio;
     }
 

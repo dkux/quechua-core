@@ -1,12 +1,6 @@
 {
-    "name": "InscripcionColoquio",
-    "fields": [
-        {
-            "fieldName": "estado",
-            "fieldType": "InscripcionColoquioEstado",
-            "fieldValues": "ACTIVA,ELIMINADA"
-        }
-    ],
+    "fluentMethods": true,
+    "clientRootFolder": "",
     "relationships": [
         {
             "relationshipType": "many-to-one",
@@ -19,15 +13,29 @@
             "relationshipName": "alumno",
             "otherEntityName": "alumno",
             "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "cursada",
+            "otherEntityName": "cursada",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "estado",
+            "fieldType": "InscripcionColoquioEstado",
+            "fieldValues": "ACTIVA,ELIMINADA,APROBADA,DESAPROBADA"
         }
     ],
     "changelogDate": "20181009020841",
-    "entityTableName": "inscripcion_coloquio",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "serviceClass",
+    "entityTableName": "inscripcion_coloquio",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

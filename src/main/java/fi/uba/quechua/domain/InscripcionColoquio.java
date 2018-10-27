@@ -5,6 +5,7 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -36,6 +37,11 @@ public class InscripcionColoquio implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties("")
     private Alumno alumno;
+
+    @ManyToOne(optional = false)
+    @NotNull
+    @JsonIgnoreProperties("")
+    private Cursada cursada;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -83,6 +89,19 @@ public class InscripcionColoquio implements Serializable {
 
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
+    }
+
+    public Cursada getCursada() {
+        return cursada;
+    }
+
+    public InscripcionColoquio cursada(Cursada cursada) {
+        this.cursada = cursada;
+        return this;
+    }
+
+    public void setCursada(Cursada cursada) {
+        this.cursada = cursada;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

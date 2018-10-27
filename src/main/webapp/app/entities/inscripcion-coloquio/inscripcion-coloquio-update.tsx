@@ -12,6 +12,8 @@ import { IColoquio } from 'app/shared/model/coloquio.model';
 import { getEntities as getColoquios } from 'app/entities/coloquio/coloquio.reducer';
 import { IAlumno } from 'app/shared/model/alumno.model';
 import { getEntities as getAlumnos } from 'app/entities/alumno/alumno.reducer';
+import { ICursada } from 'app/shared/model/cursada.model';
+import { getEntities as getCursadas } from 'app/entities/cursada/cursada.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './inscripcion-coloquio.reducer';
 import { IInscripcionColoquio } from 'app/shared/model/inscripcion-coloquio.model';
 // tslint:disable-next-line:no-unused-variable
@@ -24,6 +26,7 @@ export interface IInscripcionColoquioUpdateState {
   isNew: boolean;
   coloquioId: number;
   alumnoId: number;
+  cursadaId: number;
 }
 
 export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoquioUpdateProps, IInscripcionColoquioUpdateState> {
@@ -32,6 +35,7 @@ export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoq
     this.state = {
       coloquioId: 0,
       alumnoId: 0,
+      cursadaId: 0,
       isNew: !this.props.match.params || !this.props.match.params.id
     };
   }
@@ -45,6 +49,7 @@ export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoq
 
     this.props.getColoquios();
     this.props.getAlumnos();
+    this.props.getCursadas();
   }
 
   saveEntity = (event, errors, values) => {
@@ -102,8 +107,25 @@ export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoq
     }
   };
 
+  cursadaUpdate = element => {
+    const id = element.target.value.toString();
+    if (id === '') {
+      this.setState({
+        cursadaId: -1
+      });
+    } else {
+      for (const i in this.props.cursadas) {
+        if (id === this.props.cursadas[i].id.toString()) {
+          this.setState({
+            cursadaId: this.props.cursadas[i].id
+          });
+        }
+      }
+    }
+  };
+
   render() {
-    const { inscripcionColoquioEntity, coloquios, alumnos, loading, updating } = this.props;
+    const { inscripcionColoquioEntity, coloquios, alumnos, cursadas, loading, updating } = this.props;
     const { isNew } = this.state;
 
     return (
@@ -136,6 +158,8 @@ export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoq
                   >
                     <option value="ACTIVA">ACTIVA</option>
                     <option value="ELIMINADA">ELIMINADA</option>
+                    <option value="APROBADA">APROBADA</option>
+                    <option value="DESAPROBADA">DESAPROBADA</option>
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
@@ -176,6 +200,25 @@ export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoq
                       : null}
                   </AvInput>
                 </AvGroup>
+                <AvGroup>
+                  <Label for="cursada.id">Cursada</Label>
+                  <AvInput
+                    id="inscripcion-coloquio-cursada"
+                    type="select"
+                    className="form-control"
+                    name="cursada.id"
+                    onChange={this.cursadaUpdate}
+                    value={isNew && cursadas ? cursadas[0] && cursadas[0].id : ''}
+                  >
+                    {cursadas
+                      ? cursadas.map(otherEntity => (
+                          <option value={otherEntity.id} key={otherEntity.id}>
+                            {otherEntity.id}
+                          </option>
+                        ))
+                      : null}
+                  </AvInput>
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/inscripcion-coloquio" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>
@@ -196,6 +239,7 @@ export class InscripcionColoquioUpdate extends React.Component<IInscripcionColoq
 const mapStateToProps = (storeState: IRootState) => ({
   coloquios: storeState.coloquio.entities,
   alumnos: storeState.alumno.entities,
+  cursadas: storeState.cursada.entities,
   inscripcionColoquioEntity: storeState.inscripcionColoquio.entity,
   loading: storeState.inscripcionColoquio.loading,
   updating: storeState.inscripcionColoquio.updating
@@ -204,6 +248,7 @@ const mapStateToProps = (storeState: IRootState) => ({
 const mapDispatchToProps = {
   getColoquios,
   getAlumnos,
+  getCursadas,
   getEntity,
   updateEntity,
   createEntity,

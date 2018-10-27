@@ -37,6 +37,7 @@ export class InscripcionColoquio extends React.Component<IInscripcionColoquioPro
                 <th>Estado</th>
                 <th>Coloquio</th>
                 <th>Alumno</th>
+                <th>Cursada</th>
                 <th />
               </tr>
             </thead>
@@ -59,6 +60,13 @@ export class InscripcionColoquio extends React.Component<IInscripcionColoquioPro
                   <td>
                     {inscripcionColoquio.alumno ? (
                       <Link to={`alumno/${inscripcionColoquio.alumno.id}`}>{inscripcionColoquio.alumno.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {inscripcionColoquio.cursada ? (
+                      <Link to={`cursada/${inscripcionColoquio.cursada.id}`}>{inscripcionColoquio.cursada.id}</Link>
                     ) : (
                       ''
                     )}

@@ -36,6 +36,8 @@ export class InscripcionColoquioDetail extends React.Component<IInscripcionColoq
             <dd>{inscripcionColoquioEntity.coloquio ? inscripcionColoquioEntity.coloquio.id : ''}</dd>
             <dt>Alumno</dt>
             <dd>{inscripcionColoquioEntity.alumno ? inscripcionColoquioEntity.alumno.id : ''}</dd>
+            <dt>Cursada</dt>
+            <dd>{inscripcionColoquioEntity.cursada ? inscripcionColoquioEntity.cursada.id : ''}</dd>
           </dl>
           <Button tag={Link} to="/entity/inscripcion-coloquio" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>
