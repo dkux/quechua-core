@@ -67,6 +67,10 @@ import periodoAdministrativo, {
 import cursada, {
   CursadaState
 } from 'app/entities/cursada/cursada.reducer';
+// prettier-ignore
+import prioridad, {
+  PrioridadState
+} from 'app/entities/prioridad/prioridad.reducer';
 /* jhipster-needle-add-reducer-import - JHipster will add reducer here */
 
 export interface IRootState {
@@ -93,6 +97,7 @@ export interface IRootState {
   readonly inscripcionColoquio: InscripcionColoquioState;
   readonly periodoAdministrativo: PeriodoAdministrativoState;
   readonly cursada: CursadaState;
+  readonly prioridad: PrioridadState;
   /* jhipster-needle-add-reducer-type - JHipster will add reducer type here */
   readonly loadingBar: any;
 }
@@ -121,6 +126,7 @@ const rootReducer = combineReducers<IRootState>({
   inscripcionColoquio,
   periodoAdministrativo,
   cursada,
+  prioridad,
   /* jhipster-needle-add-reducer-combine - JHipster will add reducer here */
   loadingBar
 });
