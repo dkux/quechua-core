@@ -39,6 +39,8 @@ export class Coloquio extends React.Component<IColoquioProps> {
                 <th>Hora Fin</th>
                 <th>Sede</th>
                 <th>Fecha</th>
+                <th>Libro</th>
+                <th>Folio</th>
                 <th>Curso</th>
                 <th>Periodo</th>
                 <th />
@@ -59,6 +61,8 @@ export class Coloquio extends React.Component<IColoquioProps> {
                   <td>
                     <TextFormat type="date" value={coloquio.fecha} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
+                  <td>{coloquio.libro}</td>
+                  <td>{coloquio.folio}</td>
                   <td>{coloquio.curso ? <Link to={`curso/${coloquio.curso.id}`}>{coloquio.curso.id}</Link> : ''}</td>
                   <td>{coloquio.periodo ? <Link to={`periodo/${coloquio.periodo.id}`}>{coloquio.periodo.id}</Link> : ''}</td>
                   <td className="text-right">

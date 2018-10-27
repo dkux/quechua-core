@@ -42,6 +42,14 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="libro" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="folio" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="curso_id" type="bigint">
                 <constraints nullable="true" />
             </column>

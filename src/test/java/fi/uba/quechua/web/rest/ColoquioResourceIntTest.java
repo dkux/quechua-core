@@ -59,6 +59,12 @@ public class ColoquioResourceIntTest {
     private static final LocalDate DEFAULT_FECHA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA = LocalDate.now(ZoneId.systemDefault());
 
+    private static final String DEFAULT_LIBRO = "AAAAAAAAAA";
+    private static final String UPDATED_LIBRO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_FOLIO = "AAAAAAAAAA";
+    private static final String UPDATED_FOLIO = "BBBBBBBBBB";
+
     @Autowired
     private ColoquioRepository coloquioRepository;
 
@@ -106,7 +112,9 @@ public class ColoquioResourceIntTest {
             .horaInicio(DEFAULT_HORA_INICIO)
             .horaFin(DEFAULT_HORA_FIN)
             .sede(DEFAULT_SEDE)
-            .fecha(DEFAULT_FECHA);
+            .fecha(DEFAULT_FECHA)
+            .libro(DEFAULT_LIBRO)
+            .folio(DEFAULT_FOLIO);
         // Add required entity
         Periodo periodo = PeriodoResourceIntTest.createEntity(em);
         em.persist(periodo);
@@ -140,6 +148,8 @@ public class ColoquioResourceIntTest {
         assertThat(testColoquio.getHoraFin()).isEqualTo(DEFAULT_HORA_FIN);
         assertThat(testColoquio.getSede()).isEqualTo(DEFAULT_SEDE);
         assertThat(testColoquio.getFecha()).isEqualTo(DEFAULT_FECHA);
+        assertThat(testColoquio.getLibro()).isEqualTo(DEFAULT_LIBRO);
+        assertThat(testColoquio.getFolio()).isEqualTo(DEFAULT_FOLIO);
     }
 
     @Test
@@ -266,7 +276,9 @@ public class ColoquioResourceIntTest {
             .andExpect(jsonPath("$.[*].horaInicio").value(hasItem(DEFAULT_HORA_INICIO.toString())))
             .andExpect(jsonPath("$.[*].horaFin").value(hasItem(DEFAULT_HORA_FIN.toString())))
             .andExpect(jsonPath("$.[*].sede").value(hasItem(DEFAULT_SEDE.toString())))
-            .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())));
+            .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
+            .andExpect(jsonPath("$.[*].libro").value(hasItem(DEFAULT_LIBRO.toString())))
+            .andExpect(jsonPath("$.[*].folio").value(hasItem(DEFAULT_FOLIO.toString())));
     }
     
 
@@ -285,7 +297,9 @@ public class ColoquioResourceIntTest {
             .andExpect(jsonPath("$.horaInicio").value(DEFAULT_HORA_INICIO.toString()))
             .andExpect(jsonPath("$.horaFin").value(DEFAULT_HORA_FIN.toString()))
             .andExpect(jsonPath("$.sede").value(DEFAULT_SEDE.toString()))
-            .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()));
+            .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
+            .andExpect(jsonPath("$.libro").value(DEFAULT_LIBRO.toString()))
+            .andExpect(jsonPath("$.folio").value(DEFAULT_FOLIO.toString()));
     }
     @Test
     @Transactional
@@ -312,7 +326,9 @@ public class ColoquioResourceIntTest {
             .horaInicio(UPDATED_HORA_INICIO)
             .horaFin(UPDATED_HORA_FIN)
             .sede(UPDATED_SEDE)
-            .fecha(UPDATED_FECHA);
+            .fecha(UPDATED_FECHA)
+            .libro(UPDATED_LIBRO)
+            .folio(UPDATED_FOLIO);
 
         restColoquioMockMvc.perform(put("/api/coloquios")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -328,6 +344,8 @@ public class ColoquioResourceIntTest {
         assertThat(testColoquio.getHoraFin()).isEqualTo(UPDATED_HORA_FIN);
         assertThat(testColoquio.getSede()).isEqualTo(UPDATED_SEDE);
         assertThat(testColoquio.getFecha()).isEqualTo(UPDATED_FECHA);
+        assertThat(testColoquio.getLibro()).isEqualTo(UPDATED_LIBRO);
+        assertThat(testColoquio.getFolio()).isEqualTo(UPDATED_FOLIO);
     }
 
     @Test

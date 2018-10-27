@@ -14,6 +14,8 @@ export interface IColoquio {
   horaFin?: string;
   sede?: Sede;
   fecha?: Moment;
+  libro?: string;
+  folio?: string;
   curso?: ICurso;
   periodo?: IPeriodo;
 }

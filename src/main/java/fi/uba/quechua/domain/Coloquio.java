@@ -48,6 +48,12 @@ public class Coloquio implements Serializable {
     @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
 
+    @Column(name = "libro")
+    private String libro;
+
+    @Column(name = "folio")
+    private String folio;
+
     @ManyToOne
     @JsonIgnoreProperties("")
     private Curso curso;
@@ -131,6 +137,32 @@ public class Coloquio implements Serializable {
         this.fecha = fecha;
     }
 
+    public String getLibro() {
+        return libro;
+    }
+
+    public Coloquio libro(String libro) {
+        this.libro = libro;
+        return this;
+    }
+
+    public void setLibro(String libro) {
+        this.libro = libro;
+    }
+
+    public String getFolio() {
+        return folio;
+    }
+
+    public Coloquio folio(String folio) {
+        this.folio = folio;
+        return this;
+    }
+
+    public void setFolio(String folio) {
+        this.folio = folio;
+    }
+
     public Curso getCurso() {
         return curso;
     }
@@ -187,6 +219,8 @@ public class Coloquio implements Serializable {
             ", horaFin='" + getHoraFin() + "'" +
             ", sede='" + getSede() + "'" +
             ", fecha='" + getFecha() + "'" +
+            ", libro='" + getLibro() + "'" +
+            ", folio='" + getFolio() + "'" +
             "}";
     }
 }

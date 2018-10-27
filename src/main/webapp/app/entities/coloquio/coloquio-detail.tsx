@@ -50,6 +50,14 @@ export class ColoquioDetail extends React.Component<IColoquioDetailProps> {
             <dd>
               <TextFormat value={coloquioEntity.fecha} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
+            <dt>
+              <span id="libro">Libro</span>
+            </dt>
+            <dd>{coloquioEntity.libro}</dd>
+            <dt>
+              <span id="folio">Folio</span>
+            </dt>
+            <dd>{coloquioEntity.folio}</dd>
             <dt>Curso</dt>
             <dd>{coloquioEntity.curso ? coloquioEntity.curso.id : ''}</dd>
             <dt>Periodo</dt>

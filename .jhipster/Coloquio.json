@@ -54,6 +54,14 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "libro",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "folio",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20181009020839",
