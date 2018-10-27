@@ -14,7 +14,7 @@ import { IPeriodoAdministrativo } from 'app/shared/model/periodo-administrativo.
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IPeriodoAdministrativoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IPeriodoAdministrativoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IPeriodoAdministrativoUpdateState {
   isNew: boolean;

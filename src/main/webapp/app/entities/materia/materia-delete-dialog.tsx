@@ -9,7 +9,7 @@ import { IMateria } from 'app/shared/model/materia.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './materia.reducer';
 
-export interface IMateriaDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IMateriaDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class MateriaDeleteDialog extends React.Component<IMateriaDeleteDialogProps> {
   componentDidMount() {

@@ -12,7 +12,7 @@ import { IDepartamento } from 'app/shared/model/departamento.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IDepartamentoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IDepartamentoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class DepartamentoDetail extends React.Component<IDepartamentoDetailProps> {
   componentDidMount() {

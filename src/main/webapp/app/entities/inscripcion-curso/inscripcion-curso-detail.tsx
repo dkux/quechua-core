@@ -12,7 +12,7 @@ import { IInscripcionCurso } from 'app/shared/model/inscripcion-curso.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IInscripcionCursoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IInscripcionCursoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class InscripcionCursoDetail extends React.Component<IInscripcionCursoDetailProps> {
   componentDidMount() {

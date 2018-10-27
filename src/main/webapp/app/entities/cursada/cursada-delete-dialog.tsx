@@ -9,7 +9,7 @@ import { ICursada } from 'app/shared/model/cursada.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './cursada.reducer';
 
-export interface ICursadaDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICursadaDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class CursadaDeleteDialog extends React.Component<ICursadaDeleteDialogProps> {
   componentDidMount() {

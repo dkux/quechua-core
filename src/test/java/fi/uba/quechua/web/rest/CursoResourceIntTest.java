@@ -48,8 +48,13 @@ public class CursoResourceIntTest {
     private static final Integer DEFAULT_VACANTES = 1;
     private static final Integer UPDATED_VACANTES = 2;
 
+    private static final Integer DEFAULT_NUMERO = 1;
+    private static final Integer UPDATED_NUMERO = 2;
+
     @Autowired
     private CursoRepository cursoRepository;
+
+
 
     @Autowired
     private CursoService cursoService;
@@ -93,7 +98,8 @@ public class CursoResourceIntTest {
     public static Curso createEntity(EntityManager em) {
         Curso curso = new Curso()
             .estado(DEFAULT_ESTADO)
-            .vacantes(DEFAULT_VACANTES);
+            .vacantes(DEFAULT_VACANTES)
+            .numero(DEFAULT_NUMERO);
         return curso;
     }
 
@@ -119,6 +125,7 @@ public class CursoResourceIntTest {
         Curso testCurso = cursoList.get(cursoList.size() - 1);
         assertThat(testCurso.getEstado()).isEqualTo(DEFAULT_ESTADO);
         assertThat(testCurso.getVacantes()).isEqualTo(DEFAULT_VACANTES);
+        assertThat(testCurso.getNumero()).isEqualTo(DEFAULT_NUMERO);
     }
 
     @Test
@@ -160,6 +167,24 @@ public class CursoResourceIntTest {
 
     @Test
     @Transactional
+    public void checkNumeroIsRequired() throws Exception {
+        int databaseSizeBeforeTest = cursoRepository.findAll().size();
+        // set the field null
+        curso.setNumero(null);
+
+        // Create the Curso, which fails.
+
+        restCursoMockMvc.perform(post("/api/cursos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(curso)))
+            .andExpect(status().isBadRequest());
+
+        List<Curso> cursoList = cursoRepository.findAll();
+        assertThat(cursoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllCursos() throws Exception {
         // Initialize the database
         cursoRepository.saveAndFlush(curso);
@@ -170,7 +195,8 @@ public class CursoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(curso.getId().intValue())))
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
-            .andExpect(jsonPath("$.[*].vacantes").value(hasItem(DEFAULT_VACANTES)));
+            .andExpect(jsonPath("$.[*].vacantes").value(hasItem(DEFAULT_VACANTES)))
+            .andExpect(jsonPath("$.[*].numero").value(hasItem(DEFAULT_NUMERO)));
     }
 
 
@@ -186,7 +212,8 @@ public class CursoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(curso.getId().intValue()))
             .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO.toString()))
-            .andExpect(jsonPath("$.vacantes").value(DEFAULT_VACANTES));
+            .andExpect(jsonPath("$.vacantes").value(DEFAULT_VACANTES))
+            .andExpect(jsonPath("$.numero").value(DEFAULT_NUMERO));
     }
     @Test
     @Transactional
@@ -210,7 +237,8 @@ public class CursoResourceIntTest {
         em.detach(updatedCurso);
         updatedCurso
             .estado(UPDATED_ESTADO)
-            .vacantes(UPDATED_VACANTES);
+            .vacantes(UPDATED_VACANTES)
+            .numero(UPDATED_NUMERO);
 
         restCursoMockMvc.perform(put("/api/cursos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -223,6 +251,7 @@ public class CursoResourceIntTest {
         Curso testCurso = cursoList.get(cursoList.size() - 1);
         assertThat(testCurso.getEstado()).isEqualTo(UPDATED_ESTADO);
         assertThat(testCurso.getVacantes()).isEqualTo(UPDATED_VACANTES);
+        assertThat(testCurso.getNumero()).isEqualTo(UPDATED_NUMERO);
     }
 
     @Test

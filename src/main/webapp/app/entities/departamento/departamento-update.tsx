@@ -14,7 +14,7 @@ import { IDepartamento } from 'app/shared/model/departamento.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IDepartamentoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IDepartamentoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IDepartamentoUpdateState {
   isNew: boolean;

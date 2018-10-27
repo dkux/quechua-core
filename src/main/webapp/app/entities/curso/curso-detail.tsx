@@ -36,6 +36,10 @@ export class CursoDetail extends React.Component<ICursoDetailProps> {
               <span id="vacantes">Vacantes</span>
             </dt>
             <dd>{cursoEntity.vacantes}</dd>
+            <dt>
+              <span id="numero">Numero</span>
+            </dt>
+            <dd>{cursoEntity.numero}</dd>
             <dt>Profesor</dt>
             <dd>{cursoEntity.profesor ? `${cursoEntity.profesor.nombre} ${cursoEntity.profesor.apellido}` : ''}</dd>
             <dt>Periodo</dt>

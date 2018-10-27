@@ -18,7 +18,7 @@ import { IInscripcionColoquio } from 'app/shared/model/inscripcion-coloquio.mode
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IInscripcionColoquioUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IInscripcionColoquioUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IInscripcionColoquioUpdateState {
   isNew: boolean;

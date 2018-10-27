@@ -14,7 +14,7 @@ import { ICarrera } from 'app/shared/model/carrera.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ICarreraUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICarreraUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface ICarreraUpdateState {
   isNew: boolean;

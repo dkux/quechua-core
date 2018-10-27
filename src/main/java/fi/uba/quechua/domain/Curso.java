@@ -37,6 +37,10 @@ public class Curso implements Serializable {
     @Column(name = "vacantes", nullable = false)
     private Integer vacantes;
 
+    @NotNull
+    @Column(name = "numero", nullable = false)
+    private Integer numero;
+
     @OneToMany(mappedBy = "curso")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<HorarioCursada> horarios = new HashSet<>();
@@ -86,6 +90,19 @@ public class Curso implements Serializable {
 
     public void setVacantes(Integer vacantes) {
         this.vacantes = vacantes;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public Curso numero(Integer numero) {
+        this.numero = numero;
+        return this;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 
     public Set<HorarioCursada> getHorarios() {
@@ -179,6 +196,7 @@ public class Curso implements Serializable {
             "id=" + getId() +
             ", estado='" + getEstado() + "'" +
             ", vacantes=" + getVacantes() +
+            ", numero=" + getNumero() +
             "}";
     }
 }

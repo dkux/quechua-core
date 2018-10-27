@@ -18,7 +18,7 @@ import { ICursada } from 'app/shared/model/cursada.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface ICursadaUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICursadaUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface ICursadaUpdateState {
   isNew: boolean;

@@ -9,7 +9,7 @@ import { IPeriodoAdministrativo } from 'app/shared/model/periodo-administrativo.
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './periodo-administrativo.reducer';
 
-export interface IPeriodoAdministrativoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IPeriodoAdministrativoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class PeriodoAdministrativoDeleteDialog extends React.Component<IPeriodoAdministrativoDeleteDialogProps> {
   componentDidMount() {

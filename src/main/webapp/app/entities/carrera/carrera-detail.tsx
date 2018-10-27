@@ -12,7 +12,7 @@ import { ICarrera } from 'app/shared/model/carrera.model';
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface ICarreraDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICarreraDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class CarreraDetail extends React.Component<ICarreraDetailProps> {
   componentDidMount() {

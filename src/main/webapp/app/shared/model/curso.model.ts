@@ -13,6 +13,7 @@ export interface ICurso {
   id?: number;
   estado?: CursoEstado;
   vacantes?: number;
+  numero?: number;
   horarios?: IHorarioCursada[];
   profesor?: IProfesor;
   periodo?: IPeriodo;

@@ -9,7 +9,7 @@ import { IInscripcionCurso } from 'app/shared/model/inscripcion-curso.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './inscripcion-curso.reducer';
 
-export interface IInscripcionCursoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IInscripcionCursoDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class InscripcionCursoDeleteDialog extends React.Component<IInscripcionCursoDeleteDialogProps> {
   componentDidMount() {

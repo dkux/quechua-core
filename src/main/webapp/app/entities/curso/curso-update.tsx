@@ -178,6 +178,21 @@ export class CursoUpdate extends React.Component<ICursoUpdateProps, ICursoUpdate
                   />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="numeroLabel" for="numero">
+                    Número
+                  </Label>
+                  <AvField
+                    id="curso-numero"
+                    type="number"
+                    className="form-control"
+                    name="numero"
+                    validate={{
+                      required: { value: true, errorMessage: 'Este campo es obligatorio.' },
+                      number: { value: true, errorMessage: 'Este campo debe ser un número.' }
+                    }}
+                  />
+                </AvGroup>
+                <AvGroup>
                   <Label for="profesor.id">Profesor</Label>
                   <AvInput id="curso-profesor" type="select" className="form-control" name="profesor.id" onChange={this.profesorUpdate}>
                     {profesors

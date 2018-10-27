@@ -104,10 +104,10 @@ INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
 VALUES
   (1, 'SEGUNDO', '2018');
 
-INSERT INTO `curso` (`id`, `estado`, `vacantes`, `profesor_id`, `periodo_id`, `materia_id`)
+INSERT INTO `curso` (`id`, `estado`, `vacantes`, `numero`, `profesor_id`, `periodo_id`, `materia_id`)
 VALUES
-  (1, 'ACTIVO', 6, 1, 1, 1),
-  (2, 'ACTIVO', 2, 1, 1, 2);
+  (1, 'ACTIVO', 6, 1, 1, 1, 1),
+  (2, 'ACTIVO', 2, 1, 1, 1, 2);
 
 INSERT INTO `horario_cursada` (`id`, `dia`, `sede`, `aula`, `hora_inicio`, `hora_fin`, `curso_id`)
 VALUES

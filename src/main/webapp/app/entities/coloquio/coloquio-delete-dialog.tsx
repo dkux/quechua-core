@@ -9,7 +9,7 @@ import { IColoquio } from 'app/shared/model/coloquio.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './coloquio.reducer';
 
-export interface IColoquioDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IColoquioDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class ColoquioDeleteDialog extends React.Component<IColoquioDeleteDialogProps> {
   componentDidMount() {

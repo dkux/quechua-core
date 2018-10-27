@@ -1,19 +1,6 @@
 {
-    "name": "Curso",
-    "fields": [
-        {
-            "fieldName": "estado",
-            "fieldType": "CursoEstado",
-            "fieldValues": "ACTIVO,INACTIVO,ELIMINADO"
-        },
-        {
-            "fieldName": "vacantes",
-            "fieldType": "Integer",
-            "fieldValidateRules": [
-                "required"
-            ]
-        }
-    ],
+    "fluentMethods": true,
+    "clientRootFolder": "",
     "relationships": [
         {
             "relationshipType": "one-to-many",
@@ -40,13 +27,32 @@
             "otherEntityField": "id"
         }
     ],
+    "fields": [
+        {
+            "fieldName": "estado",
+            "fieldType": "CursoEstado",
+            "fieldValues": "ACTIVO,INACTIVO,ELIMINADO"
+        },
+        {
+            "fieldName": "vacantes",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "numero",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
     "changelogDate": "20181009020834",
-    "entityTableName": "curso",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "serviceClass",
+    "entityTableName": "curso",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

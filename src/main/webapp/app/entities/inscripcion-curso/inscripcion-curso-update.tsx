@@ -18,7 +18,7 @@ import { IInscripcionCurso } from 'app/shared/model/inscripcion-curso.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IInscripcionCursoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IInscripcionCursoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IInscripcionCursoUpdateState {
   isNew: boolean;

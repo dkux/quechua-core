@@ -14,7 +14,7 @@ import { IAlumno } from 'app/shared/model/alumno.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IAlumnoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAlumnoUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IAlumnoUpdateState {
   isNew: boolean;

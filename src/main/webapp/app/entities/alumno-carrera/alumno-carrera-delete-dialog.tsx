@@ -9,7 +9,7 @@ import { IAlumnoCarrera } from 'app/shared/model/alumno-carrera.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './alumno-carrera.reducer';
 
-export interface IAlumnoCarreraDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAlumnoCarreraDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class AlumnoCarreraDeleteDialog extends React.Component<IAlumnoCarreraDeleteDialogProps> {
   componentDidMount() {

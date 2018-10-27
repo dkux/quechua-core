@@ -12,7 +12,7 @@ import { IPeriodoAdministrativo } from 'app/shared/model/periodo-administrativo.
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IPeriodoAdministrativoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IPeriodoAdministrativoDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class PeriodoAdministrativoDetail extends React.Component<IPeriodoAdministrativoDetailProps> {
   componentDidMount() {

@@ -170,6 +170,7 @@ public class InscripcionCursoResource {
     public ResponseEntity<InscripcionCurso> cambiarEstadoInscripcion(
             @PathVariable Long inscripcionCursoId,
             @PathVariable String accion) {
+        log.debug("REST request to {} la inscripcion {}", accion, inscripcionCursoId);
         Optional<InscripcionCurso> inscripcion = inscripcionCursoService.findOne(inscripcionCursoId);
         if (!inscripcion.isPresent()) {
             throw new BadRequestAlertException("No existe la inscripcion con id provisto", "InscripcionCurso", "idnoexists");

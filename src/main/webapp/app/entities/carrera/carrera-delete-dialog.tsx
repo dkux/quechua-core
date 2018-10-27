@@ -9,7 +9,7 @@ import { ICarrera } from 'app/shared/model/carrera.model';
 import { IRootState } from 'app/shared/reducers';
 import { getEntity, deleteEntity } from './carrera.reducer';
 
-export interface ICarreraDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface ICarreraDeleteDialogProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class CarreraDeleteDialog extends React.Component<ICarreraDeleteDialogProps> {
   componentDidMount() {

@@ -18,7 +18,7 @@ import { IAlumnoCarrera } from 'app/shared/model/alumno-carrera.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IAlumnoCarreraUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IAlumnoCarreraUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IAlumnoCarreraUpdateState {
   isNew: boolean;

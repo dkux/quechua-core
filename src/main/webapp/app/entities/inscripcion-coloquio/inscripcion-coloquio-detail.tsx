@@ -12,7 +12,7 @@ import { IInscripcionColoquio } from 'app/shared/model/inscripcion-coloquio.mode
 // tslint:disable-next-line:no-unused-variable
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IInscripcionColoquioDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IInscripcionColoquioDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export class InscripcionColoquioDetail extends React.Component<IInscripcionColoquioDetailProps> {
   componentDidMount() {

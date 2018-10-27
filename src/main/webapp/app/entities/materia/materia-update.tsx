@@ -18,7 +18,7 @@ import { IMateria } from 'app/shared/model/materia.model';
 import { convertDateTimeFromServer } from 'app/shared/util/date-utils';
 import { keysToValues } from 'app/shared/util/entity-utils';
 
-export interface IMateriaUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id: number }> {}
+export interface IMateriaUpdateProps extends StateProps, DispatchProps, RouteComponentProps<{ id }> {}
 
 export interface IMateriaUpdateState {
   isNew: boolean;

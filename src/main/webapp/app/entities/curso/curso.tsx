@@ -36,6 +36,7 @@ export class Curso extends React.Component<ICursoProps> {
                 <th>ID</th>
                 <th>Estado</th>
                 <th>Vacantes</th>
+                <th>Número</th>
                 <th>Profesor</th>
                 <th>Periodo</th>
                 <th>Materia</th>
@@ -52,6 +53,7 @@ export class Curso extends React.Component<ICursoProps> {
                   </td>
                   <td>{curso.estado}</td>
                   <td>{curso.vacantes}</td>
+                  <td>{curso.numero}</td>
                   <td>{curso.profesor ? <Link to={`profesor/${curso.profesor.id}`}>{curso.profesor.nombre}, {curso.profesor.apellido} </Link> : ''}</td>
                   <td>{curso.periodo ? <Link to={`periodo/${curso.periodo.id}`}>{curso.periodo.cuatrimestre}-{curso.periodo.anio}</Link> : ''}</td>
                   <td>{curso.materia ? <Link to={`materia/${curso.materia.id}`}>{curso.materia.nombre} ({curso.materia.codigo})</Link> : ''}</td>
