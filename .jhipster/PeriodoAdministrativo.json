@@ -1,5 +1,7 @@
 {
-    "name": "PeriodoAdministrativo",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
     "fields": [
         {
             "fieldName": "fechaInicio",
@@ -16,26 +18,19 @@
             ]
         },
         {
-            "fieldName": "consultarPioridad",
-            "fieldType": "Boolean"
-        },
-        {
-            "fieldName": "inscribirCursada",
-            "fieldType": "Boolean"
-        },
-        {
-            "fieldName": "inscribirColoquio",
-            "fieldType": "Boolean"
+            "fieldName": "actividad",
+            "fieldType": "PeriodoActividad",
+            "fieldValues": "CONSULTAR_PRIORIDAD, INSCRIPCION_CURSADA, INSCRIPCION_COLOQUIO",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
-    "relationships": [],
     "changelogDate": "20181009020842",
-    "entityTableName": "periodo_administrativo",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "serviceClass",
+    "entityTableName": "periodo_administrativo",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

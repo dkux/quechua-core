@@ -36,9 +36,7 @@ export class PeriodoAdministrativo extends React.Component<IPeriodoAdministrativ
                 <th>ID</th>
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
-                <th>Consultar Pioridad</th>
-                <th>Inscribir Cursada</th>
-                <th>Inscribir Coloquio</th>
+                <th>Actividad</th>
                 <th />
               </tr>
             </thead>
@@ -56,9 +54,7 @@ export class PeriodoAdministrativo extends React.Component<IPeriodoAdministrativ
                   <td>
                     <TextFormat type="date" value={periodoAdministrativo.fechaFin} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
-                  <td>{periodoAdministrativo.consultarPioridad ? 'true' : 'false'}</td>
-                  <td>{periodoAdministrativo.inscribirCursada ? 'true' : 'false'}</td>
-                  <td>{periodoAdministrativo.inscribirColoquio ? 'true' : 'false'}</td>
+                  <td>{periodoAdministrativo.actividad}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${periodoAdministrativo.id}`} color="info" size="sm">

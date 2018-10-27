@@ -109,37 +109,17 @@ export class PeriodoAdministrativoUpdate extends React.Component<IPeriodoAdminis
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="consultarPioridadLabel" check>
-                    <AvInput
-                      id="periodo-administrativo-consultarPioridad"
-                      type="checkbox"
-                      className="form-control"
-                      name="consultarPioridad"
-                    />
-                    Consultar Pioridad
+                  <Label id="actividadLabel" for="actividad">
+                    Actividad
                   </Label>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="inscribirCursadaLabel" check>
-                    <AvInput
-                      id="periodo-administrativo-inscribirCursada"
-                      type="checkbox"
-                      className="form-control"
-                      name="inscribirCursada"
-                    />
-                    Inscribir Cursada
-                  </Label>
-                </AvGroup>
-                <AvGroup>
-                  <Label id="inscribirColoquioLabel" check>
-                    <AvInput
-                      id="periodo-administrativo-inscribirColoquio"
-                      type="checkbox"
-                      className="form-control"
-                      name="inscribirColoquio"
-                    />
-                    Inscribir Coloquio
-                  </Label>
+                  <AvField
+                    id="periodo-administrativo-actividad"
+                    type="text"
+                    name="actividad"
+                    validate={{
+                      required: { value: true, errorMessage: 'This field is required.' }
+                    }}
+                  />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/periodo-administrativo" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;

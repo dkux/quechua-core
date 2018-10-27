@@ -3,6 +3,7 @@ package fi.uba.quechua.web.rest;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.PeriodoAdministrativo;
+import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 import fi.uba.quechua.repository.PeriodoAdministrativoRepository;
 import fi.uba.quechua.service.PeriodoAdministrativoService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
@@ -48,19 +49,13 @@ public class PeriodoAdministrativoResourceIntTest {
     private static final LocalDate DEFAULT_FECHA_FIN = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA_FIN = LocalDate.now(ZoneId.systemDefault());
 
-    private static final Boolean DEFAULT_CONSULTAR_PIORIDAD = false;
-    private static final Boolean UPDATED_CONSULTAR_PIORIDAD = true;
-
-    private static final Boolean DEFAULT_INSCRIBIR_CURSADA = false;
-    private static final Boolean UPDATED_INSCRIBIR_CURSADA = true;
-
-    private static final Boolean DEFAULT_INSCRIBIR_COLOQUIO = false;
-    private static final Boolean UPDATED_INSCRIBIR_COLOQUIO = true;
+    private static final PeriodoActividad DEFAULT_ACTIVIDAD = PeriodoActividad.CONSULTAR_PRIORIDAD;
+    private static final PeriodoActividad UPDATED_ACTIVIDAD = PeriodoActividad.INSCRIPCION_COLOQUIO;
 
     @Autowired
     private PeriodoAdministrativoRepository periodoAdministrativoRepository;
 
-    
+
 
     @Autowired
     private PeriodoAdministrativoService periodoAdministrativoService;
@@ -102,9 +97,7 @@ public class PeriodoAdministrativoResourceIntTest {
         PeriodoAdministrativo periodoAdministrativo = new PeriodoAdministrativo()
             .fechaInicio(DEFAULT_FECHA_INICIO)
             .fechaFin(DEFAULT_FECHA_FIN)
-            .consultarPioridad(DEFAULT_CONSULTAR_PIORIDAD)
-            .inscribirCursada(DEFAULT_INSCRIBIR_CURSADA)
-            .inscribirColoquio(DEFAULT_INSCRIBIR_COLOQUIO);
+            .actividad(DEFAULT_ACTIVIDAD);
         return periodoAdministrativo;
     }
 
@@ -130,9 +123,7 @@ public class PeriodoAdministrativoResourceIntTest {
         PeriodoAdministrativo testPeriodoAdministrativo = periodoAdministrativoList.get(periodoAdministrativoList.size() - 1);
         assertThat(testPeriodoAdministrativo.getFechaInicio()).isEqualTo(DEFAULT_FECHA_INICIO);
         assertThat(testPeriodoAdministrativo.getFechaFin()).isEqualTo(DEFAULT_FECHA_FIN);
-        assertThat(testPeriodoAdministrativo.isConsultarPioridad()).isEqualTo(DEFAULT_CONSULTAR_PIORIDAD);
-        assertThat(testPeriodoAdministrativo.isInscribirCursada()).isEqualTo(DEFAULT_INSCRIBIR_CURSADA);
-        assertThat(testPeriodoAdministrativo.isInscribirColoquio()).isEqualTo(DEFAULT_INSCRIBIR_COLOQUIO);
+        assertThat(testPeriodoAdministrativo.getActividad()).isEqualTo(DEFAULT_ACTIVIDAD);
     }
 
     @Test
@@ -192,6 +183,24 @@ public class PeriodoAdministrativoResourceIntTest {
 
     @Test
     @Transactional
+    public void checkActividadIsRequired() throws Exception {
+        int databaseSizeBeforeTest = periodoAdministrativoRepository.findAll().size();
+        // set the field null
+        periodoAdministrativo.setActividad(null);
+
+        // Create the PeriodoAdministrativo, which fails.
+
+        restPeriodoAdministrativoMockMvc.perform(post("/api/periodo-administrativos")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(periodoAdministrativo)))
+            .andExpect(status().isBadRequest());
+
+        List<PeriodoAdministrativo> periodoAdministrativoList = periodoAdministrativoRepository.findAll();
+        assertThat(periodoAdministrativoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllPeriodoAdministrativos() throws Exception {
         // Initialize the database
         periodoAdministrativoRepository.saveAndFlush(periodoAdministrativo);
@@ -203,11 +212,9 @@ public class PeriodoAdministrativoResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(periodoAdministrativo.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(DEFAULT_FECHA_INICIO.toString())))
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(DEFAULT_FECHA_FIN.toString())))
-            .andExpect(jsonPath("$.[*].consultarPioridad").value(hasItem(DEFAULT_CONSULTAR_PIORIDAD.booleanValue())))
-            .andExpect(jsonPath("$.[*].inscribirCursada").value(hasItem(DEFAULT_INSCRIBIR_CURSADA.booleanValue())))
-            .andExpect(jsonPath("$.[*].inscribirColoquio").value(hasItem(DEFAULT_INSCRIBIR_COLOQUIO.booleanValue())));
+            .andExpect(jsonPath("$.[*].actividad").value(hasItem(DEFAULT_ACTIVIDAD.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -222,9 +229,7 @@ public class PeriodoAdministrativoResourceIntTest {
             .andExpect(jsonPath("$.id").value(periodoAdministrativo.getId().intValue()))
             .andExpect(jsonPath("$.fechaInicio").value(DEFAULT_FECHA_INICIO.toString()))
             .andExpect(jsonPath("$.fechaFin").value(DEFAULT_FECHA_FIN.toString()))
-            .andExpect(jsonPath("$.consultarPioridad").value(DEFAULT_CONSULTAR_PIORIDAD.booleanValue()))
-            .andExpect(jsonPath("$.inscribirCursada").value(DEFAULT_INSCRIBIR_CURSADA.booleanValue()))
-            .andExpect(jsonPath("$.inscribirColoquio").value(DEFAULT_INSCRIBIR_COLOQUIO.booleanValue()));
+            .andExpect(jsonPath("$.actividad").value(DEFAULT_ACTIVIDAD.toString()));
     }
     @Test
     @Transactional
@@ -249,9 +254,7 @@ public class PeriodoAdministrativoResourceIntTest {
         updatedPeriodoAdministrativo
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaFin(UPDATED_FECHA_FIN)
-            .consultarPioridad(UPDATED_CONSULTAR_PIORIDAD)
-            .inscribirCursada(UPDATED_INSCRIBIR_CURSADA)
-            .inscribirColoquio(UPDATED_INSCRIBIR_COLOQUIO);
+            .actividad(UPDATED_ACTIVIDAD);
 
         restPeriodoAdministrativoMockMvc.perform(put("/api/periodo-administrativos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -264,9 +267,7 @@ public class PeriodoAdministrativoResourceIntTest {
         PeriodoAdministrativo testPeriodoAdministrativo = periodoAdministrativoList.get(periodoAdministrativoList.size() - 1);
         assertThat(testPeriodoAdministrativo.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testPeriodoAdministrativo.getFechaFin()).isEqualTo(UPDATED_FECHA_FIN);
-        assertThat(testPeriodoAdministrativo.isConsultarPioridad()).isEqualTo(UPDATED_CONSULTAR_PIORIDAD);
-        assertThat(testPeriodoAdministrativo.isInscribirCursada()).isEqualTo(UPDATED_INSCRIBIR_CURSADA);
-        assertThat(testPeriodoAdministrativo.isInscribirColoquio()).isEqualTo(UPDATED_INSCRIBIR_COLOQUIO);
+        assertThat(testPeriodoAdministrativo.getActividad()).isEqualTo(UPDATED_ACTIVIDAD);
     }
 
     @Test

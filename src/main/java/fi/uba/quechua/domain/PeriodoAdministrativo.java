@@ -1,5 +1,6 @@
 package fi.uba.quechua.domain;
 
+import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -32,14 +33,11 @@ public class PeriodoAdministrativo implements Serializable {
     @Column(name = "fecha_fin", nullable = false)
     private LocalDate fechaFin;
 
-    @Column(name = "consultar_pioridad")
-    private Boolean consultarPioridad;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "actividad", nullable = false)
+    private PeriodoActividad actividad;
 
-    @Column(name = "inscribir_cursada")
-    private Boolean inscribirCursada;
-
-    @Column(name = "inscribir_coloquio")
-    private Boolean inscribirColoquio;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,43 +74,17 @@ public class PeriodoAdministrativo implements Serializable {
         this.fechaFin = fechaFin;
     }
 
-    public Boolean isConsultarPioridad() {
-        return consultarPioridad;
+    public PeriodoActividad getActividad() {
+        return actividad;
     }
 
-    public PeriodoAdministrativo consultarPioridad(Boolean consultarPioridad) {
-        this.consultarPioridad = consultarPioridad;
+    public PeriodoAdministrativo actividad(PeriodoActividad actividad) {
+        this.actividad = actividad;
         return this;
     }
 
-    public void setConsultarPioridad(Boolean consultarPioridad) {
-        this.consultarPioridad = consultarPioridad;
-    }
-
-    public Boolean isInscribirCursada() {
-        return inscribirCursada;
-    }
-
-    public PeriodoAdministrativo inscribirCursada(Boolean inscribirCursada) {
-        this.inscribirCursada = inscribirCursada;
-        return this;
-    }
-
-    public void setInscribirCursada(Boolean inscribirCursada) {
-        this.inscribirCursada = inscribirCursada;
-    }
-
-    public Boolean isInscribirColoquio() {
-        return inscribirColoquio;
-    }
-
-    public PeriodoAdministrativo inscribirColoquio(Boolean inscribirColoquio) {
-        this.inscribirColoquio = inscribirColoquio;
-        return this;
-    }
-
-    public void setInscribirColoquio(Boolean inscribirColoquio) {
-        this.inscribirColoquio = inscribirColoquio;
+    public void setActividad(PeriodoActividad actividad) {
+        this.actividad = actividad;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -142,9 +114,7 @@ public class PeriodoAdministrativo implements Serializable {
             "id=" + getId() +
             ", fechaInicio='" + getFechaInicio() + "'" +
             ", fechaFin='" + getFechaFin() + "'" +
-            ", consultarPioridad='" + isConsultarPioridad() + "'" +
-            ", inscribirCursada='" + isInscribirCursada() + "'" +
-            ", inscribirColoquio='" + isInscribirColoquio() + "'" +
+            ", actividad='" + getActividad() + "'" +
             "}";
     }
 }

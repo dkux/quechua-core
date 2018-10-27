@@ -41,17 +41,9 @@ export class PeriodoAdministrativoDetail extends React.Component<IPeriodoAdminis
               <TextFormat value={periodoAdministrativoEntity.fechaFin} type="date" format={APP_LOCAL_DATE_FORMAT} />
             </dd>
             <dt>
-              <span id="consultarPioridad">Consultar Pioridad</span>
+              <span id="actividad">Actividad</span>
             </dt>
-            <dd>{periodoAdministrativoEntity.consultarPioridad ? 'true' : 'false'}</dd>
-            <dt>
-              <span id="inscribirCursada">Inscribir Cursada</span>
-            </dt>
-            <dd>{periodoAdministrativoEntity.inscribirCursada ? 'true' : 'false'}</dd>
-            <dt>
-              <span id="inscribirColoquio">Inscribir Coloquio</span>
-            </dt>
-            <dd>{periodoAdministrativoEntity.inscribirColoquio ? 'true' : 'false'}</dd>
+            <dd>{periodoAdministrativoEntity.actividad}</dd>
           </dl>
           <Button tag={Link} to="/entity/periodo-administrativo" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

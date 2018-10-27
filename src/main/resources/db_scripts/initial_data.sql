@@ -103,10 +103,6 @@ VALUES
   (3, 'Algoritmos y Programación I', '75.02', 6, 2, 6),
   (4, 'Organización del Computador', '75.03', 6, 2, 6);
 
-INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
-VALUES
-  (1, 'SEGUNDO', '2018');
-
 INSERT INTO `curso` (`id`, `estado`, `vacantes`, `numero`, `profesor_id`, `periodo_id`, `materia_id`)
 VALUES
   (1, 'ACTIVO', 6, 1, 1, 1, 1),
