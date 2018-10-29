@@ -5,10 +5,7 @@ import fi.uba.quechua.QuechuaApp;
 import fi.uba.quechua.domain.InscripcionColoquio;
 import fi.uba.quechua.domain.Cursada;
 import fi.uba.quechua.repository.InscripcionColoquioRepository;
-import fi.uba.quechua.service.AlumnoService;
-import fi.uba.quechua.service.ColoquioService;
-import fi.uba.quechua.service.InscripcionColoquioService;
-import fi.uba.quechua.service.UserService;
+import fi.uba.quechua.service.*;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -64,6 +61,9 @@ public class InscripcionColoquioResourceIntTest {
     private AlumnoService alumnoService;
 
     @Autowired
+    private CursadaService cursadaService;
+
+    @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
     @Autowired
@@ -83,7 +83,7 @@ public class InscripcionColoquioResourceIntTest {
     public void setup() {
         MockitoAnnotations.initMocks(this);
         final InscripcionColoquioResource inscripcionColoquioResource = new InscripcionColoquioResource(inscripcionColoquioService,
-            userService, coloquioService, alumnoService);
+            userService, coloquioService, alumnoService, cursadaService);
         this.restInscripcionColoquioMockMvc = MockMvcBuilders.standaloneSetup(inscripcionColoquioResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

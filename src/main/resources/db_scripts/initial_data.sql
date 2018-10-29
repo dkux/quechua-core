@@ -51,7 +51,8 @@ VALUES
   (10, 'cgarcia@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Charly', 'Garcia', 'cgarcia@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (11, 'gcordera@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cordera', 'gcordera@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (12, 'fcantilo@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Faviana', 'Cantilo', 'fcantilo@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-  (13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
+  (13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (14, 'epresley@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Elvis', 'Presley', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
 
 
 INSERT INTO `jhi_user_authority` (`user_id`, `authority_name`)
@@ -64,7 +65,9 @@ VALUES
   (10, 'ROLE_ALUMNO'),
   (11, 'ROLE_ALUMNO'),
   (12, 'ROLE_ALUMNO'),
-  (13, 'ROLE_ALUMNO');
+  (13, 'ROLE_ALUMNO'),
+  (14, 'ROLE_ALUMNO'),
+  (14, 'ROLE_PROFESOR');
 
 INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
 VALUES
@@ -74,7 +77,8 @@ INSERT INTO `profesor` (`id`, `nombre`, `apellido`, `user_id`)
 VALUES
   (1, 'Mercedes', 'Sosa', 5),
   (2, 'Gustavo', 'Cerati', 6),
-  (3, 'Luis Alberto', 'Spinetta', 7);
+  (3, 'Luis Alberto', 'Spinetta', 7),
+  (4, 'Elvis', 'Presley', 14);
 
 
 INSERT INTO `alumno` (`id`, `nombre`, `apellido`, `padron`, `prioridad`, `user_id`)
@@ -84,7 +88,8 @@ VALUES
   (3, 'Charly', 'Garcia', '3000', 20, 10),
   (4, 'Gustavo', 'Cordera', '4000', 30, 11),
   (5, 'Fabiana', 'Cantilo', '5000', 60, 12),
-  (6, 'Hilda', 'Lizarazu', '6000', 32, 13);
+  (6, 'Hilda', 'Lizarazu', '6000', 32, 13),
+  (7, 'Elvis', 'Presley', '6000', 12, 14);
 
 INSERT INTO `alumno_carrera` (`id`, `alumno_id`, `carrera_id`)
 VALUES

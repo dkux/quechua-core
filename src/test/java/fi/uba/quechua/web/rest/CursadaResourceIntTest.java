@@ -4,6 +4,7 @@ import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.Cursada;
 import fi.uba.quechua.domain.Periodo;
+import fi.uba.quechua.domain.enumeration.CursadaEstado;
 import fi.uba.quechua.repository.CursadaRepository;
 import fi.uba.quechua.service.CursadaService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
@@ -32,7 +33,6 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import fi.uba.quechua.domain.enumeration.EstadoCursada;
 /**
  * Test class for the CursadaResource REST controller.
  *
@@ -51,8 +51,8 @@ public class CursadaResourceIntTest {
     private static final String DEFAULT_FOLIO = "AAAAAAAAAA";
     private static final String UPDATED_FOLIO = "BBBBBBBBBB";
 
-    private static final EstadoCursada DEFAULT_ESTADO = EstadoCursada.APROBADO;
-    private static final EstadoCursada UPDATED_ESTADO = EstadoCursada.REPROBADO;
+    private static final CursadaEstado DEFAULT_ESTADO = CursadaEstado.APROBADO;
+    private static final CursadaEstado UPDATED_ESTADO = CursadaEstado.REPROBADO;
 
     private static final Float DEFAULT_NOTA_FINAL = 1F;
     private static final Float UPDATED_NOTA_FINAL = 2F;
@@ -60,7 +60,7 @@ public class CursadaResourceIntTest {
     @Autowired
     private CursadaRepository cursadaRepository;
 
-    
+
 
     @Autowired
     private CursadaService cursadaService;
@@ -176,7 +176,7 @@ public class CursadaResourceIntTest {
             .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())))
             .andExpect(jsonPath("$.[*].notaFinal").value(hasItem(DEFAULT_NOTA_FINAL.doubleValue())));
     }
-    
+
 
     @Test
     @Transactional

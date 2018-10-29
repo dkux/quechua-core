@@ -37,12 +37,15 @@ public class InscripcionColoquioResource {
 
     private final ColoquioService coloquioService;
 
+    private CursadaService cursadaService;
+
     public InscripcionColoquioResource(InscripcionColoquioService inscripcionColoquioService, UserService userService,
-                                       ColoquioService coloquioService, AlumnoService alumnoService) {
+                                       ColoquioService coloquioService, AlumnoService alumnoService, CursadaService cursadaService) {
         this.inscripcionColoquioService = inscripcionColoquioService;
         this.userService = userService;
         this.coloquioService = coloquioService;
         this.alumnoService = alumnoService;
+        this.cursadaService = cursadaService;
     }
 
     /**
@@ -141,6 +144,10 @@ public class InscripcionColoquioResource {
             throw new BadRequestAlertException("No existe un coloquio con id provisto", "Coloquio", "idnoexists");
         }
 
+        Optional<Cursada> cursada = cursadaService.findCursadaByAlumnoAndCursoColoquioPendiente(alumno.get(), coloquio.get().getCurso());
+        if (!cursada.isPresent()) {
+            throw new BadRequestAlertException("No puede inscribirse al coloquio", "Coloquio", "idnoexists");
+        }
 
         Optional<InscripcionColoquio> inscripcionColoquio = inscripcionColoquioService.findByColoquioAndAlumnoAndEstado(coloquio.get(), alumno.get(), InscripcionColoquioEstado.ACTIVA);
         if (inscripcionColoquio.isPresent()) {
@@ -150,6 +157,7 @@ public class InscripcionColoquioResource {
         inscripcion.setAlumno(alumno.get());
         inscripcion.setColoquio(coloquio.get());
         inscripcion.estado(InscripcionColoquioEstado.ACTIVA);
+        inscripcion.setCursada(cursada.get());
         InscripcionColoquio result = inscripcionColoquioService.save(inscripcion);
         return ResponseEntity.created(new URI("/api/inscripcion-coloquios/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("inscripcionColoquio", result.getId().toString()))

@@ -1,14 +1,10 @@
 package fi.uba.quechua.service;
 
-import fi.uba.quechua.domain.Alumno;
-import fi.uba.quechua.domain.Cursada;
-import fi.uba.quechua.domain.InscripcionCurso;
-import fi.uba.quechua.domain.Periodo;
-import fi.uba.quechua.domain.enumeration.EstadoCursada;
+import fi.uba.quechua.domain.*;
+import fi.uba.quechua.domain.enumeration.CursadaEstado;
+import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import fi.uba.quechua.domain.enumeration.InscripcionCursoEstado;
-import fi.uba.quechua.repository.CursadaRepository;
-import fi.uba.quechua.repository.InscripcionCursoRepository;
-import fi.uba.quechua.repository.PeriodoRepository;
+import fi.uba.quechua.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,11 +30,14 @@ public class CursadaService {
 
     private final PeriodoRepository periodoRepository;
 
+    private final InscripcionColoquioRepository inscripcionColoquioRepository;
+
     public CursadaService(CursadaRepository cursadaRepository, InscripcionCursoRepository inscripcionCursoRepository,
-                          PeriodoRepository periodoRepository) {
+                          PeriodoRepository periodoRepository, InscripcionColoquioRepository inscripcionColoquioRepository) {
         this.cursadaRepository = cursadaRepository;
         this.inscripcionCursoRepository = inscripcionCursoRepository;
         this.periodoRepository = periodoRepository;
+        this.inscripcionColoquioRepository = inscripcionColoquioRepository;
     }
 
     /**
@@ -87,7 +86,7 @@ public class CursadaService {
     }
 
     public List<Cursada> findCursadasActivasByAlumno(Alumno alumno) {
-        List<EstadoCursada> estadoCursadas = Arrays.asList(EstadoCursada.ACTIVA, EstadoCursada.FINAL_PENDIENTE);
+        List<CursadaEstado> estadoCursadas = Arrays.asList(CursadaEstado.ACTIVA, CursadaEstado.FINAL_PENDIENTE);
         List<Cursada> cursadas = cursadaRepository.findAllByAlumnoAndEstadoIn(alumno, estadoCursadas);
         for (Cursada cursada: cursadas) {
             cursada.getCurso().getHorarios().size();
@@ -104,9 +103,27 @@ public class CursadaService {
             Cursada cursada = new Cursada();
             cursada.setAlumno(inscripcionCurso.getAlumno());
             cursada.setCurso(inscripcionCurso.getCurso());
-            cursada.setEstado(EstadoCursada.ACTIVA);
+            cursada.setEstado(CursadaEstado.ACTIVA);
             cursada.setPeriodo(periodo.get());
             cursadaRepository.save(cursada);
         }
+    }
+
+    public Optional<Cursada> findCursadaByAlumnoAndCursoColoquioPendiente(Alumno alumno, Curso curso) {
+        log.debug("Request to find cursada by Alumno : {} y curso: {}", alumno.getId(), curso.getId());
+        Optional<Cursada> cursada = cursadaRepository.findCursadaByAlumnoAndCursoAndEstado(alumno, curso, CursadaEstado.FINAL_PENDIENTE);
+        if (!cursada.isPresent()) {
+            log.debug("No se encontró la cursada");
+            return cursada;
+        } else {
+            log.debug("Se encontro la cursada {}", cursada.get().getId());
+        }
+        //Busco los coloquios que ya rindió el alumno con esa cursada
+        List<InscripcionColoquio> incripcionesColoquio = inscripcionColoquioRepository.findAllByCursadaAndEstado(cursada.get(), InscripcionColoquioEstado.DESAPROBADA);
+        log.debug("Se encontraron {} inscripciones a coloquios", incripcionesColoquio.size());
+        if (incripcionesColoquio.size() >= 3) {
+            return Optional.empty();
+        }
+        return cursada;
     }
 }

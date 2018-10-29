@@ -4,5 +4,5 @@ package fi.uba.quechua.domain.enumeration;
  * The CursadaEstado enumeration.
  */
 public enum CursadaEstado {
-    APROBADA, DESAPROBADA, ACTIVA
+    APROBADO, REPROBADO, FINAL_PENDIENTE, FINAL_APROBADO, APLAZO, ACTIVA
 }

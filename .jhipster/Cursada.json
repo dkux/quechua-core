@@ -39,7 +39,7 @@
         },
         {
             "fieldName": "estado",
-            "fieldType": "EstadoCursada",
+            "fieldType": "CursadaEstado",
             "fieldValues": "APROBADO,REPROBADO,FINAL_PENDIENTE,FINAL_APROBADO,APLAZO,ACTIVA"
         },
         {

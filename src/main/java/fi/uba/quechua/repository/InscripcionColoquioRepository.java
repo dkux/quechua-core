@@ -2,6 +2,7 @@ package fi.uba.quechua.repository;
 
 import fi.uba.quechua.domain.Alumno;
 import fi.uba.quechua.domain.Coloquio;
+import fi.uba.quechua.domain.Cursada;
 import fi.uba.quechua.domain.InscripcionColoquio;
 import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import org.springframework.data.jpa.repository.*;
@@ -21,4 +22,6 @@ public interface InscripcionColoquioRepository extends JpaRepository<Inscripcion
     Optional<InscripcionColoquio> findByColoquioAndAlumnoAndEstado(Coloquio coloquio, Alumno alumno, InscripcionColoquioEstado estado);
 
     List<InscripcionColoquio> findAllByAlumnoAndEstado(Alumno alumno, InscripcionColoquioEstado estado);
+
+    List<InscripcionColoquio> findAllByCursadaAndEstado(Cursada cursada, InscripcionColoquioEstado estado);
 }

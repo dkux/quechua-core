@@ -1,6 +1,7 @@
 package fi.uba.quechua.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import fi.uba.quechua.domain.enumeration.CursadaEstado;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -9,8 +10,6 @@ import javax.validation.constraints.*;
 
 import java.io.Serializable;
 import java.util.Objects;
-
-import fi.uba.quechua.domain.enumeration.EstadoCursada;
 
 /**
  * A Cursada.
@@ -37,7 +36,7 @@ public class Cursada implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "estado")
-    private EstadoCursada estado;
+    private CursadaEstado estado;
 
     @Column(name = "nota_final")
     private Float notaFinal;
@@ -103,16 +102,16 @@ public class Cursada implements Serializable {
         this.folio = folio;
     }
 
-    public EstadoCursada getEstado() {
+    public CursadaEstado getEstado() {
         return estado;
     }
 
-    public Cursada estado(EstadoCursada estado) {
+    public Cursada estado(CursadaEstado estado) {
         this.estado = estado;
         return this;
     }
 
-    public void setEstado(EstadoCursada estado) {
+    public void setEstado(CursadaEstado estado) {
         this.estado = estado;
     }
 

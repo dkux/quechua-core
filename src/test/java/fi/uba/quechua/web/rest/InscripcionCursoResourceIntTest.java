@@ -48,8 +48,8 @@ public class InscripcionCursoResourceIntTest {
     private static final InscripcionCursoEstado DEFAULT_ESTADO = InscripcionCursoEstado.REGULAR;
     private static final InscripcionCursoEstado UPDATED_ESTADO = InscripcionCursoEstado.CONDICIONAL;
 
-    private static final CursadaEstado DEFAULT_CURSADA_ESTADO = CursadaEstado.APROBADA;
-    private static final CursadaEstado UPDATED_CURSADA_ESTADO = CursadaEstado.DESAPROBADA;
+    private static final CursadaEstado DEFAULT_CURSADA_ESTADO = CursadaEstado.APROBADO;
+    private static final CursadaEstado UPDATED_CURSADA_ESTADO = CursadaEstado.REPROBADO;
 
     @Autowired
     private InscripcionCursoRepository inscripcionCursoRepository;
