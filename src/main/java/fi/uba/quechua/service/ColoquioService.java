@@ -3,8 +3,11 @@ package fi.uba.quechua.service;
 import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.domain.Periodo;
+import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import fi.uba.quechua.repository.ColoquioRepository;
+import fi.uba.quechua.repository.InscripcionColoquioRepository;
 import fi.uba.quechua.repository.PeriodoRepository;
+import fi.uba.quechua.service.dto.ColoquioDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,9 +33,13 @@ public class ColoquioService {
 
     private final PeriodoRepository periodoRepository;
 
-    public ColoquioService(ColoquioRepository coloquioRepository, PeriodoRepository periodoRepository) {
+    private final InscripcionColoquioRepository inscripcionColoquioRepository;
+
+    public ColoquioService(ColoquioRepository coloquioRepository, PeriodoRepository periodoRepository,
+                           InscripcionColoquioRepository inscripcionColoquioRepository) {
         this.coloquioRepository = coloquioRepository;
         this.periodoRepository = periodoRepository;
+        this.inscripcionColoquioRepository = inscripcionColoquioRepository;
     }
 
     /**
@@ -80,13 +87,28 @@ public class ColoquioService {
         coloquioRepository.deleteById(id);
     }
 
-    public List<Coloquio> findAllByCurso(Curso curso) {
-        log.debug("Request to get Coloquios by curso {}", curso.getId());
+    public List<Coloquio> findAllByCursoParaInscribirse(Curso curso) {
+        log.debug("Request to get Coloquios by curso {} para inscribirse", curso.getId());
         Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
         if (!periodo.isPresent()) {
             return new LinkedList<>();
         }
         LocalDate fecha = LocalDate.now().plusDays(2);
-        return coloquioRepository.findAllByCursoAndPeriodoAndFechaGreaterThanEqual(curso, periodo.get(), fecha);
+        return coloquioRepository.findAllByCursoAndPeriodoAndFechaGreaterThanEqualOrderByFechaDesc(curso, periodo.get(), fecha);
+    }
+
+    public List<ColoquioDTO> findAllColoquiosDTOByCurso(Curso curso) {
+        log.debug("Request to get Coloquios by curso {}", curso.getId());
+        Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
+        if (!periodo.isPresent()) {
+            return new LinkedList<>();
+        }
+        List<Coloquio> coloquios = coloquioRepository.findAllByCursoAndPeriodoOrderByFechaDesc(curso, periodo.get());
+        List<ColoquioDTO> coloquiosDTO = new LinkedList<>();
+        for (Coloquio coloquio: coloquios) {
+            Integer inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA).size();
+            coloquiosDTO.add(new ColoquioDTO(coloquio, inscripciones));
+        }
+        return coloquiosDTO;
     }
 }

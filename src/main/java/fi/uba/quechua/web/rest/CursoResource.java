@@ -5,6 +5,7 @@ import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.service.ColoquioService;
 import fi.uba.quechua.service.CursoService;
+import fi.uba.quechua.service.dto.ColoquioDTO;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -123,18 +124,34 @@ public class CursoResource {
     }
 
     /**
+     * GET  /coloquios/{cursoId}/coloquiosParaInscribirse : get all the coloquios by curso.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of coloquios in body
+     */
+    @GetMapping("/cursos/{cursoId}/coloquiosParaInscribirse")
+    @Timed
+    public List<Coloquio> getColoquiosParaInscribirseByCurso(@PathVariable Long cursoId) {
+        log.debug("REST request to get Coloquios by curso {} para inscribirse", cursoId);
+        Optional<Curso> curso = cursoService.findOne(cursoId);
+        if (!curso.isPresent()) {
+            throw new BadRequestAlertException("No existe el curso con id provisto", "Curso", "idnoexists");
+        }
+        return coloquioService.findAllByCursoParaInscribirse(curso.get());
+    }
+
+    /**
      * GET  /coloquios/{cursoId}/coloquios : get all the coloquios by curso.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of coloquios in body
      */
     @GetMapping("/cursos/{cursoId}/coloquios")
     @Timed
-    public List<Coloquio> getColoquiosByCurso(@PathVariable Long cursoId) {
+    public List<ColoquioDTO> getColoquiosByCurso(@PathVariable Long cursoId) {
         log.debug("REST request to get all Coloquios by curso {}", cursoId);
         Optional<Curso> curso = cursoService.findOne(cursoId);
         if (!curso.isPresent()) {
             throw new BadRequestAlertException("No existe el curso con id provisto", "Curso", "idnoexists");
         }
-        return coloquioService.findAllByCurso(curso.get());
+        return coloquioService.findAllColoquiosDTOByCurso(curso.get());
     }
 }

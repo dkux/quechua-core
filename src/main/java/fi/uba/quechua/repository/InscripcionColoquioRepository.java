@@ -24,4 +24,6 @@ public interface InscripcionColoquioRepository extends JpaRepository<Inscripcion
     List<InscripcionColoquio> findAllByAlumnoAndEstado(Alumno alumno, InscripcionColoquioEstado estado);
 
     List<InscripcionColoquio> findAllByCursadaAndEstado(Cursada cursada, InscripcionColoquioEstado estado);
+
+    List<InscripcionColoquio> findAllByColoquioAndEstado(Coloquio coloquio, InscripcionColoquioEstado estado);
 }

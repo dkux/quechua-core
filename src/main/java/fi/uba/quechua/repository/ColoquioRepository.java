@@ -17,5 +17,7 @@ import java.util.List;
 @Repository
 public interface ColoquioRepository extends JpaRepository<Coloquio, Long> {
 
-    List<Coloquio> findAllByCursoAndPeriodoAndFechaGreaterThanEqual(Curso curso, Periodo periodo, LocalDate fecha);
+    List<Coloquio> findAllByCursoAndPeriodoAndFechaGreaterThanEqualOrderByFechaDesc(Curso curso, Periodo periodo, LocalDate fecha);
+
+    List<Coloquio> findAllByCursoAndPeriodoOrderByFechaDesc(Curso curso, Periodo periodo);
 }
