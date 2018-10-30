@@ -21,5 +21,5 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 
     List<Curso> findAllByMateriaAndEstado(Materia materia, CursoEstado estado);
 
-    List<Curso> findAllByProfesorAndEstado(Profesor profesor, CursoEstado estado);
+    List<Curso> findAllByProfesorAndEstadoOrderById(Profesor profesor, CursoEstado estado);
 }
