@@ -1,6 +1,7 @@
 package fi.uba.quechua.service;
 
 import fi.uba.quechua.domain.PeriodoAdministrativo;
+import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 import fi.uba.quechua.repository.PeriodoAdministrativoRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -68,5 +70,11 @@ public class PeriodoAdministrativoService {
     public void delete(Long id) {
         log.debug("Request to delete PeriodoAdministrativo : {}", id);
         periodoAdministrativoRepository.deleteById(id);
+    }
+
+    public List<PeriodoActividad> getActividadesDisponibles() {
+        LocalDate today = LocalDate.now();
+        log.debug("Request to get Actividades en fecha : {}", today);
+        return periodoAdministrativoRepository.selectActividadesDisponiblesEnFecha(today);
     }
 }

@@ -2,6 +2,7 @@ package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.PeriodoAdministrativo;
+import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 import fi.uba.quechua.service.PeriodoAdministrativoService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
@@ -115,5 +116,17 @@ public class PeriodoAdministrativoResource {
         log.debug("REST request to delete PeriodoAdministrativo : {}", id);
         periodoAdministrativoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * GET  /periodo-administrativos : get all the Actividades disponibles en la fecha actual.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of PeriodoActividad in body
+     */
+    @GetMapping("/periodo-administrativos/acciones")
+    @Timed
+    public List<PeriodoActividad> getAccionesDisponibles() {
+        log.debug("REST request to get all Acciones disponibles en la fecha actual");
+        return periodoAdministrativoService.getActividadesDisponibles();
     }
 }
