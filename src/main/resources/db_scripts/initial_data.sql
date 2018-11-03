@@ -52,7 +52,7 @@ VALUES
   (11, 'gcordera@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cordera', 'gcordera@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (12, 'fcantilo@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Faviana', 'Cantilo', 'fcantilo@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-  (14, 'epresley@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Elvis', 'Presley', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
+  (14, 'epresley@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Elvis', 'Presley', 'epresley@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
 
 
 INSERT INTO `jhi_user_authority` (`user_id`, `authority_name`)
@@ -119,10 +119,10 @@ VALUES
   (2, 'MIERCOLES', 'PC', '102', '19:00', '23:00', 1),
   (3, 'VIERNES', 'LH', '201', '15:00', '18:00', 2);
 
-INSERT INTO `coloquio` (`id`, `aula`, `hora_inicio`, `hora_fin`, `sede`, `fecha`, `curso_id`, `periodo_id`)
+INSERT INTO `coloquio` (`id`, `aula`, `hora_inicio`, `hora_fin`, `sede`, `fecha`, `curso_id`, `periodo_id`, `estado`)
 VALUES
-  (1, '201', '19:00', '22:00', 'PC', '2018-12-23', 1, 1),
-  (2, 'E9', '9:00', '12:00', 'PC', '2018-12-18', 2, 1);
+  (1, '201', '19:00', '22:00', 'PC', '2018-12-23', 1, 1, 'ACTIVO'),
+  (2, 'E9', '9:00', '12:00', 'PC', '2018-12-18', 2, 1, 'ACTIVO');
 
 INSERT INTO `prioridad` (`fecha_habilitacion`, `periodo_id`)
 VALUES
@@ -221,3 +221,9 @@ VALUES
   ("2018-07-27 17:00:00",1),
   ("2018-07-27 17:30:00",1),
   ("2018-07-27 18:00:00",1);
+
+INSERT INTO `periodo_administrativo` (`id`, `fecha_inicio`, `fecha_fin`, `actividad`)
+VALUES
+  (1, '2018-07-01', '2018-12-31', 'INSCRIPCION_CURSADA'),
+  (2, '2018-07-01', '2018-12-31', 'CONSULTAR_PRIORIDAD'),
+  (3, '2018-07-01', '2018-12-31', 'INSCRIPCION_COLOQUIO');

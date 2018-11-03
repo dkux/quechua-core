@@ -5,7 +5,9 @@ import fi.uba.quechua.QuechuaApp;
 import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.Periodo;
 import fi.uba.quechua.repository.ColoquioRepository;
+import fi.uba.quechua.repository.ProfesorRepository;
 import fi.uba.quechua.service.ColoquioService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -35,6 +37,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import fi.uba.quechua.domain.enumeration.Sede;
+import fi.uba.quechua.domain.enumeration.ColoquioEstado;
 /**
  * Test class for the ColoquioResource REST controller.
  *
@@ -65,13 +68,22 @@ public class ColoquioResourceIntTest {
     private static final String DEFAULT_FOLIO = "AAAAAAAAAA";
     private static final String UPDATED_FOLIO = "BBBBBBBBBB";
 
+    private static final ColoquioEstado DEFAULT_ESTADO = ColoquioEstado.ACTIVO;
+    private static final ColoquioEstado UPDATED_ESTADO = ColoquioEstado.ELIMINADO;
+
     @Autowired
     private ColoquioRepository coloquioRepository;
 
-    
+
 
     @Autowired
     private ColoquioService coloquioService;
+
+    @Autowired
+    private ProfesorRepository profesorRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -92,7 +104,7 @@ public class ColoquioResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ColoquioResource coloquioResource = new ColoquioResource(coloquioService);
+        final ColoquioResource coloquioResource = new ColoquioResource(coloquioService, profesorRepository, userService);
         this.restColoquioMockMvc = MockMvcBuilders.standaloneSetup(coloquioResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -114,7 +126,8 @@ public class ColoquioResourceIntTest {
             .sede(DEFAULT_SEDE)
             .fecha(DEFAULT_FECHA)
             .libro(DEFAULT_LIBRO)
-            .folio(DEFAULT_FOLIO);
+            .folio(DEFAULT_FOLIO)
+            .estado(DEFAULT_ESTADO);
         // Add required entity
         Periodo periodo = PeriodoResourceIntTest.createEntity(em);
         em.persist(periodo);
@@ -150,6 +163,7 @@ public class ColoquioResourceIntTest {
         assertThat(testColoquio.getFecha()).isEqualTo(DEFAULT_FECHA);
         assertThat(testColoquio.getLibro()).isEqualTo(DEFAULT_LIBRO);
         assertThat(testColoquio.getFolio()).isEqualTo(DEFAULT_FOLIO);
+        assertThat(testColoquio.getEstado()).isEqualTo(DEFAULT_ESTADO);
     }
 
     @Test
@@ -263,6 +277,24 @@ public class ColoquioResourceIntTest {
 
     @Test
     @Transactional
+    public void checkEstadoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = coloquioRepository.findAll().size();
+        // set the field null
+        coloquio.setEstado(null);
+
+        // Create the Coloquio, which fails.
+
+        restColoquioMockMvc.perform(post("/api/coloquios")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(coloquio)))
+            .andExpect(status().isBadRequest());
+
+        List<Coloquio> coloquioList = coloquioRepository.findAll();
+        assertThat(coloquioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllColoquios() throws Exception {
         // Initialize the database
         coloquioRepository.saveAndFlush(coloquio);
@@ -278,9 +310,10 @@ public class ColoquioResourceIntTest {
             .andExpect(jsonPath("$.[*].sede").value(hasItem(DEFAULT_SEDE.toString())))
             .andExpect(jsonPath("$.[*].fecha").value(hasItem(DEFAULT_FECHA.toString())))
             .andExpect(jsonPath("$.[*].libro").value(hasItem(DEFAULT_LIBRO.toString())))
-            .andExpect(jsonPath("$.[*].folio").value(hasItem(DEFAULT_FOLIO.toString())));
+            .andExpect(jsonPath("$.[*].folio").value(hasItem(DEFAULT_FOLIO.toString())))
+            .andExpect(jsonPath("$.[*].estado").value(hasItem(DEFAULT_ESTADO.toString())));
     }
-    
+
 
     @Test
     @Transactional
@@ -299,7 +332,8 @@ public class ColoquioResourceIntTest {
             .andExpect(jsonPath("$.sede").value(DEFAULT_SEDE.toString()))
             .andExpect(jsonPath("$.fecha").value(DEFAULT_FECHA.toString()))
             .andExpect(jsonPath("$.libro").value(DEFAULT_LIBRO.toString()))
-            .andExpect(jsonPath("$.folio").value(DEFAULT_FOLIO.toString()));
+            .andExpect(jsonPath("$.folio").value(DEFAULT_FOLIO.toString()))
+            .andExpect(jsonPath("$.estado").value(DEFAULT_ESTADO.toString()));
     }
     @Test
     @Transactional
@@ -328,7 +362,8 @@ public class ColoquioResourceIntTest {
             .sede(UPDATED_SEDE)
             .fecha(UPDATED_FECHA)
             .libro(UPDATED_LIBRO)
-            .folio(UPDATED_FOLIO);
+            .folio(UPDATED_FOLIO)
+            .estado(UPDATED_ESTADO);
 
         restColoquioMockMvc.perform(put("/api/coloquios")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -346,6 +381,7 @@ public class ColoquioResourceIntTest {
         assertThat(testColoquio.getFecha()).isEqualTo(UPDATED_FECHA);
         assertThat(testColoquio.getLibro()).isEqualTo(UPDATED_LIBRO);
         assertThat(testColoquio.getFolio()).isEqualTo(UPDATED_FOLIO);
+        assertThat(testColoquio.getEstado()).isEqualTo(UPDATED_ESTADO);
     }
 
     @Test

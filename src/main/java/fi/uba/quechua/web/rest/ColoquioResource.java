@@ -2,7 +2,10 @@ package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.Coloquio;
+import fi.uba.quechua.domain.Profesor;
+import fi.uba.quechua.repository.ProfesorRepository;
 import fi.uba.quechua.service.ColoquioService;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -31,8 +34,15 @@ public class ColoquioResource {
 
     private final ColoquioService coloquioService;
 
-    public ColoquioResource(ColoquioService coloquioService) {
+    private final ProfesorRepository profesorRepository;
+
+    private final UserService userService;
+
+    public ColoquioResource(ColoquioService coloquioService, ProfesorRepository profesorRepository,
+                            UserService userService) {
         this.coloquioService = coloquioService;
+        this.profesorRepository = profesorRepository;
+        this.userService = userService;
     }
 
     /**
@@ -115,5 +125,31 @@ public class ColoquioResource {
         log.debug("REST request to delete Coloquio : {}", id);
         coloquioService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    /**
+     * POST  /coloquios/:coloquioId/eliminar : Elimina el coloquio.
+     *
+     * @param coloquioId the coloquio to eliminar
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @PostMapping("/coloquios/{coloquioId}/eliminar")
+    @Timed
+    public ResponseEntity<Coloquio> eliminarColoquio(@PathVariable Long coloquioId) {
+        log.debug("REST request to eliminar Coloquio : {}", coloquioId);
+        Optional<Coloquio> coloquio = coloquioService.findOne(coloquioId);
+        if (!coloquio.isPresent()) {
+            throw new BadRequestAlertException("No existe un Coloquio con el Id", ENTITY_NAME, "idnoexists");
+        }
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Profesor> profesor = profesorRepository.findByUserId(userId);
+        if (!profesor.isPresent()) {
+            throw new BadRequestAlertException("No existe un Profesor asociado al usuario logueado", ENTITY_NAME, "idnoexists");
+        }
+        if (coloquio.get().getCurso().getProfesor().getId() != profesor.get().getId()) {
+            throw new BadRequestAlertException("El coloquio no pertence al profesor logueado", ENTITY_NAME, "idnoexists");
+        }
+        coloquioService.eliminar(coloquio.get());
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, coloquioId.toString())).build();
     }
 }

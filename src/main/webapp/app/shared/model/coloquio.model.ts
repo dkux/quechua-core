@@ -7,6 +7,11 @@ export const enum Sede {
   LH = 'LH'
 }
 
+export const enum ColoquioEstado {
+  ACTIVO = 'ACTIVO',
+  ELIMINADO = 'ELIMINADO'
+}
+
 export interface IColoquio {
   id?: number;
   aula?: string;
@@ -16,6 +21,7 @@ export interface IColoquio {
   fecha?: Moment;
   libro?: string;
   folio?: string;
+  estado?: ColoquioEstado;
   curso?: ICurso;
   periodo?: IPeriodo;
 }

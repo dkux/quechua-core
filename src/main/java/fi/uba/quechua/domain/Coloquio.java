@@ -13,6 +13,8 @@ import java.util.Objects;
 
 import fi.uba.quechua.domain.enumeration.Sede;
 
+import fi.uba.quechua.domain.enumeration.ColoquioEstado;
+
 /**
  * A Coloquio.
  */
@@ -53,6 +55,11 @@ public class Coloquio implements Serializable {
 
     @Column(name = "folio")
     private String folio;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado", nullable = false)
+    private ColoquioEstado estado;
 
     @ManyToOne
     @JsonIgnoreProperties("")
@@ -163,6 +170,19 @@ public class Coloquio implements Serializable {
         this.folio = folio;
     }
 
+    public ColoquioEstado getEstado() {
+        return estado;
+    }
+
+    public Coloquio estado(ColoquioEstado estado) {
+        this.estado = estado;
+        return this;
+    }
+
+    public void setEstado(ColoquioEstado estado) {
+        this.estado = estado;
+    }
+
     public Curso getCurso() {
         return curso;
     }
@@ -221,6 +241,7 @@ public class Coloquio implements Serializable {
             ", fecha='" + getFecha() + "'" +
             ", libro='" + getLibro() + "'" +
             ", folio='" + getFolio() + "'" +
+            ", estado='" + getEstado() + "'" +
             "}";
     }
 }

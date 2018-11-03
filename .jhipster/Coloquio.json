@@ -62,6 +62,14 @@
         {
             "fieldName": "folio",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "ColoquioEstado",
+            "fieldValues": "ACTIVO,ELIMINADO",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20181009020839",

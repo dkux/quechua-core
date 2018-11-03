@@ -3,6 +3,7 @@ package fi.uba.quechua.service;
 import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.domain.Periodo;
+import fi.uba.quechua.domain.enumeration.ColoquioEstado;
 import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import fi.uba.quechua.repository.ColoquioRepository;
 import fi.uba.quechua.repository.InscripcionColoquioRepository;
@@ -94,7 +95,7 @@ public class ColoquioService {
             return new LinkedList<>();
         }
         LocalDate fecha = LocalDate.now().plusDays(2);
-        return coloquioRepository.findAllByCursoAndPeriodoAndFechaGreaterThanEqualOrderByFechaDesc(curso, periodo.get(), fecha);
+        return coloquioRepository.findAllByCursoAndPeriodoAndFechaGreaterThanEqualAndEstadoOrderByFechaDesc(curso, periodo.get(), fecha, ColoquioEstado.ACTIVO);
     }
 
     public List<ColoquioDTO> findAllColoquiosDTOByCurso(Curso curso) {
@@ -103,12 +104,18 @@ public class ColoquioService {
         if (!periodo.isPresent()) {
             return new LinkedList<>();
         }
-        List<Coloquio> coloquios = coloquioRepository.findAllByCursoAndPeriodoOrderByFechaDesc(curso, periodo.get());
+        List<Coloquio> coloquios = coloquioRepository.findAllByCursoAndPeriodoAndEstadoOrderByFechaDesc(curso, periodo.get(), ColoquioEstado.ACTIVO);
         List<ColoquioDTO> coloquiosDTO = new LinkedList<>();
         for (Coloquio coloquio: coloquios) {
             Integer inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA).size();
             coloquiosDTO.add(new ColoquioDTO(coloquio, inscripciones));
         }
         return coloquiosDTO;
+    }
+
+    public void eliminar(Coloquio coloquio) {
+        coloquio.setEstado(ColoquioEstado.ELIMINADO);
+        coloquioRepository.save(coloquio);
+        //@TODO Notificar a los alumnos inscriptos
     }
 }

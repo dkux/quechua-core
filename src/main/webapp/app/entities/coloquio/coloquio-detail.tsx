@@ -58,6 +58,10 @@ export class ColoquioDetail extends React.Component<IColoquioDetailProps> {
               <span id="folio">Folio</span>
             </dt>
             <dd>{coloquioEntity.folio}</dd>
+            <dt>
+              <span id="estado">Estado</span>
+            </dt>
+            <dd>{coloquioEntity.estado}</dd>
             <dt>Curso</dt>
             <dd>{coloquioEntity.curso ? coloquioEntity.curso.id : ''}</dd>
             <dt>Periodo</dt>

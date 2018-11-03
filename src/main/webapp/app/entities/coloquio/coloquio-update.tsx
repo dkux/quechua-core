@@ -204,6 +204,19 @@ export class ColoquioUpdate extends React.Component<IColoquioUpdateProps, IColoq
                   <AvField id="coloquio-folio" type="text" name="folio" />
                 </AvGroup>
                 <AvGroup>
+                  <Label id="estadoLabel">Estado</Label>
+                  <AvInput
+                    id="coloquio-estado"
+                    type="select"
+                    className="form-control"
+                    name="estado"
+                    value={(!isNew && coloquioEntity.estado) || 'ACTIVO'}
+                  >
+                    <option value="ACTIVO">ACTIVO</option>
+                    <option value="ELIMINADO">ELIMINADO</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
                   <Label for="curso.id">Curso</Label>
                   <AvInput id="coloquio-curso" type="select" className="form-control" name="curso.id" onChange={this.cursoUpdate}>
                     <option value="" key="0" />
