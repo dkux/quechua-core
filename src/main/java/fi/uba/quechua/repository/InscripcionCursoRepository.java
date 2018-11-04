@@ -32,4 +32,8 @@ public interface InscripcionCursoRepository extends JpaRepository<InscripcionCur
     List<InscripcionCurso> findAllNoEliminadasByCursoOrderByAlumnoNombre(@Param("curso") Curso curso , @Param("eliminada") InscripcionCursoEstado eliminada);
 
     List<InscripcionCurso> findByEstadoNot(InscripcionCursoEstado estado);
+
+    @Query("SELECT i FROM InscripcionCurso i " +
+    	"WHERE i.estado <> :eliminada AND i.alumno = :alumno ")
+    List<InscripcionCurso> findAllByAlumnoAndEstadoNot(@Param("alumno") Alumno alumno, @Param("eliminada") InscripcionCursoEstado eliminada);
 }

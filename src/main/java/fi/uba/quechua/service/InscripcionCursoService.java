@@ -87,4 +87,14 @@ public class InscripcionCursoService {
         log.debug("Request to get InscripcionCursos by Curso {}", curso.getId());
         return inscripcionCursoRepository.findAllByCursoAndEstado(curso, InscripcionCursoEstado.REGULAR);
     }
+
+    /**
+     * Get all the inscripcionCurso by alumno.
+     *
+     * @param id the id of the entity
+     */
+    public List<InscripcionCurso> findAllActivasByAlumno(Alumno alumno) {
+        log.debug("Request to get InscripcionCursos by Alumno {}", alumno.getId());
+        return inscripcionCursoRepository.findAllByAlumnoAndEstadoNot(alumno, InscripcionCursoEstado.ELIMINADA);
+    }
 }

@@ -194,4 +194,21 @@ public class InscripcionCursoResource {
             .body(result);
     }
 
+    /**
+     * GET  /inscripcion-cursos/byAlumno : get all the inscripcionCursos by Alumno.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of inscripcionCursos in body
+     */
+    @GetMapping("/inscripcion-cursos/byAlumno")
+    @Timed
+    public List<InscripcionCurso> getAllInscripcionCursosByAlumno() {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        log.debug("REST request to get all InscripcionCursos by Almuno {}", userId);
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
+        }
+        return inscripcionCursoService.findAllActivasByAlumno(alumno.get());
+    }
+
 }
