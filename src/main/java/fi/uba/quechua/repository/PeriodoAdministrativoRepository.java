@@ -19,4 +19,7 @@ public interface PeriodoAdministrativoRepository extends JpaRepository<PeriodoAd
 
     @Query("SELECT p.actividad FROM PeriodoAdministrativo p WHERE :fecha BETWEEN p.fechaInicio AND p.fechaFin")
     List<PeriodoActividad> selectActividadesDisponiblesEnFecha(@Param("fecha")LocalDate fecha);
+
+    @Query("SELECT p FROM PeriodoAdministrativo p WHERE :fecha BETWEEN p.fechaInicio AND p.fechaFin")
+    List<PeriodoAdministrativo> selectPeriodosAdministrativosDisponiblesEnFecha(@Param("fecha")LocalDate fecha);
 }

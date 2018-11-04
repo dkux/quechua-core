@@ -129,4 +129,16 @@ public class PeriodoAdministrativoResource {
         log.debug("REST request to get all Acciones disponibles en la fecha actual");
         return periodoAdministrativoService.getActividadesDisponibles();
     }
+
+    /**
+     * GET  /periodo-administrativos/periodos : get all the Periodos Administrativos disponibles en la fecha actual.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of PeriodoAdministrativo in body
+     */
+    @GetMapping("/periodo-administrativos/periodos")
+    @Timed
+    public List<PeriodoAdministrativo> getPeriodosAdministrativosDisponibles() {
+        log.debug("REST request to get all Acciones disponibles en la fecha actual");
+        return periodoAdministrativoService.getPeriodosAdministrativosDisponibles();
+    }    
 }

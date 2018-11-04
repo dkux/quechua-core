@@ -77,4 +77,10 @@ public class PeriodoAdministrativoService {
         log.debug("Request to get Actividades en fecha : {}", today);
         return periodoAdministrativoRepository.selectActividadesDisponiblesEnFecha(today);
     }
+
+    public List<PeriodoAdministrativo> getPeriodosAdministrativosDisponibles() {
+        LocalDate today = LocalDate.now();
+        log.debug("Request to get Actividades en fecha : {}", today);
+        return periodoAdministrativoRepository.selectPeriodosAdministrativosDisponiblesEnFecha(today);
+    }
 }
