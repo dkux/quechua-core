@@ -208,7 +208,16 @@ public class InscripcionCursoResource {
         if (!alumno.isPresent()) {
             throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
         }
-        return inscripcionCursoService.findAllActivasByAlumno(alumno.get());
+
+        List<InscripcionCurso> inscripciones = inscripcionCursoService.findAllActivasByAlumno(alumno.get());
+        for (InscripcionCurso inscripcion: inscripciones ) {
+            Optional<Curso> curso = cursoService.findOneWithHorarios(inscripcion.getCurso().getId());
+            if (curso.isPresent()) {
+                inscripcion.setCurso(curso.get());
+            }
+        }
+
+        return inscripciones;
     }
 
 }
