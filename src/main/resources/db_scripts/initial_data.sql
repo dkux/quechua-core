@@ -52,7 +52,9 @@ VALUES
   (11, 'gcordera@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Gustavo', 'Cordera', 'gcordera@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (12, 'fcantilo@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Faviana', 'Cantilo', 'fcantilo@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-  (14, 'epresley@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Elvis', 'Presley', 'epresley@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
+  (14, 'epresley@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Elvis', 'Presley', 'epresley@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (15, 'admin@fiuba.com', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'Juan', 'Admin', 'admin@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
+
 
 
 INSERT INTO `jhi_user_authority` (`user_id`, `authority_name`)
@@ -67,7 +69,8 @@ VALUES
   (12, 'ROLE_ALUMNO'),
   (13, 'ROLE_ALUMNO'),
   (14, 'ROLE_ALUMNO'),
-  (14, 'ROLE_PROFESOR');
+  (14, 'ROLE_PROFESOR'),
+  (15, 'ROLE_ADMIN');
 
 INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
 VALUES
