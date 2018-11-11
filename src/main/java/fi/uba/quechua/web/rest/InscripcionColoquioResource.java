@@ -198,6 +198,42 @@ public class InscripcionColoquioResource {
             .body(result);    }
 
     /**
+     * POST  /inscripcion-coloquios/{coloquioId}/accion/{accion:desinscribir|regularizar|rechazar}
+     *  : Actualiza el estado de una inscripcion a final, dependiendo de la accion a realizar.
+     *  desinscribir - La inscripcion al coloquio pasará al estado ELIMINADA
+     *  regularizar - La inscripcion al coloquio pasará al estado APROBADA
+     *  rechazar - La inscripcion al coloquio pasará al estado DESAPROBADA
+     * @return the ResponseEntity with status 200 (OK) and the list of inscripcionColoquios in body
+     */
+    @PostMapping("/inscripcion-coloquios/{coloquioId}/accion/{accion:desinscribir|regularizar|rechazar}")
+    public ResponseEntity<InscripcionColoquio> cambiarEstadoInscripcion(
+            @PathVariable Long coloquioId,
+            @PathVariable String accion) {
+        log.debug("REST request to {} la inscripcion {}", accion, coloquioId);
+        Optional<InscripcionColoquio> inscripcion = inscripcionColoquioService.findOne(coloquioId);
+        if (!inscripcion.isPresent()) {
+            throw new BadRequestAlertException("No existe la inscripcion con id provisto", "InscripcionColoquio", "idnoexists");
+        }
+        InscripcionColoquioEstado estado = null;
+        switch (accion) {
+            case "desinscribir":
+                estado = InscripcionColoquioEstado.ELIMINADA;
+                break;
+            case "regularizar":
+                estado = InscripcionColoquioEstado.APROBADA;
+                break;
+            case "rechazar":
+                estado = InscripcionColoquioEstado.DESAPROBADA;
+                break;
+        }
+        inscripcion.get().setEstado(estado);
+        InscripcionColoquio result = inscripcionColoquioService.save(inscripcion.get());
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("InscripcionColoquio", result.getId().toString()))
+            .body(result);
+    }
+
+    /**
      * GET  /inscripcion-coloquios : get all the inscripcionColoquios by Alumno.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of inscripcionColoquios in body
