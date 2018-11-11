@@ -164,6 +164,38 @@ public class InscripcionColoquioResource {
             .body(result);
     }
 
+    @PostMapping("/inscripcion-coloquios/{coloquioId}/desinscribir")
+    @Timed
+    public ResponseEntity<InscripcionColoquio> desinscribir(@PathVariable Long coloquioId) throws URISyntaxException {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        log.debug("REST request to desinscribir al alumno {} en el coloquio {}", userId, coloquioId);
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un alumno con id provisto", "Alumno", "idnoexists");
+        }
+        Optional<Coloquio> coloquio = coloquioService.findOne(coloquioId);
+        if (!coloquio.isPresent()) {
+            throw new BadRequestAlertException("No existe un coloquio con id provisto", "Coloquio", "idnoexists");
+        }
+
+        Optional<Cursada> cursada = cursadaService.findCursadaByAlumnoAndCursoColoquioPendiente(alumno.get(), coloquio.get().getCurso());
+        if (!cursada.isPresent()) {
+            throw new BadRequestAlertException("No puede inscribirse al coloquio", "Coloquio", "idnoexists");
+        }
+
+        Optional<InscripcionColoquio> inscripcionColoquio = inscripcionColoquioService.findByColoquioAndAlumnoAndEstado(coloquio.get(), alumno.get(), InscripcionColoquioEstado.ACTIVA);
+        if (!inscripcionColoquio.isPresent()) {
+            throw new BadRequestAlertException("No puede desinscribirse al coloquio", "Coloquio", "idnoexists");
+        }
+
+        InscripcionColoquio inscripcion = inscripcionColoquio.get();
+        inscripcion.estado(InscripcionColoquioEstado.ELIMINADA);
+        InscripcionColoquio result = inscripcionColoquioService.save(inscripcion);
+
+
+        return ResponseEntity.created(new URI("/api/inscripcion-coloquios/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("inscripcionColoquio", result.getId().toString()))
+            .body(result);    }
 
     /**
      * GET  /inscripcion-coloquios : get all the inscripcionColoquios by Alumno.
