@@ -15,4 +15,6 @@ import java.util.Optional;
 public interface AlumnoRepository extends JpaRepository<Alumno, Long> {
 
     Optional<Alumno> findByUserId(Long userId);
+
+    Optional<Alumno> findByPadron(String padron);
 }

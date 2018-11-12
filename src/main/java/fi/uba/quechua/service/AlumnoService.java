@@ -81,4 +81,16 @@ public class AlumnoService {
         log.debug("Request to delete Alumno : {}", id);
         alumnoRepository.deleteById(id);
     }
+
+    /**
+     * Get one alumno by userId.
+     *
+     * @param padron el padron
+     * @return the entity
+     */
+    @Transactional(readOnly = true)
+    public Optional<Alumno> findOneByPadron(String padron) {
+        log.debug("Request to get Alumno by padron : {}", padron);
+        return alumnoRepository.findByPadron(padron);
+    }
 }
