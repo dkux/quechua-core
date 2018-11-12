@@ -1,10 +1,12 @@
 package fi.uba.quechua.service;
 
 import fi.uba.quechua.domain.Curso;
+import fi.uba.quechua.domain.HorarioCursada;
 import fi.uba.quechua.domain.Materia;
 import fi.uba.quechua.domain.Profesor;
 import fi.uba.quechua.domain.enumeration.CursoEstado;
-import fi.uba.quechua.repository.CursoRepository;
+import fi.uba.quechua.repository.*;
+import fi.uba.quechua.service.dto.CursoDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import javax.validation.constraints.Null;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 /**
@@ -25,8 +29,11 @@ public class CursoService {
 
     private final CursoRepository cursoRepository;
 
-    public CursoService(CursoRepository cursoRepository) {
+    private final HorarioCursadaRepository horarioCursadaRepository;
+
+    public CursoService(CursoRepository cursoRepository, HorarioCursadaRepository horarioCursadaRepository) {
         this.cursoRepository = cursoRepository;
+        this.horarioCursadaRepository = horarioCursadaRepository;
     }
 
     /**
@@ -90,7 +97,11 @@ public class CursoService {
     @Transactional(readOnly = true)
     public Optional<Curso> findOne(Long id) {
         log.debug("Request to get Curso : {}", id);
-        return cursoRepository.findById(id);
+        Optional<Curso> curso = cursoRepository.findById(id);
+        if (curso.isPresent()) {
+            curso.get().getHorarios().size();
+        }
+        return  curso;
     }
 
     /**
@@ -132,5 +143,74 @@ public class CursoService {
             curso.getHorarios().size();
         }
         return cursos;
+    }
+
+    /**
+     * Save a curso.
+     *
+     * @param cursoDTO the entity to save
+     * @return the persisted entity
+     */
+    public Curso update(CursoDTO cursoDTO) {
+        log.debug("Request to save Curso : {}", cursoDTO);
+        Curso curso = cursoRepository.findById(cursoDTO.getId()).get();
+        curso.setEstado(cursoDTO.getEstado());
+        curso.setNumero(cursoDTO.getNumero());
+        curso.setVacantes(cursoDTO.getVacantes());
+        curso.getHorarios().size();
+        curso.setMateria(cursoDTO.getMateria());
+        curso.setPeriodo(cursoDTO.getPeriodo());
+        curso.setProfesor(cursoDTO.getProfesor());
+
+
+        for (HorarioCursada horario: cursoDTO.getHorarios()) {
+            if (horario.getId() != null) {
+                horarioCursadaRepository.save(horario);
+            } else {
+                horario.setCurso(curso);
+                horarioCursadaRepository.save(horario);
+            }
+        }
+        for (Iterator<HorarioCursada> i = curso.getHorarios().iterator(); i.hasNext();) {
+            boolean exists = false;
+            HorarioCursada horarioOriginal = i.next();
+            for (HorarioCursada horario: cursoDTO.getHorarios()) {
+                if (horarioOriginal.getId().equals(horario.getId())) {
+                    exists = true;
+                    break;
+                }
+            }
+            if (!exists) {
+                horarioCursadaRepository.delete(horarioOriginal);
+                i.remove();
+            }
+        }
+        Curso cursoSaved =  cursoRepository.saveAndFlush(curso);
+        return cursoSaved;
+    }
+
+    /**
+     * Save a curso.
+     *
+     * @param cursoDTO the entity to save
+     * @return the persisted entity
+     */
+    public Curso guardar(CursoDTO cursoDTO) {
+        log.debug("Request to save Curso : {}", cursoDTO);
+        Curso curso = new Curso();
+        curso.setEstado(cursoDTO.getEstado());
+        curso.setNumero(cursoDTO.getNumero());
+        curso.setVacantes(cursoDTO.getVacantes());
+        curso.getHorarios().size();
+        curso.setMateria(cursoDTO.getMateria());
+        curso.setPeriodo(cursoDTO.getPeriodo());
+        curso.setProfesor(cursoDTO.getProfesor());
+        Curso cursoSaved =  cursoRepository.saveAndFlush(curso);
+
+        for (HorarioCursada horario: cursoDTO.getHorarios()) {
+                horario.setCurso(curso);
+                horarioCursadaRepository.save(horario);
+        }
+        return cursoSaved;
     }
 }

@@ -6,6 +6,7 @@ import fi.uba.quechua.domain.Curso;
 import fi.uba.quechua.service.ColoquioService;
 import fi.uba.quechua.service.CursoService;
 import fi.uba.quechua.service.dto.ColoquioDTO;
+import fi.uba.quechua.service.dto.CursoDTO;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -80,6 +81,48 @@ public class CursoResource {
         Curso result = cursoService.save(curso);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, curso.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /cursosAndHorarios : Updates an existing curso.
+     *
+     * @param cursoDTO the curso to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated curso,
+     * or with status 400 (Bad Request) if the curso is not valid,
+     * or with status 500 (Internal Server Error) if the curso couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/cursosAndHorarios")
+    @Timed
+    public ResponseEntity<Curso> updateCursoAndHorarios(@Valid @RequestBody CursoDTO cursoDTO) throws URISyntaxException {
+        log.debug("REST request to update Curso : {}", cursoDTO);
+        if (cursoDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        Curso result = cursoService.update(cursoDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * POST  /cursosAndHorarios : Create a new curso.
+     *
+     * @param cursoDTO the curso to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new curso, or with status 400 (Bad Request) if the curso has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/cursosAndHorarios")
+    @Timed
+    public ResponseEntity<Curso> createCurso(@Valid @RequestBody CursoDTO cursoDTO) throws URISyntaxException {
+        log.debug("REST request to save Curso : {}", cursoDTO);
+        if (cursoDTO.getId() != null) {
+            throw new BadRequestAlertException("A new curso cannot already have an ID", ENTITY_NAME, "idexists");
+        }
+        Curso result = cursoService.guardar(cursoDTO);
+        return ResponseEntity.created(new URI("/api/cursos/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
 

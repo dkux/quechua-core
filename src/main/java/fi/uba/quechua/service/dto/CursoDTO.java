@@ -24,7 +24,14 @@ public class CursoDTO {
 
     private Integer vacantesDisponibles;
 
+    private Periodo periodo;
+
     private List<InscripcionCurso> inscripciones;
+
+    private Integer numero;
+
+    public CursoDTO() {
+    }
 
     public CursoDTO(Curso curso, List<InscripcionCurso> inscripciones) {
         this.id = curso.getId();
@@ -34,6 +41,7 @@ public class CursoDTO {
         this.profesor = curso.getProfesor();
         this.materia = curso.getMateria();
         this.inscripciones = inscripciones;
+        this.numero = curso.getNumero();
         this.vacantesDisponibles =  Math.max(0, curso.getVacantes() - inscripciones.size());
 
     }
@@ -45,6 +53,7 @@ public class CursoDTO {
         this.horarios = curso.getHorarios();
         this.profesor = curso.getProfesor();
         this.materia = curso.getMateria();
+        this.numero = curso.getNumero();
         this.vacantesDisponibles = vacantesDisponibles;
     }
 
@@ -110,5 +119,21 @@ public class CursoDTO {
 
     public void setVacantesDisponibles(Integer vacantesDisponibles) {
         this.vacantesDisponibles = vacantesDisponibles;
+    }
+
+    public Periodo getPeriodo() {
+        return periodo;
+    }
+
+    public void setPeriodo(Periodo periodo) {
+        this.periodo = periodo;
+    }
+
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
     }
 }

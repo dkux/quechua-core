@@ -6,6 +6,7 @@ import fi.uba.quechua.repository.MateriaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,7 +46,7 @@ public class MateriaService {
     @Transactional(readOnly = true)
     public List<Materia> findAll() {
         log.debug("Request to get all Materias");
-        return materiaRepository.findAll();
+        return materiaRepository.findAll(new Sort(Sort.Direction.ASC, "nombre"));
     }
 
 
