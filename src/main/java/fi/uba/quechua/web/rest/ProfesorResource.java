@@ -95,7 +95,7 @@ public class ProfesorResource {
     @Timed
     public List<Profesor> getAllProfesors() {
         log.debug("REST request to get all Profesors");
-        return profesorRepository.findAll(new Sort(Sort.Direction.ASC, "nombre"));
+        return profesorRepository.findAll(new Sort(Sort.Direction.ASC, "apellido"));
     }
 
     /**
