@@ -113,6 +113,21 @@ public class ColoquioService {
         return coloquiosDTO;
     }
 
+    public List<ColoquioDTO> findAllColoquiosDTO() {
+        log.debug("Request to get Coloquios  {}");
+        Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
+        if (!periodo.isPresent()) {
+            return new LinkedList<>();
+        }
+        List<Coloquio> coloquios = coloquioRepository.findAll();
+        List<ColoquioDTO> coloquiosDTO = new LinkedList<>();
+        for (Coloquio coloquio: coloquios) {
+            Integer inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA).size();
+            coloquiosDTO.add(new ColoquioDTO(coloquio, inscripciones));
+        }
+        return coloquiosDTO;
+    }
+
     public void eliminar(Coloquio coloquio) {
         coloquio.setEstado(ColoquioEstado.ELIMINADO);
         coloquioRepository.save(coloquio);

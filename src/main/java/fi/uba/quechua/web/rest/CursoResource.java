@@ -197,4 +197,18 @@ public class CursoResource {
         }
         return coloquioService.findAllColoquiosDTOByCurso(curso.get());
     }
+
+
+    /**
+     * GET  /coloquios/{cursoId}/coloquios : get all the coloquios.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of coloquios in body
+     */
+    @GetMapping("/cursos/coloquios")
+    @Timed
+    public List<ColoquioDTO> getAllColoquios() {
+        log.debug("REST request to get all Coloquios");
+
+        return coloquioService.findAllColoquiosDTO();
+    }
 }
