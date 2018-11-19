@@ -57,6 +57,7 @@ public class CacheConfiguration {
             cm.createCache(fi.uba.quechua.domain.PeriodoAdministrativo.class.getName(), jcacheConfiguration);
             cm.createCache(fi.uba.quechua.domain.Cursada.class.getName(), jcacheConfiguration);
             cm.createCache(fi.uba.quechua.domain.Prioridad.class.getName(), jcacheConfiguration);
+            cm.createCache(fi.uba.quechua.domain.AdministradorDepartamento.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

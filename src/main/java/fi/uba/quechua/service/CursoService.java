@@ -1,12 +1,12 @@
 package fi.uba.quechua.service;
 
-import fi.uba.quechua.domain.Curso;
-import fi.uba.quechua.domain.HorarioCursada;
-import fi.uba.quechua.domain.Materia;
-import fi.uba.quechua.domain.Profesor;
+import fi.uba.quechua.domain.*;
 import fi.uba.quechua.domain.enumeration.CursoEstado;
 import fi.uba.quechua.repository.*;
+import fi.uba.quechua.security.AuthoritiesConstants;
+import fi.uba.quechua.security.SecurityUtils;
 import fi.uba.quechua.service.dto.CursoDTO;
+import fi.uba.quechua.web.rest.AdministradorDepartamentoResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,9 +31,21 @@ public class CursoService {
 
     private final HorarioCursadaRepository horarioCursadaRepository;
 
-    public CursoService(CursoRepository cursoRepository, HorarioCursadaRepository horarioCursadaRepository) {
+    private final UserService userService;
+
+    private final AdministradorDepartamentoRepository administradorDepartamentoRepository;
+
+    private final DepartamentoRepository departamentoRepository;
+
+
+    public CursoService(CursoRepository cursoRepository, HorarioCursadaRepository horarioCursadaRepository,
+                        UserService userService, AdministradorDepartamentoRepository administradorDepartamentoRepository,
+                        DepartamentoRepository departamentoRepository) {
         this.cursoRepository = cursoRepository;
         this.horarioCursadaRepository = horarioCursadaRepository;
+        this.userService = userService;
+        this.administradorDepartamentoRepository = administradorDepartamentoRepository;
+        this.departamentoRepository = departamentoRepository;
     }
 
     /**
@@ -55,6 +67,12 @@ public class CursoService {
     @Transactional(readOnly = true)
     public List<Curso> findAll() {
         log.debug("Request to get all Cursos");
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent() && SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADM_DPTO)) {
+            Optional<AdministradorDepartamento> administradorDepartamento = administradorDepartamentoRepository.findByUserId(user.get().getId());
+            Optional<Departamento> departamento = departamentoRepository.findById(administradorDepartamento.get().getDepartamentoId());
+            return cursoRepository.findAllByDepartamento(departamento.get());
+        }
         return cursoRepository.findAll();
     }
 

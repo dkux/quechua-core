@@ -1,5 +1,6 @@
 INSERT INTO `jhi_authority` VALUE('ROLE_ALUMNO');
 INSERT INTO `jhi_authority` VALUE('ROLE_PROFESOR');
+INSERT INTO `jhi_authority` VALUE('ROLE_ADM_DPTO');
 
 ALTER TABLE alumno ADD COLUMN user_id BIGINT(20);
 ALTER TABLE profesor ADD COLUMN user_id BIGINT(20);
@@ -53,7 +54,8 @@ VALUES
   (12, 'fcantilo@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Faviana', 'Cantilo', 'fcantilo@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (13, 'hlizarazu@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Hilda', 'Lizarazu', 'hlizarazu@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
   (14, 'epresley@fiuba.com', '$2a$10$VEjxo0jq2YG9Rbk2HmX9S.k1uZBGYUHdUcid3g/vfiEl7lwWgOH/K', 'Elvis', 'Presley', 'epresley@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
-  (15, 'admin@fiuba.com', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'Juan', 'Admin', 'admin@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
+  (15, 'admin@fiuba.com', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'Juan', 'Admin', 'admin@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL),
+  (16, 'computacion@fiuba.com', '$2a$10$gSAhZrxMllrbgj/kkK9UceBPpChGWJA7SYIb1Mqo.n5aNLq1/oRrC', 'Computación', 'Departamento', 'computacion@fiuba.com', '', 1, 'en', NULL, NULL, 'system', NOW(), NULL, 'system', NULL);
 
 
 
@@ -70,7 +72,8 @@ VALUES
   (13, 'ROLE_ALUMNO'),
   (14, 'ROLE_ALUMNO'),
   (14, 'ROLE_PROFESOR'),
-  (15, 'ROLE_ADMIN');
+  (15, 'ROLE_ADMIN'),
+  (16, 'ROLE_ADM_DPTO');
 
 INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
 VALUES
@@ -109,7 +112,8 @@ VALUES
   (1, 'Tesis', '75.00', 20, 2, 6),
   (2, 'Computación', '75.01', 6, 2, 6),
   (3, 'Algoritmos y Programación I', '75.02', 6, 2, 6),
-  (4, 'Organización del Computador', '75.03', 6, 2, 6);
+  (4, 'Organización del Computador', '75.03', 6, 2, 6),
+  (5, 'Legal', '71.03', 6, 8, 6);
 
 INSERT INTO `curso` (`id`, `estado`, `vacantes`, `numero`, `profesor_id`, `periodo_id`, `materia_id`)
 VALUES
@@ -230,3 +234,8 @@ VALUES
   (1, '2018-07-01', '2018-12-31', 'INSCRIPCION_CURSADA'),
   (2, '2018-07-01', '2018-12-31', 'CONSULTAR_PRIORIDAD'),
   (3, '2018-07-01', '2018-12-31', 'INSCRIPCION_COLOQUIO');
+
+INSERT INTO `administrador_departamento` (`id`, `user_id`, `departamento_id`)
+VALUES
+  (1, 16, 2);
+

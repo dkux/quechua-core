@@ -19,6 +19,7 @@ import InscripcionColoquio from './inscripcion-coloquio';
 import PeriodoAdministrativo from './periodo-administrativo';
 import Cursada from './cursada';
 import Prioridad from './prioridad';
+import AdministradorDepartamento from './administrador-departamento';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 const Routes = ({ match }) => (
@@ -40,6 +41,7 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}/periodo-administrativo`} component={PeriodoAdministrativo} />
       <ErrorBoundaryRoute path={`${match.url}/cursada`} component={Cursada} />
       <ErrorBoundaryRoute path={`${match.url}/prioridad`} component={Prioridad} />
+      <ErrorBoundaryRoute path={`${match.url}/administrador-departamento`} component={AdministradorDepartamento} />
       {/* jhipster-needle-add-route-path - JHipster will routes here */}
     </Switch>
   </div>
