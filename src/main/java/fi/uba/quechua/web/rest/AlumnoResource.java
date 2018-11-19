@@ -1,10 +1,8 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import fi.uba.quechua.domain.Alumno;
-import fi.uba.quechua.domain.AlumnoCarrera;
-import fi.uba.quechua.domain.Carrera;
-import fi.uba.quechua.domain.Cursada;
+import fi.uba.quechua.domain.*;
+import fi.uba.quechua.repository.PeriodoRepository;
 import fi.uba.quechua.security.SecurityUtils;
 import fi.uba.quechua.service.AlumnoCarreraService;
 import fi.uba.quechua.service.AlumnoService;
@@ -15,10 +13,14 @@ import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
+
 
 import javax.validation.Valid;
+import javax.validation.constraints.AssertFalse;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -37,6 +39,9 @@ public class AlumnoResource {
     private static final String ENTITY_NAME = "alumno";
 
     private final AlumnoService alumnoService;
+
+    @Autowired
+    private PeriodoRepository periodoRepository;
 
     private final AlumnoCarreraService alumnoCarreraService;
 
@@ -166,6 +171,35 @@ public class AlumnoResource {
             throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
         }
         return cursadaService.findCursadasActivasByAlumno(alumno.get());
+    }
+
+    /**
+     * GET  /alumno-prioridad : get prioridad del alumno.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of alumnoprioridad in body
+     */
+    @GetMapping("/alumnos/prioridad")
+    @Timed
+    public List<Prioridad> getPrioridadDelAlumno() {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
+        }
+        List<Prioridad> listaPrioridad = new ArrayList<Prioridad>();
+
+        List<Periodo> periodoList = periodoRepository.findAll();
+        Periodo ultimoPeriodo = periodoList.get(periodoList.size() - 1);
+        //Integer databaseSizeBeforeCreate = (int) (long) testPeriodo.getId();
+
+
+        Prioridad prioridad = new Prioridad();
+        prioridad.setNumero(alumno.get().getPrioridad());
+        prioridad.setPeriodo(ultimoPeriodo);
+        prioridad.getFecha();
+        listaPrioridad.add(prioridad);
+
+        return listaPrioridad;
     }
 
     /**

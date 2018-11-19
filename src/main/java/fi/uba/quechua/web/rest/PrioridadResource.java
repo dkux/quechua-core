@@ -1,7 +1,8 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import fi.uba.quechua.domain.Prioridad;
+import fi.uba.quechua.domain.*;
+import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import fi.uba.quechua.service.PrioridadService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
@@ -59,6 +60,7 @@ public class PrioridadResource {
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
+
 
     /**
      * PUT  /prioridads : Updates an existing prioridad.
@@ -123,4 +125,6 @@ public class PrioridadResource {
         prioridadService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+
 }
