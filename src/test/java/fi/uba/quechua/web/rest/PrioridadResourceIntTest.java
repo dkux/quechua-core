@@ -54,7 +54,7 @@ public class PrioridadResourceIntTest {
     @Autowired
     private PrioridadRepository prioridadRepository;
 
-    
+
 
     @Autowired
     private PrioridadService prioridadService;
@@ -179,7 +179,7 @@ public class PrioridadResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(prioridad.getId().intValue())))
             .andExpect(jsonPath("$.[*].fecha_habilitacion").value(hasItem(sameInstant(DEFAULT_FECHA_HABILITACION))));
     }
-    
+
 
     @Test
     @Transactional
@@ -383,7 +383,7 @@ public class PrioridadResourceIntTest {
         assertThat(prioridad1).isEqualTo(prioridad2);
         prioridad2.setId(2L);
         assertThat(prioridad1).isNotEqualTo(prioridad2);
-        prioridad1.setId(null);
+        prioridad1.setId("");
         assertThat(prioridad1).isNotEqualTo(prioridad2);
     }
 }
