@@ -1,8 +1,11 @@
 package fi.uba.quechua.service;
 
-import fi.uba.quechua.domain.Carrera;
-import fi.uba.quechua.domain.Materia;
+import fi.uba.quechua.domain.*;
+import fi.uba.quechua.repository.AdministradorDepartamentoRepository;
+import fi.uba.quechua.repository.DepartamentoRepository;
 import fi.uba.quechua.repository.MateriaRepository;
+import fi.uba.quechua.security.AuthoritiesConstants;
+import fi.uba.quechua.security.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,8 +27,19 @@ public class MateriaService {
 
     private final MateriaRepository materiaRepository;
 
-    public MateriaService(MateriaRepository materiaRepository) {
+    private final UserService userService;
+
+    private final AdministradorDepartamentoRepository administradorDepartamentoRepository;
+
+    private final DepartamentoRepository departamentoRepository;
+
+    public MateriaService(MateriaRepository materiaRepository, UserService userService,
+                          AdministradorDepartamentoRepository administradorDepartamentoRepository,
+                          DepartamentoRepository departamentoRepository) {
         this.materiaRepository = materiaRepository;
+        this.userService = userService;
+        this.administradorDepartamentoRepository = administradorDepartamentoRepository;
+        this.departamentoRepository = departamentoRepository;
     }
 
     /**
@@ -46,6 +60,12 @@ public class MateriaService {
     @Transactional(readOnly = true)
     public List<Materia> findAll() {
         log.debug("Request to get all Materias");
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent() && SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADM_DPTO)) {
+            Optional<AdministradorDepartamento> administradorDepartamento = administradorDepartamentoRepository.findByUserId(user.get().getId());
+            Optional<Departamento> departamento = departamentoRepository.findById(administradorDepartamento.get().getDepartamentoId());
+            return materiaRepository.findAllByDepartamentoOrderByCodigoAsc(departamento.get());
+        }
         return materiaRepository.findAll(new Sort(Sort.Direction.ASC, "codigo"));
     }
 

@@ -1,6 +1,7 @@
 package fi.uba.quechua.repository;
 
 import fi.uba.quechua.domain.Carrera;
+import fi.uba.quechua.domain.Departamento;
 import fi.uba.quechua.domain.Materia;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -21,4 +22,6 @@ public interface MateriaRepository extends JpaRepository<Materia, Long> {
     List<Materia> fidByFilter(@Param("carrera")Carrera carrera, @Param("query")Optional<String> query);
 
     List<Materia> findAllByCarreraAndNombreStartingWith(Carrera carrera, String query);
+
+    List<Materia> findAllByDepartamentoOrderByCodigoAsc(Departamento departamento);
 }

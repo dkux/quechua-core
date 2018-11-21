@@ -1,8 +1,14 @@
 package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import fi.uba.quechua.domain.AdministradorDepartamento;
 import fi.uba.quechua.domain.Departamento;
+import fi.uba.quechua.domain.User;
+import fi.uba.quechua.repository.AdministradorDepartamentoRepository;
 import fi.uba.quechua.repository.DepartamentoRepository;
+import fi.uba.quechua.security.AuthoritiesConstants;
+import fi.uba.quechua.security.SecurityUtils;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -15,8 +21,7 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * REST controller for managing Departamento.
@@ -31,8 +36,15 @@ public class DepartamentoResource {
 
     private final DepartamentoRepository departamentoRepository;
 
-    public DepartamentoResource(DepartamentoRepository departamentoRepository) {
+    private final UserService userService;
+
+    private final AdministradorDepartamentoRepository administradorDepartamentoRepository;
+
+    public DepartamentoResource(DepartamentoRepository departamentoRepository, UserService userService,
+                                AdministradorDepartamentoRepository administradorDepartamentoRepository) {
         this.departamentoRepository = departamentoRepository;
+        this.userService = userService;
+        this.administradorDepartamentoRepository = administradorDepartamentoRepository;
     }
 
     /**
@@ -86,6 +98,14 @@ public class DepartamentoResource {
     @Timed
     public List<Departamento> getAllDepartamentos() {
         log.debug("REST request to get all Departamentos");
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent() && SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADM_DPTO)) {
+            Optional<AdministradorDepartamento> administradorDepartamento = administradorDepartamentoRepository.findByUserId(user.get().getId());
+            Optional<Departamento> departamento = departamentoRepository.findById(administradorDepartamento.get().getDepartamentoId());
+            List<Departamento> departamentos = new LinkedList<>();
+            departamento.ifPresent(departamentos::add);
+            return departamentos;
+        }
         return departamentoRepository.findAll();
     }
 
