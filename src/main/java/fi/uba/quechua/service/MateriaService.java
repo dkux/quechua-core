@@ -46,7 +46,7 @@ public class MateriaService {
     @Transactional(readOnly = true)
     public List<Materia> findAll() {
         log.debug("Request to get all Materias");
-        return materiaRepository.findAll(new Sort(Sort.Direction.ASC, "nombre"));
+        return materiaRepository.findAll(new Sort(Sort.Direction.ASC, "codigo"));
     }
 
 
