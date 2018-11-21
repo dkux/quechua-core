@@ -25,10 +25,6 @@ public class Prioridad implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String hora;
-    private String fecha;
-
-    private int numero;
 
     @NotNull
     @Column(name = "fecha_habilitacion", nullable = false)
@@ -48,28 +44,6 @@ public class Prioridad implements Serializable {
         this.id = id;
     }
 
-    public String getHora() {
-        return hora;
-    }
-
-    public void setId(String hora) {
-        this.hora = hora;
-    }
-
-    public String getFecha() {
-        if (this.fecha == null) {
-            this.calcularFechayHora();
-        }
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
-
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
 
     public ZonedDateTime getFecha_habilitacion() {
         return fecha_habilitacion;
@@ -88,9 +62,6 @@ public class Prioridad implements Serializable {
         return periodo;
     }
 
-    public int getNumero() {
-        return numero;
-    }
 
 
     public Prioridad periodo(Periodo periodo) {
@@ -98,18 +69,6 @@ public class Prioridad implements Serializable {
         return this;
     }
 
-    public void calcularFechayHora() {
-        int año = 2019;
-        int mes = 3;
-        int dia = 1;
-        int hora = 8;
-        hora = this.numero % 10  + hora;
-        dia = (this.numero / 10) + 1;
-        String fecha = "0" + String.valueOf(dia) + "/0" + String.valueOf(mes) + "/" + String.valueOf(año);
-        String horario = String.valueOf(hora)+":00";
-        this.fecha = fecha;
-        this.hora = horario;
-    }
 
     public void setPeriodo(Periodo periodo) {
         this.periodo = periodo;

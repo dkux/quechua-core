@@ -194,9 +194,9 @@ public class AlumnoResource {
 
 
         Prioridad prioridad = new Prioridad();
-        prioridad.setNumero(alumno.get().getPrioridad());
+        //prioridad.setNumero(alumno.get().getPrioridad());
         prioridad.setPeriodo(ultimoPeriodo);
-        prioridad.getFecha();
+        //prioridad.getFecha();
         listaPrioridad.add(prioridad);
 
         return listaPrioridad;

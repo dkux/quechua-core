@@ -383,7 +383,6 @@ public class PrioridadResourceIntTest {
         assertThat(prioridad1).isEqualTo(prioridad2);
         prioridad2.setId(2L);
         assertThat(prioridad1).isNotEqualTo(prioridad2);
-        prioridad1.setId("");
         assertThat(prioridad1).isNotEqualTo(prioridad2);
     }
 }
