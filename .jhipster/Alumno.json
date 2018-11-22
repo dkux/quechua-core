@@ -1,5 +1,7 @@
 {
-    "name": "Alumno",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
     "fields": [
         {
             "fieldName": "nombre",
@@ -28,16 +30,17 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "firebaseToken",
+            "fieldType": "String"
         }
     ],
-    "relationships": [],
     "changelogDate": "20181009020836",
-    "entityTableName": "alumno",
     "dto": "no",
-    "pagination": "no",
+    "searchEngine": false,
     "service": "serviceClass",
+    "entityTableName": "alumno",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "no"
 }

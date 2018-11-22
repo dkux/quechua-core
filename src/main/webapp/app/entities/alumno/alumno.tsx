@@ -38,6 +38,7 @@ export class Alumno extends React.Component<IAlumnoProps> {
                 <th>Apellido</th>
                 <th>Padron</th>
                 <th>Prioridad</th>
+                <th>Firebase Token</th>
                 <th />
               </tr>
             </thead>
@@ -53,6 +54,7 @@ export class Alumno extends React.Component<IAlumnoProps> {
                   <td>{alumno.apellido}</td>
                   <td>{alumno.padron}</td>
                   <td>{alumno.prioridad}</td>
+                  <td>{alumno.firebaseToken}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${alumno.id}`} color="info" size="sm">

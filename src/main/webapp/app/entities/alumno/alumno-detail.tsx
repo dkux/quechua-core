@@ -44,6 +44,10 @@ export class AlumnoDetail extends React.Component<IAlumnoDetailProps> {
               <span id="prioridad">Prioridad</span>
             </dt>
             <dd>{alumnoEntity.prioridad}</dd>
+            <dt>
+              <span id="firebaseToken">Firebase Token</span>
+            </dt>
+            <dd>{alumnoEntity.firebaseToken}</dd>
           </dl>
           <Button tag={Link} to="/entity/alumno" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

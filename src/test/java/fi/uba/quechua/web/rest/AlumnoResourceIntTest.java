@@ -56,6 +56,9 @@ public class AlumnoResourceIntTest {
     private static final Integer DEFAULT_PRIORIDAD = 1;
     private static final Integer UPDATED_PRIORIDAD = 2;
 
+    private static final String DEFAULT_FIREBASE_TOKEN = "AAAAAAAAAA";
+    private static final String UPDATED_FIREBASE_TOKEN = "BBBBBBBBBB";
+
     @Autowired
     private AlumnoRepository alumnoRepository;
 
@@ -111,7 +114,8 @@ public class AlumnoResourceIntTest {
             .nombre(DEFAULT_NOMBRE)
             .apellido(DEFAULT_APELLIDO)
             .padron(DEFAULT_PADRON)
-            .prioridad(DEFAULT_PRIORIDAD);
+            .prioridad(DEFAULT_PRIORIDAD)
+            .firebaseToken(DEFAULT_FIREBASE_TOKEN);
         return alumno;
     }
 
@@ -139,6 +143,7 @@ public class AlumnoResourceIntTest {
         assertThat(testAlumno.getApellido()).isEqualTo(DEFAULT_APELLIDO);
         assertThat(testAlumno.getPadron()).isEqualTo(DEFAULT_PADRON);
         assertThat(testAlumno.getPrioridad()).isEqualTo(DEFAULT_PRIORIDAD);
+        assertThat(testAlumno.getFirebaseToken()).isEqualTo(DEFAULT_FIREBASE_TOKEN);
     }
 
     @Test
@@ -246,7 +251,8 @@ public class AlumnoResourceIntTest {
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE.toString())))
             .andExpect(jsonPath("$.[*].apellido").value(hasItem(DEFAULT_APELLIDO.toString())))
             .andExpect(jsonPath("$.[*].padron").value(hasItem(DEFAULT_PADRON.toString())))
-            .andExpect(jsonPath("$.[*].prioridad").value(hasItem(DEFAULT_PRIORIDAD)));
+            .andExpect(jsonPath("$.[*].prioridad").value(hasItem(DEFAULT_PRIORIDAD)))
+            .andExpect(jsonPath("$.[*].firebaseToken").value(hasItem(DEFAULT_FIREBASE_TOKEN.toString())));
     }
 
 
@@ -264,7 +270,8 @@ public class AlumnoResourceIntTest {
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE.toString()))
             .andExpect(jsonPath("$.apellido").value(DEFAULT_APELLIDO.toString()))
             .andExpect(jsonPath("$.padron").value(DEFAULT_PADRON.toString()))
-            .andExpect(jsonPath("$.prioridad").value(DEFAULT_PRIORIDAD));
+            .andExpect(jsonPath("$.prioridad").value(DEFAULT_PRIORIDAD))
+            .andExpect(jsonPath("$.firebaseToken").value(DEFAULT_FIREBASE_TOKEN.toString()));
     }
     @Test
     @Transactional
@@ -290,7 +297,8 @@ public class AlumnoResourceIntTest {
             .nombre(UPDATED_NOMBRE)
             .apellido(UPDATED_APELLIDO)
             .padron(UPDATED_PADRON)
-            .prioridad(UPDATED_PRIORIDAD);
+            .prioridad(UPDATED_PRIORIDAD)
+            .firebaseToken(UPDATED_FIREBASE_TOKEN);
 
         restAlumnoMockMvc.perform(put("/api/alumnos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -305,6 +313,7 @@ public class AlumnoResourceIntTest {
         assertThat(testAlumno.getApellido()).isEqualTo(UPDATED_APELLIDO);
         assertThat(testAlumno.getPadron()).isEqualTo(UPDATED_PADRON);
         assertThat(testAlumno.getPrioridad()).isEqualTo(UPDATED_PRIORIDAD);
+        assertThat(testAlumno.getFirebaseToken()).isEqualTo(UPDATED_FIREBASE_TOKEN);
     }
 
     @Test

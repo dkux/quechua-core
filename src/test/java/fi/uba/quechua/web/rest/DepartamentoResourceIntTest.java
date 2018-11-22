@@ -3,7 +3,9 @@ package fi.uba.quechua.web.rest;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.Departamento;
+import fi.uba.quechua.repository.AdministradorDepartamentoRepository;
 import fi.uba.quechua.repository.DepartamentoRepository;
+import fi.uba.quechua.service.UserService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -48,6 +50,11 @@ public class DepartamentoResourceIntTest {
     @Autowired
     private DepartamentoRepository departamentoRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AdministradorDepartamentoRepository administradorDepartamentoRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -68,7 +75,7 @@ public class DepartamentoResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final DepartamentoResource departamentoResource = new DepartamentoResource(departamentoRepository);
+        final DepartamentoResource departamentoResource = new DepartamentoResource(departamentoRepository, userService, administradorDepartamentoRepository);
         this.restDepartamentoMockMvc = MockMvcBuilders.standaloneSetup(departamentoResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -182,7 +189,7 @@ public class DepartamentoResourceIntTest {
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE.toString())))
             .andExpect(jsonPath("$.[*].codigo").value(hasItem(DEFAULT_CODIGO)));
     }
-    
+
 
     @Test
     @Transactional

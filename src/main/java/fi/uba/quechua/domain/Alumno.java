@@ -43,6 +43,22 @@ public class Alumno implements Serializable {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
+    @Column(name = "firebase_token")
+    private String firebaseToken;
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public Alumno userId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -104,19 +120,18 @@ public class Alumno implements Serializable {
         this.prioridad = prioridad;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getFirebaseToken() {
+        return firebaseToken;
     }
 
-    public Alumno userId(Long userId) {
-        this.userId = userId;
+    public Alumno firebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
         return this;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setFirebaseToken(String firebaseToken) {
+        this.firebaseToken = firebaseToken;
     }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -147,6 +162,7 @@ public class Alumno implements Serializable {
             ", apellido='" + getApellido() + "'" +
             ", padron='" + getPadron() + "'" +
             ", prioridad=" + getPrioridad() +
+            ", firebaseToken='" + getFirebaseToken() + "'" +
             "}";
     }
 }

@@ -134,6 +134,12 @@ export class AlumnoUpdate extends React.Component<IAlumnoUpdateProps, IAlumnoUpd
                     }}
                   />
                 </AvGroup>
+                <AvGroup>
+                  <Label id="firebaseTokenLabel" for="firebaseToken">
+                    Firebase Token
+                  </Label>
+                  <AvField id="alumno-firebaseToken" type="text" name="firebaseToken" />
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/alumno" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
                   <span className="d-none d-md-inline">Back</span>

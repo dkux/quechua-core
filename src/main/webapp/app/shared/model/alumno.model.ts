@@ -4,6 +4,7 @@ export interface IAlumno {
   apellido?: string;
   padron?: string;
   prioridad?: number;
+  firebaseToken?: string;
 }
 
 export const defaultValue: Readonly<IAlumno> = {};
