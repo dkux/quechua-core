@@ -4,10 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.*;
 import fi.uba.quechua.repository.PeriodoRepository;
 import fi.uba.quechua.security.SecurityUtils;
-import fi.uba.quechua.service.AlumnoCarreraService;
-import fi.uba.quechua.service.AlumnoService;
-import fi.uba.quechua.service.CursadaService;
-import fi.uba.quechua.service.UserService;
+import fi.uba.quechua.service.*;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -41,7 +38,7 @@ public class AlumnoResource {
     private final AlumnoService alumnoService;
 
     @Autowired
-    private PeriodoRepository periodoRepository;
+    private PrioridadService prioridadService;
 
     private final AlumnoCarreraService alumnoCarreraService;
 
@@ -180,26 +177,14 @@ public class AlumnoResource {
      */
     @GetMapping("/alumnos/prioridad")
     @Timed
-    public List<Prioridad> getPrioridadDelAlumno() {
+    public ResponseEntity<Prioridad> getPrioridadDelAlumno() {
         Long userId = userService.getUserWithAuthorities().get().getId();
         Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
         if (!alumno.isPresent()) {
             throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
         }
-        List<Prioridad> listaPrioridad = new ArrayList<Prioridad>();
-
-        List<Periodo> periodoList = periodoRepository.findAll();
-        Periodo ultimoPeriodo = periodoList.get(periodoList.size() - 1);
-        //Integer databaseSizeBeforeCreate = (int) (long) testPeriodo.getId();
-
-
-        Prioridad prioridad = new Prioridad();
-        //prioridad.setNumero(alumno.get().getPrioridad());
-        prioridad.setPeriodo(ultimoPeriodo);
-        //prioridad.getFecha();
-        listaPrioridad.add(prioridad);
-
-        return listaPrioridad;
+        Optional<Prioridad> prioridad = prioridadService.findOne(Long.valueOf(alumno.get().getPrioridad().toString()));
+        return ResponseUtil.wrapOrNotFound(prioridad);
     }
 
     /**
