@@ -123,7 +123,9 @@ public class ColoquioService {
         List<ColoquioDTO> coloquiosDTO = new LinkedList<>();
         for (Coloquio coloquio: coloquios) {
             Integer inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA).size();
-            coloquiosDTO.add(new ColoquioDTO(coloquio, inscripciones));
+            if(coloquio.getEstado() ==  ColoquioEstado.ACTIVO) {
+                coloquiosDTO.add(new ColoquioDTO(coloquio, inscripciones));
+            }
         }
         return coloquiosDTO;
     }
