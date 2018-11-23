@@ -177,14 +177,16 @@ public class AlumnoResource {
      */
     @GetMapping("/alumnos/prioridad")
     @Timed
-    public ResponseEntity<Prioridad> getPrioridadDelAlumno() {
+    public List<Prioridad> getPrioridadDelAlumno() {
         Long userId = userService.getUserWithAuthorities().get().getId();
         Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
         if (!alumno.isPresent()) {
             throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
         }
+        List<Prioridad> listaPrioridad = new ArrayList<Prioridad>();
         Optional<Prioridad> prioridad = prioridadService.findOne(Long.valueOf(alumno.get().getPrioridad().toString()));
-        return ResponseUtil.wrapOrNotFound(prioridad);
+        listaPrioridad.add(prioridad.get());
+        return listaPrioridad;
     }
 
     /**
