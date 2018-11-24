@@ -91,7 +91,15 @@ public class AlumnoResource {
         if (alumno.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+        if (alumno.getUserId() == null) {
+            throw new BadRequestAlertException("Invalid user id", ENTITY_NAME, "idnull");
+        }
         Alumno result = alumnoService.save(alumno);
+
+        User user = userService.getUserWithAuthorities().get();
+
+        userService.updateUser(alumno.getNombre(), alumno.getApellido(), user.getEmail(), user.getLangKey(), user.getImageUrl());
+
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, alumno.getId().toString()))
             .body(result);
