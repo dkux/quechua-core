@@ -116,4 +116,17 @@ public class PeriodoResource {
         periodoService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * GET  /periodos/actual
+     *
+     * @return the ResponseEntity with status 200 (OK) and with body the periodo, or with status 404 (Not Found)
+     */
+    @GetMapping("/periodos/actual")
+    @Timed
+    public ResponseEntity<Periodo> getPeriodoActual() {
+        log.debug("REST request to get Periodo actual");
+        Optional<Periodo> periodo = periodoService.findPeriodoActual();
+        return ResponseUtil.wrapOrNotFound(periodo);
+    }
 }

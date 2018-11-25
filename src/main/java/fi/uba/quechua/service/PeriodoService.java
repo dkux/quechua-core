@@ -69,4 +69,13 @@ public class PeriodoService {
         log.debug("Request to delete Periodo : {}", id);
         periodoRepository.deleteById(id);
     }
+
+    /**
+     * Find a periodo.
+     *
+     * @return the entity
+     */
+    public  Optional<Periodo> findPeriodoActual() {
+        return periodoRepository.findPeriodoActual();
+    }
 }

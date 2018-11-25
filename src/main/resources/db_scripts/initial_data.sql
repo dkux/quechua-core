@@ -151,7 +151,8 @@ INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
 VALUES
   (1, 'PRIMERO', '2017'),
   (2, 'SEGUNDO', '2017'),
-  (3, 'PRIMERO', '2018');
+  (3, 'PRIMERO', '2018'),
+  (4, 'SEGUNDO', '2018');
 
 INSERT INTO `profesor` (`id`, `nombre`, `apellido`, `user_id`)
 VALUES
