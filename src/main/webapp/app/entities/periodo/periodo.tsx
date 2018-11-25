@@ -36,6 +36,7 @@ export class Periodo extends React.Component<IPeriodoProps> {
                 <th>ID</th>
                 <th>Cuatrimestre</th>
                 <th>Año</th>
+                <th>Descripcion</th>
                 <th />
               </tr>
             </thead>
@@ -49,6 +50,7 @@ export class Periodo extends React.Component<IPeriodoProps> {
                   </td>
                   <td>{periodo.cuatrimestre}</td>
                   <td>{periodo.anio}</td>
+                  <td>{periodo.descripcion}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${periodo.id}`} color="info" size="sm">

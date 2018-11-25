@@ -33,9 +33,13 @@ export class PeriodoDetail extends React.Component<IPeriodoDetailProps> {
             </dt>
             <dd>{periodoEntity.cuatrimestre}</dd>
             <dt>
-              <span id="ano">Año</span>
+              <span id="anio">Año</span>
             </dt>
             <dd>{periodoEntity.anio}</dd>
+            <dt>
+              <span id="descripcion">Descripcion</span>
+            </dt>
+            <dd>{periodoEntity.descripcion}</dd>
           </dl>
           <Button tag={Link} to="/entity/periodo" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

@@ -95,7 +95,7 @@ export class PeriodoUpdate extends React.Component<IPeriodoUpdateProps, IPeriodo
                   </AvInput>
                 </AvGroup>
                 <AvGroup>
-                  <Label id="anoLabel" for="ano">
+                  <Label id="anoLabel" for="anio">
                     Año
                   </Label>
                   <AvField
@@ -106,6 +106,12 @@ export class PeriodoUpdate extends React.Component<IPeriodoUpdateProps, IPeriodo
                       required: { value: true, errorMessage: 'This field is required.' }
                     }}
                   />
+                </AvGroup>
+                <AvGroup>
+                  <Label id="descripcionLabel" for="descripcion">
+                    Descripcion
+                  </Label>
+                  <AvField id="periodo-descripcion" type="text" name="descripcion" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/periodo" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;
