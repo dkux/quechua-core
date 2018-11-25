@@ -97,9 +97,9 @@ public class CursoService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public List<Curso> findByMateriaWithHorarios(Materia materia) {
+    public List<Curso> findByMateriaWithHorariosEnPeriodo(Materia materia, Periodo periodo) {
         log.debug("Request to get all Cursos");
-        List<Curso> cursos = cursoRepository.findAllByMateriaAndEstado(materia, CursoEstado.ACTIVO);
+        List<Curso> cursos = cursoRepository.findAllByMateriaAndPeriodoAndEstado(materia, periodo, CursoEstado.ACTIVO);
         for (Curso curso: cursos) {
             curso.getHorarios().size();
         }

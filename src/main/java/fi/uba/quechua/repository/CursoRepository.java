@@ -1,9 +1,6 @@
 package fi.uba.quechua.repository;
 
-import fi.uba.quechua.domain.Curso;
-import fi.uba.quechua.domain.Departamento;
-import fi.uba.quechua.domain.Materia;
-import fi.uba.quechua.domain.Profesor;
+import fi.uba.quechua.domain.*;
 import fi.uba.quechua.domain.enumeration.CursoEstado;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +18,7 @@ public interface CursoRepository extends JpaRepository<Curso, Long> {
 
     List<Curso> findAllByEstado(CursoEstado estado);
 
-    List<Curso> findAllByMateriaAndEstado(Materia materia, CursoEstado estado);
+    List<Curso> findAllByMateriaAndPeriodoAndEstado(Materia materia, Periodo periodo, CursoEstado estado);
 
     List<Curso> findAllByProfesorAndEstadoOrderById(Profesor profesor, CursoEstado estado);
 
