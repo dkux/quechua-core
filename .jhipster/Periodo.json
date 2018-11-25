@@ -1,7 +1,5 @@
 {
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "relationships": [],
+    "name": "Periodo",
     "fields": [
         {
             "fieldName": "cuatrimestre",
@@ -12,22 +10,21 @@
             ]
         },
         {
-            "fieldName": "anio",
+            "fieldName": "ano",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"
             ]
-        },
-        {
-            "fieldName": "descripcion",
-            "fieldType": "String"
         }
     ],
+    "relationships": [],
     "changelogDate": "20181009020840",
-    "dto": "no",
-    "searchEngine": false,
-    "service": "serviceClass",
     "entityTableName": "periodo",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceClass",
     "jpaMetamodelFiltering": false,
-    "pagination": "no"
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
 }
