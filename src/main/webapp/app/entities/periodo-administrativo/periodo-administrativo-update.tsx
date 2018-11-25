@@ -109,17 +109,24 @@ export class PeriodoAdministrativoUpdate extends React.Component<IPeriodoAdminis
                   />
                 </AvGroup>
                 <AvGroup>
-                  <Label id="actividadLabel" for="actividad">
-                    Actividad
-                  </Label>
-                  <AvField
+                  <Label id="actividadLabel">Actividad</Label>
+                  <AvInput
                     id="periodo-administrativo-actividad"
-                    type="text"
+                    type="select"
+                    className="form-control"
                     name="actividad"
-                    validate={{
-                      required: { value: true, errorMessage: 'This field is required.' }
-                    }}
-                  />
+                    value={(!isNew && periodoAdministrativoEntity.actividad) || 'CONSULTAR_PRIORIDAD'}
+                  >
+                    <option value="CONSULTAR_PRIORIDAD">CONSULTAR_PRIORIDAD</option>
+                    <option value="INSCRIPCION_CURSADA">INSCRIPCION_CURSADA</option>
+                    <option value="INSCRIPCION_COLOQUIO">INSCRIPCION_COLOQUIO</option>
+                  </AvInput>
+                </AvGroup>
+                <AvGroup>
+                  <Label id="descripcionLabel" for="descripcion">
+                    Descripcion
+                  </Label>
+                  <AvField id="periodo-administrativo-descripcion" type="text" name="descripcion" />
                 </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/periodo-administrativo" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />&nbsp;

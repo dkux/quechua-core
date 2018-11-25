@@ -44,6 +44,10 @@ export class PeriodoAdministrativoDetail extends React.Component<IPeriodoAdminis
               <span id="actividad">Actividad</span>
             </dt>
             <dd>{periodoAdministrativoEntity.actividad}</dd>
+            <dt>
+              <span id="descripcion">Descripcion</span>
+            </dt>
+            <dd>{periodoAdministrativoEntity.descripcion}</dd>
           </dl>
           <Button tag={Link} to="/entity/periodo-administrativo" replace color="info">
             <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

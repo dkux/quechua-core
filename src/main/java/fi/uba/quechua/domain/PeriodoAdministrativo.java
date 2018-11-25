@@ -1,6 +1,5 @@
 package fi.uba.quechua.domain;
 
-import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -10,6 +9,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
+
+import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 
 /**
  * A PeriodoAdministrativo.
@@ -38,6 +39,8 @@ public class PeriodoAdministrativo implements Serializable {
     @Column(name = "actividad", nullable = false)
     private PeriodoActividad actividad;
 
+    @Column(name = "descripcion")
+    private String descripcion;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -86,6 +89,19 @@ public class PeriodoAdministrativo implements Serializable {
     public void setActividad(PeriodoActividad actividad) {
         this.actividad = actividad;
     }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public PeriodoAdministrativo descripcion(String descripcion) {
+        this.descripcion = descripcion;
+        return this;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -115,6 +131,7 @@ public class PeriodoAdministrativo implements Serializable {
             ", fechaInicio='" + getFechaInicio() + "'" +
             ", fechaFin='" + getFechaFin() + "'" +
             ", actividad='" + getActividad() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             "}";
     }
 }

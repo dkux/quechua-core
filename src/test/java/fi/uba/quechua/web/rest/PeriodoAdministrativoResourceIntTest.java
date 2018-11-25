@@ -3,7 +3,6 @@ package fi.uba.quechua.web.rest;
 import fi.uba.quechua.QuechuaApp;
 
 import fi.uba.quechua.domain.PeriodoAdministrativo;
-import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 import fi.uba.quechua.repository.PeriodoAdministrativoRepository;
 import fi.uba.quechua.service.PeriodoAdministrativoService;
 import fi.uba.quechua.web.rest.errors.ExceptionTranslator;
@@ -34,6 +33,7 @@ import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import fi.uba.quechua.domain.enumeration.PeriodoActividad;
 /**
  * Test class for the PeriodoAdministrativoResource REST controller.
  *
@@ -50,12 +50,15 @@ public class PeriodoAdministrativoResourceIntTest {
     private static final LocalDate UPDATED_FECHA_FIN = LocalDate.now(ZoneId.systemDefault());
 
     private static final PeriodoActividad DEFAULT_ACTIVIDAD = PeriodoActividad.CONSULTAR_PRIORIDAD;
-    private static final PeriodoActividad UPDATED_ACTIVIDAD = PeriodoActividad.INSCRIPCION_COLOQUIO;
+    private static final PeriodoActividad UPDATED_ACTIVIDAD = PeriodoActividad.INSCRIPCION_CURSADA;
+
+    private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
 
     @Autowired
     private PeriodoAdministrativoRepository periodoAdministrativoRepository;
 
-
+    
 
     @Autowired
     private PeriodoAdministrativoService periodoAdministrativoService;
@@ -97,7 +100,8 @@ public class PeriodoAdministrativoResourceIntTest {
         PeriodoAdministrativo periodoAdministrativo = new PeriodoAdministrativo()
             .fechaInicio(DEFAULT_FECHA_INICIO)
             .fechaFin(DEFAULT_FECHA_FIN)
-            .actividad(DEFAULT_ACTIVIDAD);
+            .actividad(DEFAULT_ACTIVIDAD)
+            .descripcion(DEFAULT_DESCRIPCION);
         return periodoAdministrativo;
     }
 
@@ -124,6 +128,7 @@ public class PeriodoAdministrativoResourceIntTest {
         assertThat(testPeriodoAdministrativo.getFechaInicio()).isEqualTo(DEFAULT_FECHA_INICIO);
         assertThat(testPeriodoAdministrativo.getFechaFin()).isEqualTo(DEFAULT_FECHA_FIN);
         assertThat(testPeriodoAdministrativo.getActividad()).isEqualTo(DEFAULT_ACTIVIDAD);
+        assertThat(testPeriodoAdministrativo.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
     @Test
@@ -212,9 +217,10 @@ public class PeriodoAdministrativoResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(periodoAdministrativo.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaInicio").value(hasItem(DEFAULT_FECHA_INICIO.toString())))
             .andExpect(jsonPath("$.[*].fechaFin").value(hasItem(DEFAULT_FECHA_FIN.toString())))
-            .andExpect(jsonPath("$.[*].actividad").value(hasItem(DEFAULT_ACTIVIDAD.toString())));
+            .andExpect(jsonPath("$.[*].actividad").value(hasItem(DEFAULT_ACTIVIDAD.toString())))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION.toString())));
     }
-
+    
 
     @Test
     @Transactional
@@ -229,7 +235,8 @@ public class PeriodoAdministrativoResourceIntTest {
             .andExpect(jsonPath("$.id").value(periodoAdministrativo.getId().intValue()))
             .andExpect(jsonPath("$.fechaInicio").value(DEFAULT_FECHA_INICIO.toString()))
             .andExpect(jsonPath("$.fechaFin").value(DEFAULT_FECHA_FIN.toString()))
-            .andExpect(jsonPath("$.actividad").value(DEFAULT_ACTIVIDAD.toString()));
+            .andExpect(jsonPath("$.actividad").value(DEFAULT_ACTIVIDAD.toString()))
+            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION.toString()));
     }
     @Test
     @Transactional
@@ -254,7 +261,8 @@ public class PeriodoAdministrativoResourceIntTest {
         updatedPeriodoAdministrativo
             .fechaInicio(UPDATED_FECHA_INICIO)
             .fechaFin(UPDATED_FECHA_FIN)
-            .actividad(UPDATED_ACTIVIDAD);
+            .actividad(UPDATED_ACTIVIDAD)
+            .descripcion(UPDATED_DESCRIPCION);
 
         restPeriodoAdministrativoMockMvc.perform(put("/api/periodo-administrativos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -268,6 +276,7 @@ public class PeriodoAdministrativoResourceIntTest {
         assertThat(testPeriodoAdministrativo.getFechaInicio()).isEqualTo(UPDATED_FECHA_INICIO);
         assertThat(testPeriodoAdministrativo.getFechaFin()).isEqualTo(UPDATED_FECHA_FIN);
         assertThat(testPeriodoAdministrativo.getActividad()).isEqualTo(UPDATED_ACTIVIDAD);
+        assertThat(testPeriodoAdministrativo.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 
     @Test
