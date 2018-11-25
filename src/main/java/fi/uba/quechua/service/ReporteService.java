@@ -23,4 +23,8 @@ public class ReporteService {
     public List<Object[]> reporteMaterias(Long departamentoId, Long periodoId) {
         return reporteRepository.reporteMaterias(departamentoId, periodoId);
     }
+
+    public List<Object[]> reporteCursos(String codigoMateria, Long periodoId) {
+        return reporteRepository.reporteCursos(codigoMateria, periodoId);
+    }
 }

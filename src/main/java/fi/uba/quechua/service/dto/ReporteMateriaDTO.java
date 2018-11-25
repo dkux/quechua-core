@@ -2,9 +2,9 @@ package fi.uba.quechua.service.dto;
 
 public class ReporteMateriaDTO {
 
-    Long id;
+    String id;
 
-    String nombre;
+    String name;
 
     Float y;
 
@@ -14,29 +14,29 @@ public class ReporteMateriaDTO {
 
     Integer cursos;
 
-    public ReporteMateriaDTO(Long id, String nombre, Float y, Integer inscriptos, Integer docentes, Integer cursos) {
+    public ReporteMateriaDTO(String id, String nombre, Float y, Integer inscriptos, Integer docentes, Integer cursos) {
         this.id = id;
-        this.nombre = nombre;
+        this.name = nombre;
         this.y = y;
         this.inscriptos = inscriptos;
         this.docentes = docentes;
         this.cursos = cursos;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return name;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Float getY() {

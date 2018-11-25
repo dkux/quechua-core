@@ -2,6 +2,7 @@ package fi.uba.quechua.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.service.ReporteService;
+import fi.uba.quechua.service.dto.ReporteCursoDTO;
 import fi.uba.quechua.service.dto.ReporteMateriaDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +39,40 @@ public class ReporteResource {
             total += Integer.valueOf(row[2].toString());
         }
         for (Object[] row: reporte) {
-            Long id = Long.valueOf(row[0].toString());
+            String id = row[0].toString();
             String materia = row[1].toString();
             Integer inscriptos = Integer.valueOf(row[2].toString());
             Float y = (float)inscriptos/total;
             Integer docentes = Integer.valueOf(row[3].toString());
             Integer cursos = Integer.valueOf(row[4].toString());
+            if (inscriptos.intValue() == 0) {
+                continue;
+            }
             result.add(new ReporteMateriaDTO(id, materia, y, inscriptos, docentes, cursos));
+        }
+        return result;
+    }
+
+    @GetMapping("/reportes/cursos")
+    @Timed
+    public List<ReporteCursoDTO> reporteMaterias(@RequestParam(name="materiaId") String codigoMateria,
+                                                   @RequestParam(name="periodoId") Long periodoId) {
+        List<Object[]> reporte = reporteService.reporteCursos(codigoMateria, periodoId);
+        List<ReporteCursoDTO> result = new LinkedList<>();
+        Integer total = 0;
+        for (Object[] row: reporte) {
+            total += Integer.valueOf(row[2].toString());
+        }
+        for (Object[] row: reporte) {
+            Long id = Long.valueOf(row[0].toString());
+            String nombre = "Curso " + row[1].toString();
+            Integer inscriptos = Integer.valueOf(row[2].toString());
+            Float y = (float)inscriptos/total;
+            String profesor = row[3].toString() + " " + row[4].toString();
+            if (inscriptos.intValue() == 0) {
+                continue;
+            }
+            result.add(new ReporteCursoDTO(nombre, profesor, y, inscriptos));
         }
         return result;
     }
