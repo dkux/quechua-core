@@ -334,6 +334,12 @@
             <artifactId>spring-security-messaging</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        <!-- Firebase -->
+        <dependency>
+          <groupId>com.google.firebase</groupId>
+          <artifactId>firebase-admin</artifactId>
+          <version>6.5.0</version>
+        </dependency>
     </dependencies>
 
     <build>
