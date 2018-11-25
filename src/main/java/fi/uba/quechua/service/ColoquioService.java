@@ -2,13 +2,16 @@ package fi.uba.quechua.service;
 
 import fi.uba.quechua.domain.Coloquio;
 import fi.uba.quechua.domain.Curso;
+import fi.uba.quechua.domain.Materia;
 import fi.uba.quechua.domain.Periodo;
+import fi.uba.quechua.domain.InscripcionColoquio;
 import fi.uba.quechua.domain.enumeration.ColoquioEstado;
 import fi.uba.quechua.domain.enumeration.InscripcionColoquioEstado;
 import fi.uba.quechua.repository.ColoquioRepository;
 import fi.uba.quechua.repository.InscripcionColoquioRepository;
 import fi.uba.quechua.repository.PeriodoRepository;
 import fi.uba.quechua.service.dto.ColoquioDTO;
+import fi.uba.quechua.firebase.FirebaseConnectionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -133,6 +137,25 @@ public class ColoquioService {
     public void eliminar(Coloquio coloquio) {
         coloquio.setEstado(ColoquioEstado.ELIMINADO);
         coloquioRepository.save(coloquio);
-        //@TODO Notificar a los alumnos inscriptos
+
+        // Notificar a los alumnos inscriptos
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        Materia materia = coloquio.getCurso().getMateria();
+        String message = "La fecha de final " + coloquio.getFecha().format(formatter) + " de la materia " 
+                        + materia.getCodigo() + " - " + materia.getNombre() 
+                        + " ha sido eliminada por el docente";
+
+        FirebaseConnectionService fcmService = new FirebaseConnectionService();
+        List<InscripcionColoquio> inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA);
+        for (InscripcionColoquio inscripcion: inscripciones) {
+            String token = inscripcion.getAlumno().getFirebaseToken();
+            String notification = fcmService.buildNotificationMessage("Final Eliminado", message, token);
+            try {
+                fcmService.sendMessage(notification);
+            } catch (Exception e) {
+                log.error("FirebaseConnectionService: " + e);
+            }
+
+        }
     }
 }

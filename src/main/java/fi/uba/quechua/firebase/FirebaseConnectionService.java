@@ -74,11 +74,11 @@ public class FirebaseConnectionService {
    * @param fcmMessage Body of the HTTP request.
    * @throws IOException
    */
-  public static void sendMessage(JsonObject fcmMessage) throws IOException {
+  public static void sendMessage(String fcmMessage) throws IOException {
     HttpURLConnection connection = getConnection();
     connection.setDoOutput(true);
     DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-    outputStream.writeBytes(fcmMessage.toString());
+    outputStream.writeBytes(fcmMessage);
     outputStream.flush();
     outputStream.close();
 
@@ -107,7 +107,7 @@ public class FirebaseConnectionService {
     }
 }
 */
-  public static JsonObject buildNotificationMessage(String title, String body, String token) {
+  public static String buildNotificationMessage(String title, String body, String token) {
     JsonObject jNotification = new JsonObject();
     jNotification.addProperty("title", title);
     jNotification.addProperty("body", body);
@@ -119,7 +119,7 @@ public class FirebaseConnectionService {
     JsonObject jMessageAux = new JsonObject();
     jMessageAux.add("message", new Gson().toJsonTree(jMessage));
 
-    return jMessageAux;
+    return jMessageAux.toString();
   }
 
 }
