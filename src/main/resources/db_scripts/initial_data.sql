@@ -150,8 +150,8 @@ VALUES
 INSERT INTO `periodo` (`id`, `cuatrimestre`, `anio`)
 VALUES
   (1, 'PRIMERO', '2017'),
-  (1, 'SEGUNDO', '2017'),
-  (1, 'PRIMERO', '2017');
+  (2, 'SEGUNDO', '2017'),
+  (3, 'PRIMERO', '2018');
 
 INSERT INTO `profesor` (`id`, `nombre`, `apellido`, `user_id`)
 VALUES
@@ -703,11 +703,11 @@ VALUES
   ("2018-07-27 17:30:00",1),
   ("2018-07-27 18:00:00",1);
 
-INSERT INTO `periodo_administrativo` (`id`, `fecha_inicio`, `fecha_fin`, `actividad`)
+INSERT INTO `periodo_administrativo` (`id`, `fecha_inicio`, `fecha_fin`, `actividad`, `descripcion`)
 VALUES
-  (1, '2018-07-01', '2018-12-31', 'INSCRIPCION_CURSADA'),
-  (2, '2018-07-01', '2018-12-31', 'CONSULTAR_PRIORIDAD'),
-  (3, '2018-07-01', '2018-12-31', 'INSCRIPCION_COLOQUIO');
+  (1, '2018-07-01', '2018-12-31', 'INSCRIPCION_CURSADA', 'Inscripción cursada segundo cuat. 2018'),
+  (2, '2018-07-01', '2018-12-31', 'CONSULTAR_PRIORIDAD', 'Consultar prioridad segundo cuat. 2018'),
+  (3, '2018-07-01', '2018-12-31', 'INSCRIPCION_COLOQUIO', 'Inscripciones a coloquio segundo cuat. 2018');
 
 INSERT INTO `administrador_departamento` (`id`, `user_id`, `departamento_id`)
 VALUES
