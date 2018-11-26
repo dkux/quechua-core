@@ -5,6 +5,7 @@ import fi.uba.quechua.domain.*;
 import fi.uba.quechua.repository.PeriodoRepository;
 import fi.uba.quechua.security.SecurityUtils;
 import fi.uba.quechua.service.*;
+import fi.uba.quechua.service.dto.FirebaseTokenDTO;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -210,4 +211,19 @@ public class AlumnoResource {
         Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
         return ResponseUtil.wrapOrNotFound(alumno);
     }
+
+    @PostMapping("/alumnos/setFirebaseToken")
+    @Timed
+    public ResponseEntity<Void> setFirebaseToken(@RequestBody FirebaseTokenDTO tokenDTO) {
+        Long userId = userService.getUserWithAuthorities().get().getId();
+        Optional<Alumno> alumno = alumnoService.findOneByUserId(userId);
+        if (!alumno.isPresent()) {
+            throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
+        } else {
+            alumno.get().setFirebaseToken(tokenDTO.getToken());
+            alumnoService.save(alumno.get());
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }
