@@ -104,11 +104,8 @@ public class ColoquioService {
 
     public List<ColoquioDTO> findAllColoquiosDTOByCurso(Curso curso) {
         log.debug("Request to get Coloquios by curso {}", curso.getId());
-        Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
-        if (!periodo.isPresent()) {
-            return new LinkedList<>();
-        }
-        List<Coloquio> coloquios = coloquioRepository.findAllByCursoAndPeriodoAndEstadoOrderByFechaDesc(curso, periodo.get(), ColoquioEstado.ACTIVO);
+
+        List<Coloquio> coloquios = coloquioRepository.findAllByCursoAndEstadoOrderByFechaDesc(curso, ColoquioEstado.ACTIVO);
         List<ColoquioDTO> coloquiosDTO = new LinkedList<>();
         for (Coloquio coloquio: coloquios) {
             Integer inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA).size();
@@ -141,8 +138,8 @@ public class ColoquioService {
         // Notificar a los alumnos inscriptos
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         Materia materia = coloquio.getCurso().getMateria();
-        String message = "La fecha de final " + coloquio.getFecha().format(formatter) + " de la materia " 
-                        + materia.getCodigo() + " - " + materia.getNombre() 
+        String message = "La fecha de final " + coloquio.getFecha().format(formatter) + " de la materia "
+                        + materia.getCodigo() + " - " + materia.getNombre()
                         + " ha sido eliminada por el docente";
 
         FirebaseConnectionService fcmService = new FirebaseConnectionService();
@@ -155,6 +152,9 @@ public class ColoquioService {
             } catch (Exception e) {
                 log.error("FirebaseConnectionService: " + e);
             }
+
+            inscripcion.setEstado(InscripcionColoquioEstado.ELIMINADA);
+            inscripcionColoquioRepository.save(inscripcion);
 
         }
     }
