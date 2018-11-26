@@ -94,12 +94,9 @@ public class ColoquioService {
 
     public List<Coloquio> findAllByCursoParaInscribirse(Curso curso) {
         log.debug("Request to get Coloquios by curso {} para inscribirse", curso.getId());
-        Optional<Periodo> periodo = periodoRepository.findPeriodoActual();
-        if (!periodo.isPresent()) {
-            return new LinkedList<>();
-        }
+
         LocalDate fecha = LocalDate.now().plusDays(2);
-        return coloquioRepository.findAllByCursoAndPeriodoAndFechaGreaterThanEqualAndEstadoOrderByFechaDesc(curso, periodo.get(), fecha, ColoquioEstado.ACTIVO);
+        return coloquioRepository.findAllByCursoAndFechaGreaterThanEqualAndEstadoOrderByFechaDesc(curso, fecha, ColoquioEstado.ACTIVO);
     }
 
     public List<ColoquioDTO> findAllColoquiosDTOByCurso(Curso curso) {
