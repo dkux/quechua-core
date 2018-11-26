@@ -193,8 +193,10 @@ public class AlumnoResource {
             throw new BadRequestAlertException("No existe un Alumno asociado al usuario logueado", "Alumno", "idnoexists");
         }
         List<Prioridad> listaPrioridad = new ArrayList<Prioridad>();
-        Optional<Prioridad> prioridad = prioridadService.findOne(Long.valueOf(alumno.get().getPrioridad().toString()));
-        listaPrioridad.add(prioridad.get());
+        if((alumno.get().getPrioridad() != 0) && (alumno.get().getPrioridad() < 96)) {
+            Optional<Prioridad> prioridad = prioridadService.findOne(Long.valueOf(alumno.get().getPrioridad().toString()));
+            listaPrioridad.add(prioridad.get());
+        }
         return listaPrioridad;
     }
 
