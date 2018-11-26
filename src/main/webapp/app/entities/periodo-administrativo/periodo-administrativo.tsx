@@ -37,6 +37,7 @@ export class PeriodoAdministrativo extends React.Component<IPeriodoAdministrativ
                 <th>Fecha Inicio</th>
                 <th>Fecha Fin</th>
                 <th>Actividad</th>
+                <th>Descripcion</th>
                 <th />
               </tr>
             </thead>
@@ -55,6 +56,7 @@ export class PeriodoAdministrativo extends React.Component<IPeriodoAdministrativ
                     <TextFormat type="date" value={periodoAdministrativo.fechaFin} format={APP_LOCAL_DATE_FORMAT} />
                   </td>
                   <td>{periodoAdministrativo.actividad}</td>
+                  <td>{periodoAdministrativo.descripcion}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${periodoAdministrativo.id}`} color="info" size="sm">

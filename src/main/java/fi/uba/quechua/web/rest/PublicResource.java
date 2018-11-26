@@ -3,10 +3,7 @@ package fi.uba.quechua.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import fi.uba.quechua.domain.*;
 import fi.uba.quechua.domain.enumeration.InscripcionCursoEstado;
-import fi.uba.quechua.service.AlumnoService;
-import fi.uba.quechua.service.CursoService;
-import fi.uba.quechua.service.InscripcionCursoService;
-import fi.uba.quechua.service.MateriaService;
+import fi.uba.quechua.service.*;
 import fi.uba.quechua.service.dto.CursoDTO;
 import fi.uba.quechua.web.rest.errors.BadRequestAlertException;
 import fi.uba.quechua.web.rest.util.HeaderUtil;
@@ -36,12 +33,15 @@ public class PublicResource {
 
     private final InscripcionCursoService inscripcionCursoService;
 
+    private final PeriodoService periodoService;
+
     public PublicResource(CursoService cursoService, MateriaService materiaService, AlumnoService alumnoService,
-                          InscripcionCursoService inscripcionCursoService) {
+                          InscripcionCursoService inscripcionCursoService, PeriodoService periodoService) {
         this.cursoService = cursoService;
         this.materiaService = materiaService;
         this.alumnoService = alumnoService;
         this.inscripcionCursoService = inscripcionCursoService;
+        this.periodoService = periodoService;
     }
 
     /**
@@ -75,7 +75,12 @@ public class PublicResource {
         if (!materia.isPresent()) {
             throw new BadRequestAlertException("No existe una Materia con id provisto", "Materia", "idnoexists");
         }
-        List<Curso> cursos = cursoService.findByMateriaWithHorarios(materia.get());
+        //Si no existe un periodo actual, por lo tanto no existen cursos
+        Optional<Periodo> periodo = periodoService.findPeriodoActual();
+        if (!periodo.isPresent()) {
+            return new LinkedList<>();
+        }
+        List<Curso> cursos = cursoService.findByMateriaWithHorariosEnPeriodo(materia.get(), periodo.get());
         List<CursoDTO> cursoDTOS = new LinkedList<>();
         for (Curso curso: cursos) {
             List<InscripcionCurso> inscripciones = inscripcionCursoService.findByCurso(curso);

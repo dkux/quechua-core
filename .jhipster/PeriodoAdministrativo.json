@@ -24,6 +24,10 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "descripcion",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20181009020842",

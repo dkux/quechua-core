@@ -47,9 +47,6 @@ public class PeriodoResourceIntTest {
     private static final String DEFAULT_ANO = "AAAAAAAAAA";
     private static final String UPDATED_ANO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
-    private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
-
     @Autowired
     private PeriodoRepository periodoRepository;
 
@@ -94,8 +91,7 @@ public class PeriodoResourceIntTest {
     public static Periodo createEntity(EntityManager em) {
         Periodo periodo = new Periodo()
             .cuatrimestre(DEFAULT_CUATRIMESTRE)
-            .anio(DEFAULT_ANO)
-            .descripcion(DEFAULT_DESCRIPCION);
+            .anio(DEFAULT_ANO);
         return periodo;
     }
 
@@ -121,7 +117,6 @@ public class PeriodoResourceIntTest {
         Periodo testPeriodo = periodoList.get(periodoList.size() - 1);
         assertThat(testPeriodo.getCuatrimestre()).isEqualTo(DEFAULT_CUATRIMESTRE);
         assertThat(testPeriodo.getAnio()).isEqualTo(DEFAULT_ANO);
-        assertThat(testPeriodo.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
     @Test
@@ -191,8 +186,7 @@ public class PeriodoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(periodo.getId().intValue())))
             .andExpect(jsonPath("$.[*].cuatrimestre").value(hasItem(DEFAULT_CUATRIMESTRE.toString())))
-            .andExpect(jsonPath("$.[*].ano").value(hasItem(DEFAULT_ANO.toString())))
-            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION.toString())));
+            .andExpect(jsonPath("$.[*].ano").value(hasItem(DEFAULT_ANO.toString())));
     }
 
 
@@ -208,8 +202,7 @@ public class PeriodoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(periodo.getId().intValue()))
             .andExpect(jsonPath("$.cuatrimestre").value(DEFAULT_CUATRIMESTRE.toString()))
-            .andExpect(jsonPath("$.ano").value(DEFAULT_ANO.toString()))
-            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION.toString()));
+            .andExpect(jsonPath("$.ano").value(DEFAULT_ANO.toString()));
     }
     @Test
     @Transactional
@@ -233,8 +226,7 @@ public class PeriodoResourceIntTest {
         em.detach(updatedPeriodo);
         updatedPeriodo
             .cuatrimestre(UPDATED_CUATRIMESTRE)
-            .anio(UPDATED_ANO)
-            .descripcion(UPDATED_DESCRIPCION);
+            .anio(UPDATED_ANO);
 
         restPeriodoMockMvc.perform(put("/api/periodos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -247,7 +239,6 @@ public class PeriodoResourceIntTest {
         Periodo testPeriodo = periodoList.get(periodoList.size() - 1);
         assertThat(testPeriodo.getCuatrimestre()).isEqualTo(UPDATED_CUATRIMESTRE);
         assertThat(testPeriodo.getAnio()).isEqualTo(UPDATED_ANO);
-        assertThat(testPeriodo.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 
     @Test

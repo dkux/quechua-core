@@ -8,7 +8,6 @@ export interface IPeriodo {
   id?: number;
   cuatrimestre?: Cuatrimestre;
   anio?: string;
-  descripcion?: string;
 }
 
 export const defaultValue: Readonly<IPeriodo> = {};
