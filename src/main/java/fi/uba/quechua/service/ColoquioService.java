@@ -120,11 +120,12 @@ public class ColoquioService {
         if (!periodo.isPresent()) {
             return new LinkedList<>();
         }
+        LocalDate ayer = LocalDate.now().minusDays(1);
         List<Coloquio> coloquios = coloquioRepository.findAll();
         List<ColoquioDTO> coloquiosDTO = new LinkedList<>();
         for (Coloquio coloquio: coloquios) {
             Integer inscripciones = inscripcionColoquioRepository.findAllByColoquioAndEstado(coloquio, InscripcionColoquioEstado.ACTIVA).size();
-            if(coloquio.getEstado() ==  ColoquioEstado.ACTIVO) {
+            if((coloquio.getEstado() ==  ColoquioEstado.ACTIVO) && (coloquio.getFecha().isAfter(ayer) )) {
                 coloquiosDTO.add(new ColoquioDTO(coloquio, inscripciones));
             }
         }
